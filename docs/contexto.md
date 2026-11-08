@@ -24,7 +24,7 @@ Postulados renumerados según la cátedra; Deutsch con qubit auxiliar en $|1\ran
 - 30 páginas, 20 interactivos, 59 preguntas de quiz (52 generales + 7 de la autoevaluación 1), 27 archivos de material (11 MB).
 - 7 pruebas del simulador pasan (resultados de parciales y autoevaluación 4).
 - Recorrido automático en navegador: las 30 páginas cargan sin errores de consola ni fórmulas rotas; sin scroll horizontal a 390 px; visor de PDF probado con la slide de 46 hojas.
-- Pendiente de Facundo: crear el repo en GitHub (`facucabral/fiuba-computacion-cuantica`), agregar los topics `fiuba`, `tb032` y `computacion-cuantica`, y publicar el portafolio.
+- Publicado: repo en GitHub y facucabral.me/fiuba/cuantica (PR #10 del portafolio).
 
 ## Próximos pasos posibles
 
