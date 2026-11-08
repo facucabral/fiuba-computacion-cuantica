@@ -1,0 +1,66 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 2 · Matemática</span>
+  <h1>Números <em>complejos</em></h1>
+  <p class="bajada">Las amplitudes de un qubit son números complejos. Sin ellos no hay fases, y sin fases no hay interferencia.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Un número complejo es una flechita en un plano: tiene un <strong>largo</strong> (módulo) y una <strong>dirección</strong> (fase). La probabilidad solo mira el largo al cuadrado. La dirección es lo que permite que dos caminos se sumen (flechas alineadas) o se cancelen (flechas opuestas): eso es la interferencia.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Matemáticas mínimas”</span>
+</div>
+
+<h2>Definición</h2>
+<p>Un número complejo tiene parte real y parte imaginaria:</p>
+<div class="formula">$$z = a + b\,i, \qquad a, b \in \mathbb{R}, \qquad i^2 = -1$$</div>
+<p>Se puede dibujar como un punto (o una flecha) en el plano: $a$ en el eje horizontal y $b$ en el vertical. Esa imagen es la que conviene tener en la cabeza.</p>
+
+<div data-widget="planoComplejo"></div>
+
+<h2>Las operaciones que vamos a usar</h2>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Operación</th><th>Fórmula</th><th>Ejemplo con $z = 3 + 4i$</th></tr></thead>
+  <tbody>
+    <tr><td>Conjugado</td><td>$z^* = a - b\,i$</td><td>$z^* = 3 - 4i$</td></tr>
+    <tr><td>Módulo</td><td>$|z| = \sqrt{a^2 + b^2}$</td><td>$|z| = 5$</td></tr>
+    <tr><td>Módulo al cuadrado</td><td>$|z|^2 = z\,z^* = a^2 + b^2$</td><td>$|z|^2 = 25$</td></tr>
+    <tr><td>Fase (argumento)</td><td>$\varphi = \arg z$, con $\tan\varphi = b/a$</td><td>$\varphi \approx 53{,}13^\circ$</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="aviso clave">
+  <span class="titulo-aviso">Por qué importa $|z|^2$</span>
+  <p>$z\,z^*$ siempre da un número <strong>real y no negativo</strong>. Por eso la probabilidad de un resultado es el módulo al cuadrado de su amplitud, $p = |c|^2$: nunca puede dar negativa ni compleja.</p>
+</div>
+
+<h2>Forma polar y fórmula de Euler</h2>
+<p>Todo complejo se puede escribir con su módulo $r$ y su fase $\varphi$:</p>
+<div class="formula destacada">$$z = r\,e^{i\varphi} = r(\cos\varphi + i\,\sin\varphi)$$</div>
+<p>En esta forma multiplicar es muy fácil: <strong>se multiplican los módulos y se suman las fases</strong>. Multiplicar por $e^{i\theta}$ es <strong>girar</strong> la flecha un ángulo $\theta$ sin cambiar su largo. Valores que aparecen todo el tiempo:</p>
+<div class="formula">$$e^{i0} = 1, \qquad e^{i\pi/2} = i, \qquad e^{i\pi} = -1, \qquad e^{i3\pi/2} = -i, \qquad e^{i\pi/4} = \tfrac{1}{\sqrt2}(1 + i)$$</div>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">Trampa de la autoevaluación 2</span>
+  <p>El estado $\tfrac{2e^{i\pi}}{3}|\varphi_3\rangle$ es lo mismo que $-\tfrac{2}{3}|\varphi_3\rangle$, porque $e^{i\pi} = -1$. Al calcular probabilidades, $|e^{i\theta}| = 1$ siempre: la fase no cambia el módulo.</p>
+</div>
+
+<h2>Fase global y fase relativa</h2>
+<p>Multiplicar <em>todo</em> el estado por $e^{i\theta}$ (fase global) no cambia ninguna probabilidad ni ningún resultado observable: $e^{i\theta}|\psi\rangle$ y $|\psi\rangle$ son el mismo estado físico. En cambio, la fase <strong>entre</strong> dos términos (fase relativa) sí importa:</p>
+<div class="formula">$$|+\rangle = \tfrac{1}{\sqrt2}(|0\rangle + |1\rangle) \qquad\text{y}\qquad |-\rangle = \tfrac{1}{\sqrt2}(|0\rangle - |1\rangle)$$</div>
+<p>Ambos dan 50 % y 50 % al medir en la base $\{|0\rangle, |1\rangle\}$, pero son estados distintos (ortogonales, de hecho). Una Hadamard los distingue: $H|+\rangle = |0\rangle$ y $H|-\rangle = |1\rangle$. Ver <a href="#/paralelismo">interferencia</a>.</p>
+
+<h2>Practicá</h2>
+<details class="desplegable">
+  <summary>Calculá $|z|^2$ para $z = \tfrac{1 - i}{2}$</summary>
+  <div class="contenido-desplegable">
+    <p>$z\,z^* = \tfrac{(1-i)(1+i)}{4} = \tfrac{1 - i^2}{4} = \tfrac{2}{4} = \tfrac12$. Una amplitud así da probabilidad 50 %.</p>
+  </div>
+</details>
+<details class="desplegable">
+  <summary>¿Está normalizado $\tfrac{3}{5}|0\rangle + \tfrac{4i}{5}|1\rangle$?</summary>
+  <div class="contenido-desplegable">
+    <p>$\left|\tfrac35\right|^2 + \left|\tfrac{4i}{5}\right|^2 = \tfrac{9}{25} + \tfrac{16}{25} = 1$. Sí. Ojo: $\left|\tfrac{4i}{5}\right|^2 = \tfrac{4i}{5}\cdot\tfrac{-4i}{5} = \tfrac{16}{25}$, no $-\tfrac{16}{25}$.</p>
+  </div>
+</details>

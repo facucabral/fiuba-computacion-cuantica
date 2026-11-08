@@ -1,0 +1,98 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 2 · Matemática · Slides 3 · Guía 2</span>
+  <h1>Operadores <em>lineales</em></h1>
+  <p class="bajada">Las compuertas, los observables y las mediciones son operadores. Tres familias alcanzan para toda la materia: hermíticos, unitarios y proyectores.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Un operador es una máquina que agarra una flechita y devuelve otra. <strong>Hermítico</strong>: algo que se puede medir (siempre da resultados reales). <strong>Unitario</strong>: un giro que no estira ni achica la flecha, así las probabilidades siguen sumando 1. <strong>Proyector</strong>: la sombra de la flecha sobre un eje, que es lo que hace una medición.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Matemáticas mínimas”</span>
+</div>
+
+<h2>Operador y su matriz</h2>
+<p>Un operador lineal $\hat A$ transforma kets en kets respetando sumas y escalares. Si sabés cómo actúa sobre una base ortonormal, sabés todo. Su matriz en la BON $\{|u_i\rangle\}$ tiene por elementos:</p>
+<div class="formula destacada">$$A_{ij} = \langle u_i|\hat A|u_j\rangle$$</div>
+<p>La columna $j$ es el vector $\hat A|u_j\rangle$ escrito en la base. Ejemplo de la guía 2: si $\hat X|0\rangle = |1\rangle$ y $\hat X|1\rangle = |0\rangle$, entonces</p>
+<div class="formula">$$X = \begin{pmatrix}\langle0|X|0\rangle & \langle0|X|1\rangle\\ \langle1|X|0\rangle & \langle1|X|1\rangle\end{pmatrix} = \begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix}$$</div>
+
+<h3>El adjunto</h3>
+<p>El adjunto (conjugado hermítico) es la transpuesta conjugada: $A^\dagger = (A^T)^* = (A^*)^T$. Cumple $\langle\varphi|\hat A\psi\rangle = \langle\hat A^\dagger\varphi|\psi\rangle$.</p>
+
+<h2>Las tres familias</h2>
+<div class="grilla">
+  <div class="tarjeta">
+    <h3>Hermíticos $\hat A^\dagger = \hat A$</h3>
+    <p>Representan <strong>magnitudes medibles</strong> (observables). Sus autovalores son <strong>reales</strong> y sus autovectores de autovalores distintos son <strong>ortogonales</strong>.</p>
+    <p class="chico texto-2">Ej.: $X$, $Y$, $Z$, $H$, cualquier proyector.</p>
+  </div>
+  <div class="tarjeta">
+    <h3>Unitarios $\hat U^\dagger\hat U = I$</h3>
+    <p>Representan la <strong>evolución</strong> y las <strong>compuertas</strong>. Conservan la norma (las probabilidades siguen sumando 1) y son reversibles: $\hat U^{-1} = \hat U^\dagger$.</p>
+    <p class="chico texto-2">Ej.: $X$, $Y$, $Z$, $H$, $S$, $T$, CNOT.</p>
+  </div>
+  <div class="tarjeta">
+    <h3>Proyectores $\hat P^2 = \hat P = \hat P^\dagger$</h3>
+    <p>Representan la <strong>medición</strong>: se quedan con la componente del estado en un subespacio. $\hat P_u = |u\rangle\langle u|$.</p>
+    <p class="chico texto-2">Ej.: $|0\rangle\langle 0| = \begin{pmatrix}1&0\\0&0\end{pmatrix}$.</p>
+  </div>
+</div>
+
+<div class="aviso clave">
+  <span class="titulo-aviso">Las Pauli son las dos cosas</span>
+  <p>$X$, $Y$, $Z$ (y también $H$) son hermíticas <em>y</em> unitarias a la vez. Por eso cumplen $X^2 = Y^2 = Z^2 = H^2 = I$: aplicarlas dos veces deja todo como estaba.</p>
+</div>
+
+<h2>Proyectores en detalle</h2>
+<p>Aplicar un proyector a un estado da la “sombra” del estado sobre ese vector. Es un <strong>ket</strong>, no un número:</p>
+<div class="formula">$$\hat P_u|\psi\rangle = |u\rangle\langle u|\psi\rangle = \underbrace{\langle u|\psi\rangle}_{\text{número}}\;|u\rangle$$</div>
+<p>Para un subespacio de dimensión mayor (autovalor degenerado) se suman los proyectores de una base del subespacio: $\hat P = |u_1\rangle\langle u_1| + |u_2\rangle\langle u_2|$.</p>
+
+<h3>Relación de clausura</h3>
+<p>Si sumás los proyectores de todos los vectores de una BON, obtenés la identidad. Es lo que justifica “insertar un 1” en las cuentas:</p>
+<div class="formula destacada">$$\sum_k |u_k\rangle\langle u_k| = \hat I \qquad\text{por ejemplo}\qquad |0\rangle\langle0| + |1\rangle\langle1| = |+\rangle\langle+| + |-\rangle\langle-| = I$$</div>
+
+<h2>Autovalores y autovectores</h2>
+<p>$|v\rangle$ es autovector de $\hat A$ con autovalor $\lambda$ si $\hat A|v\rangle = \lambda|v\rangle$. Para una matriz se resuelve $\det(A - \lambda I) = 0$. En computación cuántica, los autovectores de un observable son <strong>los estados en los que puede colapsar</strong> y los autovalores, <strong>los resultados posibles</strong> de la medición.</p>
+
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Operador</th><th>Autovalor $+1$</th><th>Autovalor $-1$</th></tr></thead>
+  <tbody>
+    <tr><td>$Z = \begin{pmatrix}1&0\\0&-1\end{pmatrix}$</td><td>$|0\rangle$</td><td>$|1\rangle$</td></tr>
+    <tr><td>$X = \begin{pmatrix}0&1\\1&0\end{pmatrix}$</td><td>$|+\rangle$</td><td>$|-\rangle$</td></tr>
+    <tr><td>$Y = \begin{pmatrix}0&-i\\i&0\end{pmatrix}$</td><td>$|{+i}\rangle$</td><td>$|{-i}\rangle$</td></tr>
+  </tbody>
+</table>
+</div>
+
+<details class="desplegable">
+  <summary>Resolución: autovalores y autovectores de $\sigma_y$ (guía 3, ejercicio 1)</summary>
+  <div class="contenido-desplegable">
+    <ol class="pasos">
+      <li>¿Es hermítico? $\sigma_y^\dagger = \left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)^{T*} = \left(\begin{smallmatrix}0&i\\-i&0\end{smallmatrix}\right)^{*} = \left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right) = \sigma_y$. Sí.</li>
+      <li>Polinomio característico: $\det\left(\begin{smallmatrix}-\lambda&-i\\i&-\lambda\end{smallmatrix}\right) = \lambda^2 - (-i)(i) = \lambda^2 - 1 = 0 \Rightarrow \lambda = \pm 1$.</li>
+      <li>Para $\lambda = 1$: $-a - ib = 0 \Rightarrow b = ia$. Normalizado: $|{+i}\rangle = \tfrac{1}{\sqrt2}(|0\rangle + i|1\rangle)$.</li>
+      <li>Para $\lambda = -1$: $a - ib = 0 \Rightarrow b = -ia$: $|{-i}\rangle = \tfrac{1}{\sqrt2}(|0\rangle - i|1\rangle)$.</li>
+      <li>Al medir la magnitud $\sigma_y$ solo se puede obtener $+1$ o $-1$ (postulado 3).</li>
+    </ol>
+  </div>
+</details>
+
+<h2>Unitarios: comprobar que una compuerta es válida</h2>
+<p>Para verificar que $H$ es unitaria (guía 2, ejercicio 3):</p>
+<div class="formula">$$H^\dagger H = \frac{1}{2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}\begin{pmatrix}1&1\\1&-1\end{pmatrix} = \frac12\begin{pmatrix}2&0\\0&2\end{pmatrix} = I$$</div>
+<p>Además $H = \tfrac{1}{\sqrt2}(X + Z)$: es una combinación de Pauli.</p>
+
+<h3>Corrimiento de fase $R(\delta)$</h3>
+<p>La guía 2 define $R(\delta)|0\rangle = |0\rangle$ y $R(\delta)|1\rangle = e^{i\delta}|1\rangle$. Sobre un estado de Bloch suma $\delta$ a la fase: $\varphi \to \varphi + \delta$, es decir, gira la flechita alrededor del eje $z$. Casos particulares: $Z = R(\pi)$, $S = R(\pi/2)$, $T = R(\pi/4)$.</p>
+
+<h2>Conmutador</h2>
+<p>En general $\hat A\hat B \ne \hat B\hat A$. El conmutador mide esa diferencia: $[\hat A, \hat B] = \hat A\hat B - \hat B\hat A$. Por ejemplo, $XZ = -ZX$, así que el orden de las compuertas importa (lo vas a usar en <a href="#/teleportacion">teleportación</a>). Que dos observables no conmuten significa que no se pueden medir a la vez con precisión arbitraria.</p>
+
+<details class="desplegable">
+  <summary>Verificá que $XZ = -ZX$</summary>
+  <div class="contenido-desplegable">
+    <p>$XZ = \left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)\left(\begin{smallmatrix}1&0\\0&-1\end{smallmatrix}\right) = \left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$, &nbsp; $ZX = \left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right) = -XZ$. Notá que $XZ = -iY$.</p>
+  </div>
+</details>

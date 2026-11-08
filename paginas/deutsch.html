@@ -1,0 +1,63 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 6 · Algoritmos</span>
+  <h1>Algoritmo de <em>Deutsch</em></h1>
+  <p class="bajada">El primer algoritmo con ventaja cuántica demostrable: decide si una función es constante o balanceada consultándola una sola vez.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Alguien te da una caja negra que come 0 o 1 y devuelve 0 o 1. Clásicamente tenés que probarla <strong>dos</strong> veces para saber si siempre devuelve lo mismo (constante) o no (balanceada). Cuánticamente le metés 0 y 1 superpuestos en <strong>una</strong> sola pasada: la $H$ lleva la flechita al ecuador, el oráculo la deja en $|+\rangle$ o en $|-\rangle$, y la segunda $H$ la manda al norte (sale 0: constante) o al sur (sale 1: balanceada).</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Tu primer algoritmo cuántico con un qubit”</span>
+</div>
+
+<h2>El problema</h2>
+<p>Hay una caja negra que calcula $f:\{0,1\}\to\{0,1\}$. Hay cuatro funciones posibles:</p>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Función</th><th>$f(0)$</th><th>$f(1)$</th><th>Tipo</th></tr></thead>
+  <tbody>
+    <tr><td>$f_1(x) = 0$</td><td>0</td><td>0</td><td>constante</td></tr>
+    <tr><td>$f_2(x) = 1$</td><td>1</td><td>1</td><td>constante</td></tr>
+    <tr><td>$f_3(x) = x$</td><td>0</td><td>1</td><td>balanceada</td></tr>
+    <tr><td>$f_4(x) = \bar x$</td><td>1</td><td>0</td><td>balanceada</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>Pregunta:</strong> ¿$f$ es constante ($f(0) = f(1)$) o balanceada ($f(0) \ne f(1)$)? Clásicamente hacen falta <strong>dos</strong> consultas: con solo $f(0) = 0$ no se distingue $f_1$ de $f_3$. Con el algoritmo de Deutsch alcanza con <strong>una</strong>.</p>
+
+<h2>El circuito</h2>
+<p>Dos qubits: el de arriba arranca en $|0\rangle$ y el auxiliar en $|1\rangle$. Elegí la función y recorré los pasos:</p>
+<div data-widget="deutsch"></div>
+
+<h2>La cuenta</h2>
+<ol class="pasos" data-revelar>
+  <li><strong>Preparación.</strong> $|\psi_0\rangle = |0\rangle|1\rangle$.</li>
+  <li><strong>Hadamard en los dos.</strong> $|\psi_1\rangle = (H\otimes H)|01\rangle = |+\rangle|-\rangle = \tfrac{1}{\sqrt2}(|0\rangle + |1\rangle)\otimes|-\rangle$.</li>
+  <li><strong>Retroceso de fase (<em>phase kickback</em>).</strong> Con el auxiliar en $|-\rangle$, el oráculo no cambia el auxiliar sino el signo:
+    $$U_f|x\rangle|-\rangle = |x\rangle\frac{|f(x)\rangle - |1\oplus f(x)\rangle}{\sqrt2} = (-1)^{f(x)}|x\rangle|-\rangle$$
+    Si $f(x) = 0$ queda igual; si $f(x) = 1$, $|0\rangle$ y $|1\rangle$ se intercambian y aparece un signo menos.</li>
+  <li><strong>Después del oráculo.</strong> $|\psi_2\rangle = \tfrac{1}{\sqrt2}\left((-1)^{f(0)}|0\rangle + (-1)^{f(1)}|1\rangle\right)|-\rangle$, que es:
+    $$|\psi_2\rangle = \begin{cases}\pm|+\rangle|-\rangle & \text{si } f(0) = f(1)\\ \pm|-\rangle|-\rangle & \text{si } f(0) \ne f(1)\end{cases}$$</li>
+  <li><strong>Hadamard en el qubit 1 (interferencia).</strong> $H|+\rangle = |0\rangle$, $H|-\rangle = |1\rangle$:
+    $$|\psi_3\rangle = \pm|f(0)\oplus f(1)\rangle\,|-\rangle$$</li>
+  <li><strong>Medición del qubit 1.</strong> Sale $0$ con certeza si $f$ es <strong>constante</strong> y $1$ con certeza si es <strong>balanceada</strong>. Una sola consulta a $U_f$.</li>
+</ol>
+
+<div class="aviso intuicion">
+  <span class="titulo-aviso">Intuición</span>
+  <p>El algoritmo no averigua $f(0)$ ni $f(1)$: averigua $f(0)\oplus f(1)$, una propiedad global. El paralelismo mete ambos valores en una fase relativa ($|+\rangle$ o $|-\rangle$) y la Hadamard final la convierte en un 0 o un 1 que se puede medir.</p>
+</div>
+
+<h2>Respuesta para el ejercicio 4</h2>
+<p>El recuperatorio 2024 preguntó: <em>“¿Cuál es el objetivo del algoritmo de Deutsch? Hacer una descripción en pocas palabras”</em>. Una respuesta completa:</p>
+<div class="tarjeta">
+  <p>Dada una función booleana $f:\{0,1\}\to\{0,1\}$ desconocida (accesible como oráculo $U_f|x,y\rangle = |x, y\oplus f(x)\rangle$), el algoritmo determina si $f$ es <strong>constante</strong> o <strong>balanceada</strong> evaluándola <strong>una sola vez</strong>, cuando clásicamente hacen falta dos. Prepara $|0\rangle|1\rangle$, aplica $H\otimes H$ (superposición), el oráculo (que por retroceso de fase deja $(-1)^{f(x)}$ en cada término) y una Hadamard en el primer qubit (interferencia). Al medir el primer qubit se obtiene $0$ si es constante y $1$ si es balanceada, con probabilidad 1. Es el ejemplo más simple de paralelismo cuántico combinado con interferencia.</p>
+</div>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">El teórico no siempre es Deutsch</span>
+  <p>En el parcial 2026 preguntaron por la <a href="#/teleportacion">teleportación</a> y en el recuperatorio 2026 por la <a href="#/superdensa">codificación superdensa</a> (con circuito). Prepará los tres.</p>
+</div>
+
+<h2>Generalización</h2>
+<p>El algoritmo de <strong>Deutsch-Jozsa</strong> extiende la idea a $f:\{0,1\}^n\to\{0,1\}$ prometida constante o balanceada: clásicamente, en el peor caso, hacen falta $2^{n-1}+1$ consultas; cuánticamente, una. Es el antecesor de algoritmos como Simon, Shor (factorización) y Grover (búsqueda en $\sim\sqrt N$ pasos).</p>

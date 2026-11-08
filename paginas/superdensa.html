@@ -1,0 +1,56 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 6 · Protocolos</span>
+  <h1>Codificación <em>superdensa</em></h1>
+  <p class="bajada">El protocolo inverso a la teleportación: Alice manda dos bits clásicos enviando un solo qubit, gracias a un par entrelazado compartido de antemano.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Es la teleportación al revés. Los dos ya comparten un par de Bell. Alice, tocando <strong>solo su mitad</strong>, elige cuál de los 4 estados de Bell tienen juntos (4 opciones = 2 bits). Le manda su qubit a Bob, y Bob, con los dos en la mano, distingue cuál de los 4 era.</p>
+</div>
+
+<h2>Objetivo</h2>
+<p>Alice quiere mandarle a Bob dos bits clásicos $b_1b_2 \in \{00, 01, 10, 11\}$. Clásicamente necesita mandar dos bits; si mandara un qubit sin preparación previa, también podría transmitir como máximo un bit. Con un par de Bell compartido le alcanza con <strong>enviar un qubit</strong>.</p>
+<div class="grilla dos">
+  <div class="tarjeta"><h3>Teleportación</h3><p>1 par de Bell + <strong>2 bits clásicos</strong> → transfiere <strong>1 qubit</strong>.</p></div>
+  <div class="tarjeta"><h3>Codificación superdensa</h3><p>1 par de Bell + <strong>1 qubit</strong> enviado → transfiere <strong>2 bits clásicos</strong>.</p></div>
+</div>
+
+<h2>Probalo</h2>
+<div data-widget="superdensa"></div>
+
+<h2>El protocolo</h2>
+<ol class="pasos" data-revelar>
+  <li><strong>Antes:</strong> Alice y Bob comparten $|\beta_{00}\rangle = \tfrac{1}{\sqrt2}(|00\rangle + |11\rangle)$; Alice tiene el qubit 1 y Bob el 2.</li>
+  <li><strong>Alice codifica</strong> aplicando una compuerta <em>solo</em> a su qubit, según los bits que quiere mandar. Cada opción lleva el par a un estado de Bell distinto:
+    <div class="tabla-envoltura"><table>
+      <thead><tr><th>Bits</th><th>Alice aplica</th><th>Estado del par</th></tr></thead>
+      <tbody>
+        <tr><td>00</td><td>$I$</td><td>$|\beta_{00}\rangle = \tfrac{1}{\sqrt2}(|00\rangle + |11\rangle)$</td></tr>
+        <tr><td>01</td><td>$X$</td><td>$|\beta_{01}\rangle = \tfrac{1}{\sqrt2}(|10\rangle + |01\rangle)$</td></tr>
+        <tr><td>10</td><td>$Z$</td><td>$|\beta_{10}\rangle = \tfrac{1}{\sqrt2}(|00\rangle - |11\rangle)$</td></tr>
+        <tr><td>11</td><td>$X$ y después $Z$ ($ZX$)</td><td>$|\beta_{11}\rangle = \tfrac{1}{\sqrt2}(|01\rangle - |10\rangle)$</td></tr>
+      </tbody>
+    </table></div></li>
+  <li><strong>Alice le envía su qubit a Bob</strong> (por ejemplo, un fotón por fibra óptica).</li>
+  <li><strong>Bob decodifica</strong> con la operación inversa a la que crea pares de Bell: $\mathrm{CNOT}_{1,2}$ y luego $H$ en el qubit 1. Eso lleva cada $|\beta_{xy}\rangle$ a $|xy\rangle$ (a menos de una fase global).</li>
+  <li><strong>Bob mide</strong> los dos qubits en la base computacional y obtiene $b_1b_2$ con certeza.</li>
+</ol>
+
+<details class="desplegable">
+  <summary>Ejemplo: Alice quiere mandar 10</summary>
+  <div class="contenido-desplegable">
+    <ol class="pasos">
+      <li>$(Z\otimes I)|\beta_{00}\rangle = \tfrac{1}{\sqrt2}(|00\rangle - |11\rangle)$.</li>
+      <li>$\mathrm{CNOT}_{1,2}$: $\tfrac{1}{\sqrt2}(|00\rangle - |10\rangle) = |-\rangle|0\rangle$.</li>
+      <li>$H\otimes I$: $H|-\rangle = |1\rangle$, queda $|10\rangle$. Bob mide 10.</li>
+    </ol>
+  </div>
+</details>
+
+<h2>Respuesta para el ejercicio 4 (recuperatorio 2026)</h2>
+<p>Pidieron: <em>“¿Cuál es el objetivo del protocolo de codificación superdensa? Hacer una descripción del mismo y graficar el circuito.”</em></p>
+<div class="tarjeta">
+  <p>El objetivo es <strong>transmitir dos bits clásicos enviando un único qubit</strong>, usando como recurso un par entrelazado $|\beta_{00}\rangle$ compartido previamente entre Alice (qubit 1) y Bob (qubit 2). Alice, según los bits $b_1b_2$, aplica a su qubit $I$ (00), $X$ (01), $Z$ (10) o $ZX$ (11); cada operación local lleva el par a uno de los cuatro estados de Bell, que son ortogonales y por lo tanto distinguibles. Alice envía su qubit a Bob, quien aplica $\mathrm{CNOT}_{1,2}$ y $H\otimes I$ (medición en la base de Bell) y, al medir en la base computacional, obtiene $b_1b_2$ con probabilidad 1.</p>
+  <p class="chico texto-2">Circuito: dibujá el que aparece en el interactivo de arriba (preparación de Bell con $H$ y CNOT, compuertas de Alice $X^{b_2}$ y $Z^{b_1}$ sobre el qubit 1, CNOT y $H$ de Bob, y las dos mediciones).</p>
+</div>

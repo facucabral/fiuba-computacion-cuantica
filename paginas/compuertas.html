@@ -1,0 +1,98 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 5 · Compuertas y circuitos · Slides 8 y 9 · Guía 5</span>
+  <h1>Compuertas <em>cuánticas</em></h1>
+  <p class="bajada">Operadores unitarios: matrices que rotan el estado sin cambiar su norma. Todas son reversibles.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Una compuerta es una matriz que mueve la flechita. <strong>X</strong> la da vuelta (norte ↔ sur): es el NOT. <strong>Z</strong> la gira media vuelta alrededor del eje vertical: los polos no se mueven, pero $|+\rangle$ pasa a $|-\rangle$. <strong>H</strong> acuesta el norte sobre el ecuador: crea superposición. La <strong>CNOT</strong> es un “si… entonces”: si el control vale 1, da vuelta al objetivo.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Circuitos y puertas”</span>
+</div>
+
+<h2>Compuertas de un qubit</h2>
+<p>Elegí una compuerta y aplicala sobre la esfera para ver qué rotación hace. Partí de distintos estados: algunas compuertas no mueven ciertos estados (sus autovectores).</p>
+<div data-widget="esferaBloch"></div>
+
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Compuerta</th><th>Matriz</th><th>Sobre la base</th><th>Para recordar</th></tr></thead>
+  <tbody>
+    <tr><td><strong>X</strong> (NOT)</td><td>$\begin{pmatrix}0&1\\1&0\end{pmatrix}$</td><td>$X|0\rangle = |1\rangle$, $X|1\rangle = |0\rangle$</td><td>Intercambia amplitudes: $X(\alpha|0\rangle + \beta|1\rangle) = \beta|0\rangle + \alpha|1\rangle$</td></tr>
+    <tr><td><strong>Y</strong></td><td>$\begin{pmatrix}0&-i\\i&0\end{pmatrix}$</td><td>$Y|0\rangle = i|1\rangle$, $Y|1\rangle = -i|0\rangle$</td><td>$Y = iXZ$: intercambia y agrega fases</td></tr>
+    <tr><td><strong>Z</strong></td><td>$\begin{pmatrix}1&0\\0&-1\end{pmatrix}$</td><td>$Z|0\rangle = |0\rangle$, $Z|1\rangle = -|1\rangle$</td><td>Cambia el signo de $|1\rangle$; $Z|\pm\rangle = |\mp\rangle$</td></tr>
+    <tr><td><strong>H</strong> (Hadamard)</td><td>$\tfrac{1}{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}$</td><td>$H|0\rangle = |+\rangle$, $H|1\rangle = |-\rangle$</td><td>Crea superposición; $H^2 = I$</td></tr>
+    <tr><td><strong>S</strong> (fase $\pi/2$)</td><td>$\begin{pmatrix}1&0\\0&i\end{pmatrix}$</td><td>$S|1\rangle = i|1\rangle$</td><td>$S^2 = Z$</td></tr>
+    <tr><td><strong>T</strong> (fase $\pi/4$)</td><td>$\begin{pmatrix}1&0\\0&e^{i\pi/4}\end{pmatrix}$</td><td>$T|1\rangle = e^{i\pi/4}|1\rangle$</td><td>$T^2 = S$; a veces se la llama “$\pi/8$”</td></tr>
+    <tr><td><strong>R(δ)</strong></td><td>$\begin{pmatrix}1&0\\0&e^{i\delta}\end{pmatrix}$</td><td>$R(\delta)|1\rangle = e^{i\delta}|1\rangle$</td><td>Familia general: $Z = R(\pi)$, $S = R(\pi/2)$, $T = R(\pi/4)$</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="aviso clave">
+  <span class="titulo-aviso">Las cuatro identidades de H</span>
+  <p>$H|0\rangle = |+\rangle$, $\;H|1\rangle = |-\rangle$, $\;H|+\rangle = |0\rangle$, $\;H|-\rangle = |1\rangle$. Y en general $H|x\rangle = \tfrac{1}{\sqrt2}\left(|0\rangle + (-1)^x|1\rangle\right)$ para $x \in \{0,1\}$. Esa forma compacta es la que usan Deutsch y la interferencia.</p>
+</div>
+
+<h2>Compuertas de dos qubits</h2>
+<h3>CNOT (NOT controlada)</h3>
+<p>Si el qubit de <strong>control</strong> (●) vale 1, aplica $X$ al <strong>objetivo</strong> (⊕); si vale 0, no hace nada. Con la notación de la cátedra, $\mathrm{CNOT}_{1,2}$ tiene control en el qubit 1 y objetivo en el 2:</p>
+<div class="formula">$$\mathrm{CNOT}_{1,2}|x\,y\rangle = |x,\; y\oplus x\rangle, \qquad \mathrm{CNOT}_{1,2} = \begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&0&1\\0&0&1&0\end{pmatrix}$$</div>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Entrada</th><th>Salida</th></tr></thead>
+  <tbody><tr><td>$|00\rangle$</td><td>$|00\rangle$</td></tr><tr><td>$|01\rangle$</td><td>$|01\rangle$</td></tr><tr><td>$|10\rangle$</td><td>$|11\rangle$</td></tr><tr><td>$|11\rangle$</td><td>$|10\rangle$</td></tr></tbody>
+</table>
+</div>
+<div class="aviso parcial">
+  <span class="titulo-aviso">¿Quién es el control?</span>
+  <p>Mirá dónde está el punto en el dibujo: no siempre es el qubit de arriba. $\mathrm{CNOT}_{2,1}$ tiene control en el 2. En una superposición, la CNOT actúa <em>término por término</em>: en cada ket cambiás el objetivo solo si el control vale 1.</p>
+</div>
+
+<div data-widget="secuencia" data-titulo="La CNOT sobre una superposición, término por término">
+  <div class="paso-visual" data-titulo="El estado de entrada">
+    <div class="formula">$$|\psi\rangle = \tfrac{1}{\sqrt2}\left(|00\rangle + |10\rangle\right) \qquad \mathrm{CNOT}_{1,2}:\ \text{control } q_1,\ \text{objetivo } q_2$$</div>
+    <p class="explicacion-paso">Es lo que sale de aplicar $H$ al primer qubit de $|00\rangle$.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Primer término: control en 0">
+    <div class="formula">$$|\htmlClass{q-cambio}{0}0\rangle \;\to\; |00\rangle$$</div>
+    <p class="explicacion-paso">El primer dígito (control) vale 0: la CNOT no toca nada.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Segundo término: control en 1">
+    <div class="formula">$$|\htmlClass{q-cambio}{1}0\rangle \;\to\; |1\htmlClass{q-cambio}{1}\rangle$$</div>
+    <p class="explicacion-paso">El control vale 1: se invierte el segundo dígito (objetivo), $0 \to 1$.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Juntar">
+    <div class="formula">$$\mathrm{CNOT}_{1,2}\,|\psi\rangle = \tfrac{1}{\sqrt2}\left(|00\rangle + |11\rangle\right) = |\beta_{00}\rangle$$</div>
+    <p class="explicacion-paso">Los coeficientes no cambian, solo las etiquetas. Y apareció el entrelazamiento: así se fabrica un par de Bell.</p>
+  </div>
+</div>
+
+<h3>CZ (Z controlada)</h3>
+<p>Le cambia el signo solo a $|11\rangle$. Es simétrica: da lo mismo cuál es el control.</p>
+<div class="formula">$$\mathrm{CZ} = \mathrm{diag}(1, 1, 1, -1)$$</div>
+
+<h3>SWAP</h3>
+<p>Intercambia los dos qubits: $\mathrm{SWAP}|xy\rangle = |yx\rangle$. Se dibuja con dos cruces unidas. Apareció en el parcial 2026 y en los ejercicios 5. Se puede construir con tres CNOT alternadas (guía 5, ejercicio 7): $\mathrm{SWAP} = \mathrm{CNOT}_{1,2}\,\mathrm{CNOT}_{2,1}\,\mathrm{CNOT}_{1,2}$.</p>
+<div class="formula">$$\mathrm{SWAP} = \begin{pmatrix}1&0&0&0\\0&0&1&0\\0&1&0&0\\0&0&0&1\end{pmatrix}$$</div>
+<div data-widget="laboratorio" data-preset="swap-con-cnot" data-modo="guiado"></div>
+
+<h2>Tres qubits: Toffoli (CCNOT)</h2>
+<p>Dos controles y un objetivo: aplica $X$ al objetivo solo si los <strong>dos</strong> controles valen 1. $|x, y, z\rangle \to |x, y, z \oplus xy\rangle$. Es la compuerta de la autoevaluación 4 y permite simular cualquier circuito clásico de forma reversible.</p>
+
+<h2>Compuertas en paralelo y en serie</h2>
+<ul>
+  <li><strong>En paralelo</strong> (misma columna, distintos qubits): producto tensorial, $H\otimes X$.</li>
+  <li><strong>En serie</strong> (una después de otra): producto de matrices <strong>en orden inverso</strong>. Si primero va $A$ y después $B$, el operador total es $BA$.</li>
+  <li><strong>El orden importa:</strong> $XZ \ne ZX$ (de hecho $XZ = -ZX$). En el ejercicio 5 de los recuperatorios se ve $Y\otimes X$ después de un SWAP: cambiar el orden cambia el resultado.</li>
+</ul>
+
+<details class="desplegable">
+  <summary>Ejemplo: $(H\otimes X)|11\rangle$ paso a paso</summary>
+  <div class="contenido-desplegable">
+    <p>$(H\otimes X)(|1\rangle\otimes|1\rangle) = H|1\rangle\otimes X|1\rangle = |-\rangle\otimes|0\rangle = \tfrac{1}{\sqrt2}(|00\rangle - |10\rangle)$. Es la segunda línea del ejercicio 5 de los recuperatorios.</p>
+  </div>
+</details>
+
+<h2>Universalidad</h2>
+<p>Con $\{H, T, \mathrm{CNOT}\}$ se puede aproximar <strong>cualquier</strong> operación unitaria sobre cualquier cantidad de qubits. Es el equivalente cuántico de “con NAND se construye todo”.</p>

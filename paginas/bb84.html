@@ -1,0 +1,70 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 6 · Protocolos</span>
+  <h1>Criptografía <em>BB84</em></h1>
+  <p class="bajada">Distribución cuántica de claves: la seguridad no depende de que un problema sea difícil de calcular, sino de que medir un qubit lo perturba.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Es como mandar la clave en sobres que se rompen al abrirlos: cada fotón va “cerrado” en una de dos bases elegida al azar. Un espía no puede mirar sin elegir una base, y si elige mal, rompe el sobre. Alice y Bob comparan un pedacito de la clave en público: si hay errores (~25 %), alguien miró.</p>
+</div>
+
+<h2>Contexto</h2>
+<p>Gran parte de la criptografía actual (RSA) se apoya en que factorizar el producto de dos primos enormes es computacionalmente inviable. El <strong>algoritmo de Shor</strong> factoriza en tiempo polinomial en una computadora cuántica suficientemente grande, así que RSA quedaría roto.</p>
+<p><strong>BB84</strong> (Bennett y Brassard, 1984) no cifra mensajes: permite que Alice y Bob acuerden una <strong>clave secreta</strong> aleatoria. Después la usan con un cifrado simétrico (idealmente, libreta de un solo uso). Usa dos canales:</p>
+<ul>
+  <li>Un canal <strong>cuántico</strong> (fibra óptica o espacio libre) por donde viajan fotones polarizados.</li>
+  <li>Un canal <strong>clásico público</strong> pero autenticado, para comparar bases. Eve lo puede escuchar, pero no modificar.</li>
+</ul>
+
+<h2>El convenio</h2>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Base</th><th>Bit 0</th><th>Bit 1</th></tr></thead>
+  <tbody>
+    <tr><td>Rectilínea ($+$, $B_z$)</td><td>$|H\rangle = |0\rangle$</td><td>$|V\rangle = |1\rangle$</td></tr>
+    <tr><td>Diagonal ($\times$, $B_x$)</td><td>$|D\rangle = |+\rangle$</td><td>$|A\rangle = |-\rangle$</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Simulación</h2>
+<p>Generá fotones, activá o desactivá a Eve y mirá la tasa de error en la parte de la clave que se compara públicamente:</p>
+<div data-widget="bb84"></div>
+
+<h2>El protocolo paso a paso</h2>
+<ol class="pasos">
+  <li><strong>Alice elige bits al azar</strong> y, para cada uno, una base al azar ($+$ o $\times$). Envía un fotón preparado en el estado correspondiente.</li>
+  <li><strong>Bob mide</strong> cada fotón en una base elegida al azar. Si coincide con la de Alice, obtiene el mismo bit con certeza; si no, obtiene 0 o 1 con 50 %.</li>
+  <li><strong>Comparación de bases (<em>sifting</em>).</strong> Por el canal clásico, Alice y Bob dicen qué base usaron en cada posición (no qué bit obtuvieron) y descartan las posiciones donde no coinciden. Queda aproximadamente la mitad: la <strong>clave bruta</strong>.</li>
+  <li><strong>Detección del espía.</strong> Sacrifican una parte de la clave bruta comparándola en público. Sin espía (y sin ruido) coincide toda. Si la tasa de error supera un umbral, abortan.</li>
+  <li><strong>Clave final.</strong> Con el resto aplican corrección de errores y amplificación de privacidad, y obtienen la clave secreta.</li>
+</ol>
+
+<h2>¿Por qué Eve introduce un 25 % de errores?</h2>
+<p>La estrategia más simple de Eve es interceptar cada fotón, medirlo en una base al azar y reenviarle a Bob lo que obtuvo. Mirando solo las posiciones que sobreviven al <em>sifting</em> (Alice y Bob usaron la misma base):</p>
+<ul>
+  <li>Con probabilidad $\tfrac12$ Eve acierta la base: no altera el fotón y no produce error.</li>
+  <li>Con probabilidad $\tfrac12$ se equivoca: reenvía un fotón en la otra base, y Bob, que mide en la base correcta, obtiene un resultado al azar, que es incorrecto la mitad de las veces.</li>
+</ul>
+<div class="formula destacada">$$p(\text{error}) = \tfrac12\cdot 0 + \tfrac12\cdot\tfrac12 = \tfrac14 = 25\,\%$$</div>
+<p>Comparando $m$ bits, la probabilidad de que Eve pase desapercibida es $(3/4)^m$: con 50 bits ya es menor que una en $10^6$.</p>
+
+<div class="aviso clave">
+  <span class="titulo-aviso">El fundamento físico</span>
+  <p>Eve no puede copiar el fotón para medirlo después (<a href="#/no-clonacion">no-clonación</a>) y no puede medirlo sin elegir una base. Como los estados de las dos bases no son ortogonales entre sí, no hay forma de distinguirlos sin perturbarlos.</p>
+</div>
+
+<h2>Resumen: qué ve Eve</h2>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Paso</th><th>Canal</th><th>¿Le sirve a Eve?</th></tr></thead>
+  <tbody>
+    <tr><td>Envío de fotones</td><td>Cuántico</td><td>Puede interceptar, pero al medir introduce errores.</td></tr>
+    <tr><td>Anuncio de bases</td><td>Clásico</td><td>Lo escucha, pero los fotones ya pasaron: llega tarde.</td></tr>
+    <tr><td>Comparación de una muestra</td><td>Clásico</td><td>Lo escucha, y es justo lo que la delata.</td></tr>
+    <tr><td>Clave final</td><td>Nunca se transmite</td><td>No.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>BB84 se implementa con fotones, por eso es una de las aplicaciones más maduras de la <a href="#/tecnologias">fotónica cuántica</a>.</p>

@@ -1,0 +1,129 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 2 · Matemática · Slides 2 · Guía 1</span>
+  <h1>Notación de <em>Dirac</em></h1>
+  <p class="bajada">Kets, bras y brakets: una forma compacta de escribir vectores complejos sin arrastrar conjugados y transpuestas en cada cuenta.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p><strong>Ket</strong> $|\psi\rangle$ = “el estado”, una columna. <strong>Bra</strong> $\langle\psi|$ = su espejo: la misma lista acostada y con los complejos conjugados. Juntos forman un <strong>bra-ket</strong> (<em>bracket</em>, el chiste de Dirac) que da un número: cuánto se parecen dos estados. Dirac inventó esto para no escribir “conjugado y transpuesto” en cada cuenta.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Matemáticas mínimas”</span>
+</div>
+
+<div class="leyenda-dirac">
+  <span><strong>Ket</strong> $|\psi\rangle$</span>
+  <span><strong>Bra</strong> $\langle\psi|$</span>
+  <span><strong>Braket (número)</strong> $\langle\varphi|\psi\rangle$</span>
+  <span><strong>Proyector</strong> $|v\rangle\langle v|$</span>
+</div>
+
+<h2>Ket: el vector de estado</h2>
+<p>Un <strong>ket</strong> $|\psi\rangle$ es un vector columna de un espacio vectorial complejo con producto interno (un <em>espacio de Hilbert</em>). Para un qubit, el espacio es $\mathbb{C}^2$ y la <strong>base computacional</strong> es:</p>
+<div class="formula">$$|0\rangle = \begin{pmatrix}1\\0\end{pmatrix}, \qquad |1\rangle = \begin{pmatrix}0\\1\end{pmatrix}, \qquad |\psi\rangle = \alpha|0\rangle + \beta|1\rangle = \begin{pmatrix}\alpha\\\beta\end{pmatrix}$$</div>
+
+<h2>Bra: el dual, conjugado</h2>
+<p>A cada ket le corresponde un <strong>bra</strong> $\langle\psi|$: el vector fila <strong>conjugado</strong>. Formalmente es el adjunto (conjugado y transpuesto), $\langle\psi| = (|\psi\rangle)^\dagger$:</p>
+<div class="formula destacada">$$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle \quad\Longrightarrow\quad \langle\psi| = \alpha^*\langle 0| + \beta^*\langle 1| = \begin{pmatrix}\alpha^* & \beta^*\end{pmatrix}$$</div>
+
+<div class="aviso error">
+  <span class="titulo-aviso">El error que más puntos cuesta</span>
+  <p>Al escribir el bra <strong>hay que conjugar</strong> los coeficientes. Si $|\psi\rangle = \tfrac{1}{\sqrt2}|0\rangle + \tfrac{i}{\sqrt2}|1\rangle$, entonces $\langle\psi| = \tfrac{1}{\sqrt2}\langle 0| - \tfrac{i}{\sqrt2}\langle 1|$. Olvidar el conjugado hace que la probabilidad y el estado posterior a la medición salgan mal: es la corrección más repetida en los parciales.</p>
+</div>
+
+<h2>Braket: el producto interno</h2>
+<p>Un bra por un ket da un <strong>número complejo</strong>:</p>
+<div class="formula">$$|\varphi\rangle = \gamma|0\rangle + \delta|1\rangle \quad\Rightarrow\quad \langle\varphi|\psi\rangle = \gamma^*\alpha + \delta^*\beta$$</div>
+<ul>
+  <li><strong>Simetría conjugada:</strong> $\langle\varphi|\psi\rangle = \langle\psi|\varphi\rangle^*$.</li>
+  <li><strong>Lineal en el ket</strong> y <strong>antilineal en el bra</strong>: $\langle a\varphi|\psi\rangle = a^*\langle\varphi|\psi\rangle$.</li>
+  <li><strong>Norma:</strong> $\langle\psi|\psi\rangle = |\alpha|^2 + |\beta|^2 \ge 0$. Un estado físico está <strong>normalizado</strong>: $\langle\psi|\psi\rangle = 1$.</li>
+</ul>
+
+<div class="aviso intuicion">
+  <span class="titulo-aviso">Intuición</span>
+  <p>$\langle\varphi|\psi\rangle$ mide cuánto “se parece” $|\psi\rangle$ a $|\varphi\rangle$: es la sombra de un vector sobre el otro. Si da 0, son ortogonales (opuestos en la esfera de Bloch). Su módulo al cuadrado será la probabilidad de encontrar $|\psi\rangle$ en $|\varphi\rangle$ al medir.</p>
+</div>
+
+<div data-widget="secuencia" data-titulo="Armar un bra sin equivocarse">
+  <div class="paso-visual" data-titulo="Partimos del ket">
+    <div class="formula">$$|\psi\rangle = \tfrac{1}{\sqrt2}|0\rangle + \tfrac{i}{\sqrt2}|1\rangle = \begin{pmatrix}\tfrac{1}{\sqrt2}\\[2pt] \tfrac{i}{\sqrt2}\end{pmatrix}$$</div>
+    <p class="explicacion-paso">Un estado con un coeficiente complejo ($i$). Es el caso donde más se equivoca la gente.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Acostar: kets → bras">
+    <div class="formula">$$|0\rangle \to \langle 0|, \qquad |1\rangle \to \langle 1|$$</div>
+    <p class="explicacion-paso">Cada ket de la base pasa a ser su bra. En matrices: la columna se vuelve fila.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Conjugar cada coeficiente">
+    <div class="formula">$$\tfrac{1}{\sqrt2} \to \tfrac{1}{\sqrt2}, \qquad \htmlClass{q-cambio}{i \to -i}$$</div>
+    <p class="explicacion-paso">Los reales quedan igual; a los complejos se les cambia el signo de la parte imaginaria.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Resultado">
+    <div class="formula">$$\langle\psi| = \tfrac{1}{\sqrt2}\langle 0| \htmlClass{q-cambio}{- \tfrac{i}{\sqrt2}}\langle 1| = \begin{pmatrix}\tfrac{1}{\sqrt2} & -\tfrac{i}{\sqrt2}\end{pmatrix}$$</div>
+    <p class="explicacion-paso">Verificación: $\langle\psi|\psi\rangle = \tfrac12 + \left(-\tfrac{i}{\sqrt2}\right)\left(\tfrac{i}{\sqrt2}\right) = \tfrac12 + \tfrac12 = 1$. Sin conjugar habría dado $\tfrac12 - \tfrac12 = 0$: imposible para un estado.</p>
+  </div>
+</div>
+
+<div data-widget="secuencia" data-titulo="Producto interno: los bras y kets ortogonales se anulan">
+  <div class="paso-visual" data-titulo="Lo que queremos">
+    <div class="formula">$$\langle +|\psi\rangle \quad\text{con}\quad |\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \qquad \langle +| = \tfrac{1}{\sqrt2}\left(\langle 0| + \langle 1|\right)$$</div>
+    <p class="explicacion-paso">La amplitud de encontrar $|\psi\rangle$ en $|+\rangle$.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Distribuir todo con todo">
+    <div class="formula">$$\tfrac{1}{\sqrt2}\Big(\alpha\langle 0|0\rangle + \beta\langle 0|1\rangle + \alpha\langle 1|0\rangle + \beta\langle 1|1\rangle\Big)$$</div>
+    <p class="explicacion-paso">Cada bra con cada ket, como $(a+b)(c+d)$. Cuatro brakets.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Ortonormalidad: iguales = 1, distintos = 0">
+    <div class="formula">$$\tfrac{1}{\sqrt2}\Big(\alpha\cdot\htmlClass{q-cambio}{1} + \beta\cdot\htmlClass{q-cambio}{0} + \alpha\cdot\htmlClass{q-cambio}{0} + \beta\cdot\htmlClass{q-cambio}{1}\Big)$$</div>
+    <p class="explicacion-paso">$\langle 0|0\rangle = \langle 1|1\rangle = 1$ y $\langle 0|1\rangle = \langle 1|0\rangle = 0$. <strong>Solo sobreviven los términos donde el bra y el ket coinciden.</strong></p>
+  </div>
+  <div class="paso-visual" data-titulo="Resultado">
+    <div class="formula">$$\langle +|\psi\rangle = \frac{\alpha + \beta}{\sqrt2} \quad\Rightarrow\quad p(+) = \frac{|\alpha + \beta|^2}{2}$$</div>
+    <p class="explicacion-paso">Atajo para siempre: en una base ortonormal, el braket es “multiplicar los coeficientes que van con el mismo vector (conjugando los del bra) y sumar”.</p>
+  </div>
+</div>
+
+<div data-widget="proyeccion"></div>
+
+<h2>Bases ortonormales</h2>
+<p>Una base $\{|u_1\rangle, \dots, |u_n\rangle\}$ es <strong>ortonormal</strong> (BON) si $\langle u_i|u_j\rangle = \delta_{ij}$ (1 si $i=j$ y 0 si no). Las tres bases de un qubit que usa la materia son:</p>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Base</th><th>Vectores</th><th>En fotones</th></tr></thead>
+  <tbody>
+    <tr><td>Computacional $B_z$</td><td>$|0\rangle,\ |1\rangle$</td><td>$|H\rangle,\ |V\rangle$</td></tr>
+    <tr><td>Hadamard $B_x$</td><td>$|\pm\rangle = \tfrac{1}{\sqrt2}(|0\rangle \pm |1\rangle)$</td><td>$|D\rangle,\ |A\rangle$ (diagonal y antidiagonal)</td></tr>
+    <tr><td>Circular $B_y$</td><td>$|\pm i\rangle = \tfrac{1}{\sqrt2}(|0\rangle \pm i|1\rangle)$</td><td>circular derecha e izquierda</td></tr>
+  </tbody>
+</table>
+</div>
+<p>En una BON, el coeficiente de cada vector se obtiene con un producto interno: $|\psi\rangle = \sum_k \langle u_k|\psi\rangle\,|u_k\rangle$.</p>
+
+<h2>Cambio de base</h2>
+<p>Es la herramienta más útil del parcial (ejercicios 2 y 3). Para medir en $B_x$, se reescribe el estado en esa base usando:</p>
+<div class="formula destacada">$$|0\rangle = \frac{|+\rangle + |-\rangle}{\sqrt2}, \qquad |1\rangle = \frac{|+\rangle - |-\rangle}{\sqrt2}$$</div>
+<p>Ejemplo general (guía 2, ejercicio 1.5):</p>
+<div class="formula">$$\alpha|0\rangle + \beta|1\rangle = \frac{\alpha + \beta}{\sqrt2}\,|+\rangle + \frac{\alpha - \beta}{\sqrt2}\,|-\rangle$$</div>
+<p>Una vez en la base de medición, la amplitud de cada resultado se lee directamente.</p>
+
+<h2>Ket por bra: un operador</h2>
+<p>El orden importa. Bra por ket ($\langle\varphi|\psi\rangle$) es un número; <strong>ket por bra</strong> ($|\psi\rangle\langle\varphi|$) es una <strong>matriz</strong>. El caso estrella es el <strong>proyector</strong> $\hat P = |u\rangle\langle u|$, que se ve en <a href="#/operadores">operadores</a>.</p>
+<div class="formula">$$|0\rangle\langle 0| = \begin{pmatrix}1\\0\end{pmatrix}\begin{pmatrix}1 & 0\end{pmatrix} = \begin{pmatrix}1&0\\0&0\end{pmatrix}$$</div>
+
+<h2>Reglas de conjugación hermítica</h2>
+<p>La autoevaluación 1 y la guía 1 (ejercicio 5) piden aplicar estas reglas. El adjunto $\dagger$ invierte el orden, conjuga los escalares y convierte kets en bras:</p>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Expresión</th><th>Adjunta</th></tr></thead>
+  <tbody>
+    <tr><td>$|a\psi\rangle = a|\psi\rangle$</td><td>$\langle a\psi| = a^*\langle\psi|$</td></tr>
+    <tr><td>$\hat A|\psi\rangle$</td><td>$\langle\psi|\hat A^\dagger$</td></tr>
+    <tr><td>$|\psi\rangle\langle\varphi|$</td><td>$|\varphi\rangle\langle\psi|$</td></tr>
+    <tr><td>$\hat A\hat B$</td><td>$\hat B^\dagger\hat A^\dagger$</td></tr>
+    <tr><td>$\langle\varphi|\hat A|\psi\rangle$</td><td>$\langle\psi|\hat A^\dagger|\varphi\rangle = \langle\varphi|\hat A|\psi\rangle^*$</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Ponelo a prueba con la <a href="#/autoevaluaciones">autoevaluación 1</a> (verdadero o falso, con explicación).</p>
+
+<h2>Producto tensorial (adelanto)</h2>
+<p>Para varios qubits se usa $|\psi\rangle \otimes |\varphi\rangle$, que se abrevia $|\psi\varphi\rangle$, como en $|01\rangle = |0\rangle\otimes|1\rangle$. Está en <a href="#/sistemas">sistemas de qubits</a>.</p>

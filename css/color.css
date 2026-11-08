@@ -1,0 +1,122 @@
+/* ═══ Color con significado: notación de Dirac, unidades, pasos visuales y práctica ═══ */
+
+/* ── Código de colores de Dirac (lo aplica colorearDirac en js/nucleo/utilidades.js) ── */
+.q-ket { color: var(--dato-0); }
+.q-bra { color: var(--dato-1); }
+.q-braket { color: var(--dato-2); }
+.q-proyector { color: var(--dato-3); }
+.q-cambio { background: color-mix(in srgb, var(--alerta) 24%, transparent); border-radius: 4px; box-shadow: 0 0 0 2px color-mix(in srgb, var(--alerta) 24%, transparent); }
+.q-cambio .q-ket, .q-cambio .q-bra { color: inherit; }
+.q-tachado { opacity: 0.35; text-decoration: line-through; }
+
+.leyenda-dirac { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 10px 14px; margin: 16px 0; border-radius: var(--radio-md); border: 1px dashed var(--borde-fuerte); font-size: var(--texto-sm); color: var(--texto-2); }
+.leyenda-dirac strong { color: var(--texto); font-weight: 600; margin-right: 4px; }
+.leyenda-dirac .muestra { font-family: var(--fuente-mono); font-weight: 600; }
+
+/* ── Color de unidad: lo fija app.js en el artículo con --color-unidad ── */
+.pagina { --color-unidad: var(--acento); }
+.encabezado .antetitulo { color: var(--color-unidad); }
+.encabezado .antetitulo::before { content: ""; width: 18px; height: 3px; border-radius: 3px; background: var(--color-unidad); }
+.encabezado h1 em { color: var(--color-unidad); }
+.pagina h2 { position: relative; padding-left: 16px; }
+.pagina h2::before { content: ""; position: absolute; left: 0; top: 0.2em; bottom: 0.2em; width: 4px; border-radius: 4px; background: var(--color-unidad); }
+.formula.destacada { border-color: color-mix(in srgb, var(--color-unidad) 45%, transparent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-unidad) 10%, transparent); }
+ol.pasos > li::before { border-color: color-mix(in srgb, var(--color-unidad) 50%, transparent); color: var(--color-unidad); }
+
+/* Tarjetas con tinte, rotando colores dentro de una grilla (como las tarjetas de la versión original) */
+.tarjeta { --tinte: var(--color-unidad); background: linear-gradient(135deg, color-mix(in srgb, var(--tinte) 9%, transparent), var(--vidrio) 70%); border-color: color-mix(in srgb, var(--tinte) 24%, var(--vidrio-borde)); }
+.tarjeta h3 { color: color-mix(in srgb, var(--tinte) 70%, var(--texto)); }
+.grilla > .tarjeta:nth-child(5n + 1) { --tinte: var(--u-fundamentos); }
+.grilla > .tarjeta:nth-child(5n + 2) { --tinte: var(--u-matematica); }
+.grilla > .tarjeta:nth-child(5n + 3) { --tinte: var(--u-mecanica); }
+.grilla > .tarjeta:nth-child(5n + 4) { --tinte: var(--u-algoritmos); }
+.grilla > .tarjeta:nth-child(5n + 5) { --tinte: var(--u-circuitos); }
+
+/* Barra lateral: punto de color por unidad */
+.grupo-nav > summary .punto-unidad { width: 8px; height: 8px; border-radius: 50%; background: var(--color-grupo); box-shadow: 0 0 8px color-mix(in srgb, var(--color-grupo) 60%, transparent); }
+.grupo-nav .enlace-nav[aria-current="page"] { box-shadow: inset 3px 0 0 var(--color-grupo), inset 0 0 0 1px var(--vidrio-borde); }
+.grupo-nav.practica { margin: 10px 0; padding: 4px; border-radius: 14px; background: color-mix(in srgb, var(--u-practica) 7%, transparent); border: 1px solid color-mix(in srgb, var(--u-practica) 28%, transparent); }
+.grupo-nav.practica > summary { color: var(--u-practica); }
+.insignia { flex-shrink: 0; padding: 1px 7px; border-radius: 999px; font-size: 10px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--u-practica); background: color-mix(in srgb, var(--u-practica) 14%, transparent); }
+.insignia.completa { color: var(--bg); background: var(--exito); }
+
+/* ── Bajada a tierra: la idea intuitiva antes del formalismo ── */
+.aviso.tierra { border: 1px solid color-mix(in srgb, var(--color-unidad) 40%, transparent); background: linear-gradient(135deg, color-mix(in srgb, var(--color-unidad) 13%, transparent), transparent 75%); padding-left: 52px; }
+.aviso.tierra::before { content: "↓"; width: 24px; height: 24px; left: 16px; top: 16px; border-radius: 8px; color: var(--bg); background: var(--color-unidad); font-size: 14px; }
+.aviso.tierra .titulo-aviso { color: var(--color-unidad); }
+.aviso.tierra p { font-size: var(--texto-lg); line-height: 1.6; }
+.aviso.tierra .fuente { display: block; margin-top: 6px; font-size: var(--texto-xs); color: var(--texto-3); }
+
+/* ── Secuencia: proceso paso a paso con el efecto visible de cada paso ── */
+.secuencia-escenario { position: relative; min-height: 140px; }
+.paso-visual { display: none; animation: aparecer 0.35s var(--curva-salida); }
+.paso-visual.activo { display: block; }
+.paso-visual .rotulo-paso { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: var(--texto-xs); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-unidad); }
+.paso-visual .rotulo-paso b { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 7px; color: var(--bg); background: var(--color-unidad); font-size: 11px; }
+.paso-visual .explicacion-paso { margin-top: 10px; color: var(--texto-2); }
+.puntos-secuencia { display: flex; gap: 6px; flex-wrap: wrap; }
+.puntos-secuencia button { width: 26px; height: 6px; border-radius: 6px; background: var(--borde-fuerte); transition: background var(--duracion-rapida); }
+.puntos-secuencia button[aria-current="step"] { background: var(--color-unidad); }
+.puntos-secuencia button.visto { background: color-mix(in srgb, var(--color-unidad) 45%, transparent); }
+.controles-secuencia { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--borde); }
+.controles-secuencia .contador { margin-left: auto; font-family: var(--fuente-mono); font-size: var(--texto-xs); color: var(--texto-3); }
+
+/* Qubits separados: dos columnas que se "desarman" y se vuelven a unir */
+.qubits-separados { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; text-align: center; }
+.qubits-separados .caja-qubit { padding: 12px; border-radius: var(--radio-md); border: 1px solid var(--borde-fuerte); background: var(--superficie-2); overflow-x: auto; }
+.qubits-separados .caja-qubit small { display: block; font-size: var(--texto-xs); color: var(--texto-3); margin-bottom: 4px; }
+.qubits-separados .operador-tensorial { font-size: 1.4rem; color: var(--texto-3); }
+@media (max-width: 520px) { .qubits-separados { grid-template-columns: 1fr; } }
+
+/* ── Pestañas (parciales) ── */
+.pestanas-lista { display: flex; gap: 4px; overflow-x: auto; padding: 4px; margin: 0 0 24px; border-radius: 14px; background: var(--vidrio); border: 1px solid var(--vidrio-borde); position: sticky; top: 72px; z-index: 5; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.pestanas-lista button { flex: 1 0 auto; padding: 10px 14px; border-radius: 10px; font-size: var(--texto-sm); font-weight: 550; color: var(--texto-2); white-space: nowrap; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.pestanas-lista button small { font-size: 10px; font-weight: 600; color: var(--texto-3); }
+.pestanas-lista button[aria-selected="true"] { background: var(--texto); color: var(--bg); }
+.pestanas-lista button[aria-selected="true"] small { color: color-mix(in srgb, var(--bg) 60%, transparent); }
+.panel-pestana[hidden] { display: none; }
+.enunciado-ejercicio { padding: 16px 18px; margin: 12px 0; border-radius: var(--radio-md); border-left: 3px solid var(--color-unidad); background: var(--superficie); }
+.enunciado-ejercicio ol, .enunciado-ejercicio ul { margin-bottom: 0; }
+.cabecera-ejercicio { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 44px 0 6px; }
+.cabecera-ejercicio h3 { margin: 0 !important; }
+.marca-resuelto { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: var(--texto-xs); font-weight: 600; border: 1px solid var(--borde-fuerte); color: var(--texto-2); }
+.marca-resuelto:hover { color: var(--texto); }
+.marca-resuelto[aria-pressed="true"] { color: var(--bg); background: var(--exito); border-color: var(--exito); }
+
+/* ── Panel de práctica ── */
+.panel-practica { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); margin: 20px 0; }
+.tarjeta-practica { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 20px; border-radius: var(--radio-lg); text-decoration: none; border: 1px solid color-mix(in srgb, var(--tinte) 30%, var(--vidrio-borde)); background: linear-gradient(135deg, color-mix(in srgb, var(--tinte) 12%, transparent), var(--vidrio) 75%); transition: transform var(--duracion-normal) var(--curva-suave), border-color var(--duracion-normal); }
+.tarjeta-practica:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--tinte) 55%, transparent); }
+.tarjeta-practica .tipo { font-size: var(--texto-xs); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--tinte); }
+.tarjeta-practica h4 { font-size: var(--texto-lg); font-weight: 650; letter-spacing: -0.01em; }
+.tarjeta-practica p { margin: 0 !important; font-size: var(--texto-sm); color: var(--texto-2) !important; }
+.tarjeta-practica .estado { display: flex; align-items: baseline; gap: 6px; margin-top: auto; padding-top: 6px; }
+.tarjeta-practica .estado strong { font-size: var(--texto-2xl); font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.tarjeta-practica .estado span { font-size: var(--texto-xs); color: var(--texto-3); }
+.tarjeta-practica .barra { height: 5px; border-radius: 5px; background: var(--borde); overflow: hidden; }
+.tarjeta-practica .barra span { display: block; height: 100%; border-radius: 5px; background: var(--tinte); transition: width 0.6s var(--curva-salida); }
+.tarjeta-practica .detalle { display: flex; flex-wrap: wrap; gap: 4px; }
+.tarjeta-practica .detalle i { width: 10px; height: 10px; border-radius: 3px; background: var(--borde-fuerte); }
+.tarjeta-practica .detalle i.si { background: var(--exito); }
+
+/* ── Impresión (el machete se guarda como PDF desde el navegador) ── */
+@media print {
+  :root, :root[data-theme] { color-scheme: light; --bg: #fff; --superficie: #fff; --superficie-2: #f4f4f4; --texto: #000; --texto-2: #333; --texto-3: #666; --borde: #ddd; --borde-fuerte: #bbb; --vidrio: #fff; --vidrio-borde: #ccc;
+    --dato-0: #1d4fbf; --dato-1: #8a2fb8; --dato-2: #0f7a58; --dato-3: #b5550f; --acento: #1d4fbf; --alerta: #9a6400; --error: #c02828; --exito: #23820a; }
+  body { background: #fff; font-size: 11pt; }
+  .barra-superior, .lateral, .velo, .paleta, .visor, .ruido, .resplandor-fondo, .navegacion-pie, .marcar-visto, .solo-pantalla, .fila-botones .boton { display: none !important; }
+  .cuerpo { display: block; }
+  .contenido { padding: 0; }
+  .pagina { max-width: none !important; animation: none; }
+  .tarjeta, .formula, .aviso, .tabla-envoltura, .widget { box-shadow: none !important; break-inside: avoid; backdrop-filter: none; }
+  .pagina h2 { break-after: avoid; margin-top: 22px; }
+  /* Chrome pierde contenido al cortar grillas entre páginas: en papel van apiladas. */
+  .grilla { display: block; }
+  .grilla > .tarjeta { margin: 0 0 10px; padding: 14px 16px; }
+  body { font-size: 10pt; line-height: 1.5; }
+  .encabezado { margin-bottom: 16px; }
+  .encabezado h1 { font-size: 26pt; }
+  a { text-decoration: none; color: inherit; }
+}
+
+h2[data-ejercicio] { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }

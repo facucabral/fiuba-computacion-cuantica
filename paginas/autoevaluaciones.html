@@ -1,0 +1,46 @@
+<header class="encabezado">
+  <span class="antetitulo">Práctica para el parcial</span>
+  <h1>Autoevaluaciones del <em>campus</em></h1>
+  <p class="bajada">Las cuatro autoevaluaciones de la cursada con resolución guiada. Los enunciados y las respuestas oficiales están en la <a href="#/material">biblioteca</a>.</p>
+</header>
+
+<h2 id="a1" data-ejercicio="a1">1 · Notación de Dirac (verdadero o falso)</h2>
+<p>Sean $\hat A$ y $\hat B$ operadores que no conmutan, $|\Psi\rangle$ y $|\varphi\rangle$ kets y $a, b \in \mathbb{C}$. Respondé cada afirmación; al elegir aparece la explicación.</p>
+<p class="chico"><a href="#" data-material="a1">Ver el enunciado original</a></p>
+<div data-widget="quiz" data-conjunto="autoevaluacion1" data-orden="fijo"></div>
+
+<h2 id="a2" data-ejercicio="a2">2 · Postulados de la mecánica cuántica</h2>
+<p>Observable con matriz $\mathrm{diag}(a, a, b)$ en la BON $\{|\varphi_1\rangle, |\varphi_2\rangle, |\varphi_3\rangle\}$; estado $|\psi\rangle = \tfrac{i}{3}|\varphi_1\rangle + \tfrac23|\varphi_2\rangle + \tfrac{2e^{i\pi}}{3}|\varphi_3\rangle$. (a) Proyectores. (b) Valor medio. (c) Estado después de obtener el autovalor doble.</p>
+<p class="chico"><a href="#" data-material="a2">Enunciado</a> · <a href="#" data-material="a2r">Respuesta oficial (PDF)</a></p>
+<ol class="pasos" data-revelar>
+  <li><strong>(a)</strong> $a$ es doble y $b$ simple: $\hat P_a = |\varphi_1\rangle\langle\varphi_1| + |\varphi_2\rangle\langle\varphi_2|$, $\;\hat P_b = |\varphi_3\rangle\langle\varphi_3|$.</li>
+  <li><strong>(b)</strong> $\hat A|\psi\rangle = \tfrac{ia}{3}|\varphi_1\rangle + \tfrac{2a}{3}|\varphi_2\rangle + \tfrac{2be^{i\pi}}{3}|\varphi_3\rangle$ y $\langle\psi| = -\tfrac{i}{3}\langle\varphi_1| + \tfrac23\langle\varphi_2| + \tfrac{2e^{-i\pi}}{3}\langle\varphi_3|$.
+    $$\langle\hat A\rangle = \langle\psi|\hat A|\psi\rangle = \tfrac{a}{9} + \tfrac{4a}{9} + \tfrac{4b}{9} = \tfrac{5a}{9} + \tfrac{4b}{9}$$</li>
+  <li><strong>(c)</strong> $\hat P_a|\psi\rangle = \tfrac{i}{3}|\varphi_1\rangle + \tfrac23|\varphi_2\rangle$, $\;p(a) = \tfrac59$, $\;|\tilde\psi\rangle = \dfrac{\hat P_a|\psi\rangle}{\sqrt{5/9}} = \tfrac{1}{\sqrt5}\left(i|\varphi_1\rangle + 2|\varphi_2\rangle\right)$.</li>
+</ol>
+
+<h2 id="a3" data-ejercicio="a3">3 · Sistemas de qubits</h2>
+<p>$|\beta_{01}\rangle = \tfrac{1}{\sqrt2}(|01\rangle + |10\rangle)$. Alice y Bob miden en $B_x$. (a) Alice obtiene $+$: estado posterior. (b) Resultado de Bob y probabilidad. (c) ¿Y si Bob mide en $B_z$?</p>
+<p class="chico"><a href="#" data-material="a3">Enunciado</a> · <a href="#" data-material="a3r">Respuesta oficial (PDF)</a></p>
+<ol class="pasos" data-revelar>
+  <li><strong>Cambio de base.</strong> $|\beta_{01}\rangle = \tfrac{1}{\sqrt2}(|{++}\rangle - |{--}\rangle)$.</li>
+  <li><strong>(a)</strong> $\hat P_+ = |+\rangle\langle+|\otimes I$ deja $\tfrac{1}{\sqrt2}|{++}\rangle$; normalizando, $|\tilde\psi\rangle = |{++}\rangle$.</li>
+  <li><strong>(b)</strong> Bob obtiene $+$ con $p(+) = \langle{++}|\,(I\otimes|+\rangle\langle+|)\,|{++}\rangle = 1$.</li>
+  <li><strong>(c)</strong> $|{++}\rangle = \tfrac12(|00\rangle + |01\rangle + |10\rangle + |11\rangle)$: Bob obtiene 0 o 1 con probabilidad $\tfrac12$ cada uno.</li>
+</ol>
+
+<h2 id="a4" data-ejercicio="a4">4 · Circuitos cuánticos</h2>
+<p>Entrada $|\beta_{00}\rangle\otimes\tfrac{1}{\sqrt2}(|0\rangle - |1\rangle)$. Se aplica $H^{\otimes2}$ a los dos primeros y $H$ al tercero (punto $b$), y después una Toffoli con controles en los qubits 1 y 2 y objetivo en el 3. (a) Algoritmo. (b) Estado de salida. (c) Aplicar $R_\delta\otimes X\otimes Y$.</p>
+<p class="chico"><a href="#" data-material="a4">Enunciado</a> · <a href="#" data-material="a4r">Respuesta oficial (PDF)</a></p>
+<ol class="pasos" data-revelar>
+  <li><strong>(a)</strong> $|\Psi\rangle = \mathrm{CCNOT}_{1,2;3}\,(H\otimes H\otimes H)\,\left(|\beta_{00}\rangle\otimes|-\rangle\right)$.</li>
+  <li><strong>Punto $b$.</strong> $(H\otimes H)|\beta_{00}\rangle = |\beta_{00}\rangle$ (comprobalo: $\tfrac{1}{\sqrt2}(|{++}\rangle + |{--}\rangle) = \tfrac{1}{\sqrt2}(|00\rangle + |11\rangle)$) y $H|-\rangle = |1\rangle$:
+    $$|\Psi_b\rangle = \tfrac{1}{\sqrt2}(|001\rangle + |111\rangle)$$</li>
+  <li><strong>(b) Toffoli.</strong> Solo $|111\rangle$ tiene los dos controles en 1: $|111\rangle \to |110\rangle$.
+    $$|\Psi\rangle = \tfrac{1}{\sqrt2}(|001\rangle + |110\rangle)$$</li>
+  <li><strong>(c)</strong> Con $R_\delta|0\rangle = |0\rangle$, $R_\delta|1\rangle = e^{i\delta}|1\rangle$:
+    $$|001\rangle \to |0\rangle\,|1\rangle\,(-i|0\rangle) = -i|010\rangle, \qquad |110\rangle \to e^{i\delta}|1\rangle\,|0\rangle\,(i|1\rangle) = ie^{i\delta}|101\rangle$$
+    $$|\Psi'\rangle = \tfrac{i}{\sqrt2}\left(e^{i\delta}|101\rangle - |010\rangle\right)$$</li>
+</ol>
+<div data-widget="laboratorio" data-preset="autoevaluacion4" data-modo="guiado"></div>
+<p class="chico texto-2">El interactivo arranca en el punto $b$ preparando $\tfrac{1}{\sqrt2}(|00\rangle + |11\rangle)\otimes|1\rangle$ con $H$ y CNOT, y después aplica la Toffoli.</p>

@@ -1,0 +1,43 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 6 · Algoritmos · Slides 11 y 12</span>
+  <h1>Paralelismo e <em>interferencia</em></h1>
+  <p class="bajada">Las dos piezas de todos los algoritmos cuánticos: evaluar una función sobre una superposición de entradas y hacer que las amplitudes se sumen o se cancelen a favor de la respuesta.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p><strong>Paralelismo</strong>: en lugar de darle a la función un 0 o un 1, le das los dos superpuestos y la evaluás una sola vez. <strong>Interferencia</strong>: como dos olas en el agua, las amplitudes que llegan a la respuesta incorrecta se cancelan y las que llegan a la correcta se suman. Lo primero sin lo segundo no sirve: al medir saldría un resultado al azar.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Tu primer algoritmo cuántico”</span>
+</div>
+
+<h2>El oráculo $U_f$</h2>
+<p>Queremos evaluar una función lógica $f:\{0,1\}^n \to \{0,1\}$. El problema es que una función como $f(x) = 0$ para todo $x$ no es reversible y las compuertas cuánticas deben serlo. La solución es guardar la entrada y sumar el resultado (módulo 2) en un qubit extra:</p>
+<div class="formula destacada">$$U_f\,|x, y\rangle = |x,\; y \oplus f(x)\rangle$$</div>
+<p>$\oplus$ es la suma módulo 2 ($0\oplus0 = 0$, $0\oplus1 = 1\oplus0 = 1$, $1\oplus1 = 0$). Aplicar $U_f$ dos veces devuelve la entrada, así que es unitaria. Para $f$ de 1 bit se usan 2 qubits ($n + 1$ en general).</p>
+
+<h2>Paralelismo cuántico</h2>
+<p>Si en lugar de $|0\rangle$ o $|1\rangle$ entra una superposición (creada con una Hadamard), $U_f$ actúa sobre los dos términos a la vez:</p>
+<div class="formula">$$U_f\left(\frac{|0\rangle + |1\rangle}{\sqrt2}\otimes|0\rangle\right) = \frac{|0, f(0)\rangle + |1, f(1)\rangle}{\sqrt2}$$</div>
+<p>Con <strong>una sola aplicación</strong> el estado contiene $f(0)$ y $f(1)$. Con $n$ qubits y $H^{\otimes n}$, contiene los $2^n$ valores de $f$.</p>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">La trampa</span>
+  <p>Si ahora medimos, obtenemos <strong>un</strong> par $(x, f(x))$ al azar, no todos. El paralelismo solo sirve si después se usa la <strong>interferencia</strong> para extraer una propiedad <em>global</em> de $f$ (por ejemplo, si es constante o balanceada) sin conocer cada valor.</p>
+</div>
+
+<h2>Interferencia</h2>
+<p>La Hadamard aplicada a un qubit cualquiera ilustra el fenómeno (slides 12):</p>
+<div class="formula">$$H(\alpha|0\rangle + \beta|1\rangle) = \frac{\alpha + \beta}{\sqrt2}|0\rangle + \frac{\alpha - \beta}{\sqrt2}|1\rangle$$</div>
+<p>Cada resultado recibe una contribución de $\alpha$ y otra de $\beta$. Si tienen el mismo signo, en $|0\rangle$ se <strong>suman</strong> (interferencia constructiva) y en $|1\rangle$ se <strong>restan</strong> (destructiva). Mové las amplitudes y mirá cómo se combinan:</p>
+
+<div data-widget="interferencia"></div>
+
+<div class="aviso clave">
+  <span class="titulo-aviso">El ejemplo de la cátedra</span>
+  <p>Con $\alpha = \beta = \tfrac{1}{\sqrt2}$, antes de la Hadamard $p(0) = p(1) = \tfrac12$. Después, $|\psi_s\rangle = |0\rangle$: $p(0) = 1$ y $p(1) = 0$. La probabilidad de $|0\rangle$ pasó de 50 % a 100 % porque las dos contribuciones a $|1\rangle$ se cancelaron. <strong>Interferencia</strong> es el proceso por el cual se amplifican las amplitudes de un resultado deseable.</p>
+</div>
+
+<h3>La forma que usa Deutsch</h3>
+<p>Para $x \in \{0,1\}$, el estado $\tfrac{1}{\sqrt2}(|0\rangle + (-1)^x|1\rangle)$ es $|+\rangle$ si $x = 0$ y $|-\rangle$ si $x = 1$. Una Hadamard convierte esa fase en un resultado medible con certeza:</p>
+<div class="formula destacada">$$H\,\frac{|0\rangle + (-1)^x|1\rangle}{\sqrt2} = \frac{1 + (-1)^x}{2}|0\rangle + \frac{1 - (-1)^x}{2}|1\rangle = |x\rangle$$</div>
+<p>El algoritmo de Deutsch combina las dos ideas: paralelismo para meter $f(0)$ y $f(1)$ en una fase, e interferencia para leerla. Seguí en <a href="#/deutsch">Algoritmo de Deutsch</a>.</p>

@@ -1,0 +1,86 @@
+<header class="encabezado">
+  <span class="antetitulo">FIUBA · TB032 · Apuntes de la cursada 1C 2026</span>
+  <h1>Computación <em>cuántica</em>, explicada para el parcial.</h1>
+  <p class="bajada">Teoría corregida y ordenada como la da la cátedra, con gráficos que se pueden tocar, los parciales resueltos paso a paso y todo el material en un solo lugar.</p>
+  <div class="etiquetas">
+    <span class="chip">22 temas</span>
+    <span class="chip">3 parciales resueltos</span>
+    <span class="chip">4 autoevaluaciones</span>
+    <span class="chip">Simulador de circuitos</span>
+    <span class="chip acento">Funciona en el celular</span>
+  </div>
+</header>
+
+<h2>Practicá para el parcial</h2>
+<p>Parciales reales resueltos, ejercicios que se generan y corrigen solos, quiz y autoevaluaciones. Cada tarjeta muestra cuánto llevás.</p>
+<div data-widget="panelPractica"></div>
+
+<h2>Código de colores</h2>
+<p>La notación de Dirac llena las ecuaciones de barras y ángulos. Para leerlas de un vistazo, cada pieza tiene su color en toda la guía:</p>
+<div class="leyenda-dirac">
+  <span><strong>Ket</strong> $|\psi\rangle$ un estado</span>
+  <span><strong>Bra</strong> $\langle\psi|$ su espejo conjugado</span>
+  <span><strong>Braket</strong> $\langle\varphi|\psi\rangle$ un número</span>
+  <span><strong>Proyector</strong> $|v\rangle\langle v|$ una medición</span>
+</div>
+<p class="chico texto-2">Además, cada unidad tiene su color (el de la barra lateral) y los avisos <strong>“Bajada a tierra”</strong> resumen la idea intuitiva antes de las fórmulas.</p>
+
+<h2>Cómo usar estos apuntes</h2>
+<div class="grilla">
+  <a class="tarjeta interactiva tarjeta-tema" href="#/qubit">
+    <span class="numero">Si recién empezás</span>
+    <h3>Seguí el índice en orden</h3>
+    <p>Cada tema termina con un enlace al siguiente y podés marcarlo como visto. El progreso se guarda en tu navegador.</p>
+  </a>
+  <a class="tarjeta interactiva tarjeta-tema" href="#/parciales">
+    <span class="numero">Si el parcial es esta semana</span>
+    <h3>Andá directo a los parciales</h3>
+    <p>Tres exámenes reales resueltos con el formalismo que pide la cátedra, con la opción de ver un paso por vez.</p>
+  </a>
+  <a class="tarjeta interactiva tarjeta-tema" href="#/machete">
+    <span class="numero">La noche anterior</span>
+    <h3>Leé el machete</h3>
+    <p>Las fórmulas, los estados de Bell, las compuertas y los errores que la cátedra marca en las correcciones.</p>
+  </a>
+</div>
+<p class="chico texto-2">Atajo: <kbd>Ctrl</kbd> + <kbd>K</kbd> (o la lupa de arriba) busca cualquier tema: “Born”, “CNOT”, “fotón”…</p>
+
+<h2>Cómo es el parcial</h2>
+<p>Los tres exámenes que conocemos (recuperatorio 2024, parcial y recuperatorio 2026) repiten la misma estructura: <strong>cinco ejercicios</strong>, cuatro de cálculo y uno teórico. Cambian los números y el circuito, pero no el tipo de pregunta.</p>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Ej.</th><th>Qué piden</th><th>Dónde se practica</th></tr></thead>
+  <tbody>
+    <tr><td><strong>1</strong></td><td>Seguir un circuito de 2 qubits, escribir el algoritmo, calcular una probabilidad y el estado después de medir (con proyectores).</td><td><a href="#/circuitos">Circuitos</a> · <a href="#/practica">Ejercicios infinitos</a></td></tr>
+    <tr><td><strong>2</strong></td><td>Un estado de Bell repartido entre Alice y Bob. Miden en la base $B_x=\{|+\rangle,|-\rangle\}$ y después en la computacional.</td><td><a href="#/entrelazamiento">Entrelazamiento</a></td></tr>
+    <tr><td><strong>3</strong></td><td>Un fotón $\tfrac{1}{\sqrt5}|H\rangle+\tfrac{2}{\sqrt5}|V\rangle$ atraviesa un polarizador $|D\rangle$ o $|A\rangle$: probabilidad de que pase.</td><td><a href="#/fotones">Fotones</a></td></tr>
+    <tr><td><strong>4</strong></td><td>Teórico: objetivo de un algoritmo o protocolo (Deutsch, teleportación, codificación superdensa).</td><td><a href="#/deutsch">Deutsch</a> · <a href="#/teleportacion">Teleportación</a> · <a href="#/superdensa">Superdensa</a></td></tr>
+    <tr><td><strong>5</strong></td><td>Un algoritmo escrito paso a paso (o un circuito de 3 qubits): dibujarlo, medir y decir si el estado está entrelazado.</td><td><a href="#/laboratorio">Laboratorio</a> · <a href="#/parciales">Parciales</a></td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">Lo que más se corrige</span>
+  <p>“Usar el formalismo cuántico” significa escribir el proyector, aplicarlo y normalizar. Y al pasar de ket a bra <strong>hay que conjugar</strong> los coeficientes complejos. Son los dos errores que más puntos cuestan. Están detallados en el <a href="#/machete?ir=errores">machete</a>.</p>
+</div>
+
+<h2>Ruta de estudio sugerida</h2>
+<ol class="pasos">
+  <li><strong>Base matemática (1 día).</strong> <a href="#/complejos">Complejos</a>, <a href="#/dirac">Dirac</a> y <a href="#/operadores">operadores</a>. Sin esto, lo demás no cierra.</li>
+  <li><strong>Las reglas del juego (1 día).</strong> <a href="#/postulados">Postulados</a>, <a href="#/qubit">qubit</a> y <a href="#/bloch">esfera de Bloch</a>. Practicá con la <a href="#/autoevaluaciones">autoevaluación 2</a>.</li>
+  <li><strong>Varios qubits (1 día).</strong> <a href="#/sistemas">Producto tensorial</a>, <a href="#/entrelazamiento">entrelazamiento</a> y <a href="#/fotones">fotones</a>. Hacé los ejercicios 2 y 3 de los parciales.</li>
+  <li><strong>Circuitos (1 día).</strong> <a href="#/compuertas">Compuertas</a> y <a href="#/circuitos">circuitos</a>. Después, <a href="#/practica">ejercicios infinitos</a> hasta que salgan solos.</li>
+  <li><strong>Algoritmos (medio día).</strong> <a href="#/deutsch">Deutsch</a>, <a href="#/teleportacion">teleportación</a> y <a href="#/superdensa">superdensa</a> para el teórico.</li>
+  <li><strong>Simulacro.</strong> Un <a href="#/parciales">parcial completo</a> sin mirar la resolución, y después el <a href="#/quiz">quiz</a>.</li>
+</ol>
+
+<h2>Qué tiene cada tema</h2>
+<p>Cada tema sigue el mismo orden: primero la intuición, después la versión formal de la cátedra y al final lo que se toma. A lo largo del texto vas a ver estos avisos:</p>
+<div class="aviso intuicion"><span class="titulo-aviso">Intuición</span><p>Analogías para entender la idea, muchas inspiradas en el canal <em>El Qubit de Newton</em>. Sirven para entender, pero en el parcial se escribe la versión formal.</p></div>
+<div class="aviso clave"><span class="titulo-aviso">Clave</span><p>Definiciones y resultados que hay que saber de memoria.</p></div>
+<div class="aviso parcial"><span class="titulo-aviso">Ojo en el parcial</span><p>Trampas frecuentes y lo que la cátedra exige al corregir.</p></div>
+
+<div class="aviso">
+  <p class="chico texto-2" style="margin:0">Son apuntes de un estudiante: el material oficial es el de la cátedra, disponible en la <a href="#/material">biblioteca</a>. Si encontrás un error, avisá en el <a href="https://github.com/facucabral/fiuba-computacion-cuantica/issues" target="_blank" rel="noopener">repositorio</a>.</p>
+</div>

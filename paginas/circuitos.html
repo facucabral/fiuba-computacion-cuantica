@@ -1,0 +1,96 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 5 · Compuertas y circuitos · Slides 10 · Guías 5 y 6</span>
+  <h1>Circuitos <em>cuánticos</em></h1>
+  <p class="bajada">Cómo leer un circuito, escribir el algoritmo y medir con el formalismo. Es el ejercicio 1 del parcial, el que más pesa.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Un circuito se lee como una partitura: cada línea es un qubit y el tiempo corre de izquierda a derecha. La receta es siempre la misma: <strong>preparar</strong> (los estados de la izquierda), <strong>mover</strong> (las compuertas, columna por columna) y <strong>medir</strong> (los relojitos de la derecha). Para aplicar compuertas de un qubit, el truco es <em>desarmar</em> cada ket en sus qubits, aplicar a cada uno lo suyo y volver a <em>armar</em>.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Circuitos y puertas”</span>
+</div>
+
+<div data-widget="secuencia" data-titulo="Desarmar, aplicar, rearmar: (H ⊗ X) sobre α|00⟩ + β|10⟩">
+  <div class="paso-visual" data-titulo="Qué hay que calcular">
+    <div class="formula">$$(H\otimes X)\left(\alpha|00\rangle + \beta|10\rangle\right)$$</div>
+    <p class="explicacion-paso">$H$ va al qubit 1 y $X$ al qubit 2. Por linealidad, se resuelve término por término.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Desarmar cada ket en sus dos qubits">
+    <div class="qubits-separados">
+      <div class="caja-qubit"><small>qubit 1</small>$\alpha\,\htmlClass{q-cambio}{|0\rangle}$ &nbsp;·&nbsp; $\beta\,\htmlClass{q-cambio}{|1\rangle}$</div>
+      <span class="operador-tensorial">⊗</span>
+      <div class="caja-qubit"><small>qubit 2</small>$\htmlClass{q-cambio}{|0\rangle}$ &nbsp;·&nbsp; $\htmlClass{q-cambio}{|0\rangle}$</div>
+    </div>
+    <p class="explicacion-paso">$|00\rangle = |0\rangle\otimes|0\rangle$ y $|10\rangle = |1\rangle\otimes|0\rangle$. Ahora cada compuerta ve solo su qubit.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Aplicar cada compuerta a su qubit">
+    <div class="qubits-separados">
+      <div class="caja-qubit"><small>H al qubit 1</small>$H|0\rangle = |+\rangle$ &nbsp;·&nbsp; $H|1\rangle = |-\rangle$</div>
+      <span class="operador-tensorial">⊗</span>
+      <div class="caja-qubit"><small>X al qubit 2</small>$X|0\rangle = |1\rangle$</div>
+    </div>
+    <p class="explicacion-paso">Usá las identidades de memoria: no hace falta multiplicar matrices de $4\times4$.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Rearmar">
+    <div class="formula">$$\alpha\,|+\rangle\otimes|1\rangle + \beta\,|-\rangle\otimes|1\rangle = \tfrac{\alpha}{\sqrt2}\left(|01\rangle + |11\rangle\right) + \tfrac{\beta}{\sqrt2}\left(|01\rangle - |11\rangle\right)$$</div>
+    <p class="explicacion-paso">Se vuelve a pegar cada par con el producto tensorial y se distribuye.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Agrupar por ket">
+    <div class="formula">$$|\Psi_1\rangle = \frac{\htmlClass{q-cambio}{\alpha + \beta}}{\sqrt2}|01\rangle + \frac{\htmlClass{q-cambio}{\alpha - \beta}}{\sqrt2}|11\rangle$$</div>
+    <p class="explicacion-paso">Se suman los coeficientes que acompañan al mismo ket. Control final: $\tfrac{|\alpha+\beta|^2 + |\alpha-\beta|^2}{2} = |\alpha|^2 + |\beta|^2 = 1$. ✓</p>
+  </div>
+</div>
+
+<h2>Las tres partes de un circuito</h2>
+<ol class="pasos">
+  <li><strong>Preparación.</strong> Cada línea horizontal es un qubit y empieza en un estado conocido (a la izquierda). El estado inicial del sistema es el producto tensorial: $|\Psi_0\rangle = |q_1\rangle\otimes|q_2\rangle\otimes\cdots$</li>
+  <li><strong>Evolución.</strong> Las compuertas se aplican <strong>de izquierda a derecha</strong>. Cada columna es un operador sobre todo el sistema.</li>
+  <li><strong>Medición.</strong> El medidor (el reloj con la aguja) proyecta ese qubit; las líneas dobles que salen son bits clásicos.</li>
+</ol>
+
+<h2>Leer y escribir el algoritmo</h2>
+<p>El circuito se lee de izquierda a derecha, pero el producto de operadores se escribe <strong>de derecha a izquierda</strong> (el primero que actúa queda pegado al ket):</p>
+<div class="formula destacada">$$|\Psi_a\rangle = U_n\cdots U_2\,U_1\,|\Psi_0\rangle$$</div>
+<p>Y cada columna se escribe completa: si en una columna hay una $H$ en el qubit 1 y nada en el 2, es $(H\otimes I)$.</p>
+
+<h2>Paso a paso: el ejercicio 1 del recuperatorio 2024</h2>
+<p>El circuito del enunciado con $|\Psi\rangle = \alpha|0\rangle + \beta|1\rangle$. Para poder simularlo usamos $\alpha = 0{,}6$ y $\beta = 0{,}8$; la resolución con $\alpha$ y $\beta$ genéricos está abajo. Recorré las columnas:</p>
+<div data-widget="laboratorio" data-preset="recuperatorio-2024-ej1" data-modo="guiado"></div>
+
+<h3>La resolución en general</h3>
+<ol class="pasos" data-revelar>
+  <li><strong>Estado inicial.</strong> $|\Psi_0\rangle = (\alpha|0\rangle + \beta|1\rangle)\otimes|0\rangle = \alpha|00\rangle + \beta|10\rangle$.</li>
+  <li><strong>Columna 1: $(H\otimes X)$.</strong> $|\Psi_1\rangle = \alpha|+\rangle|1\rangle + \beta|-\rangle|1\rangle = \tfrac{\alpha + \beta}{\sqrt2}|01\rangle + \tfrac{\alpha - \beta}{\sqrt2}|11\rangle$.</li>
+  <li><strong>Columna 2: $\mathrm{CNOT}_{1,2}$.</strong> En cada término, si el qubit 1 vale 1 se invierte el 2: $|01\rangle$ queda, $|11\rangle \to |10\rangle$. $|\Psi_2\rangle = \tfrac{\alpha + \beta}{\sqrt2}|01\rangle + \tfrac{\alpha - \beta}{\sqrt2}|10\rangle$.</li>
+  <li><strong>Columna 3: $(I\otimes Z)$.</strong> $Z$ cambia el signo cuando el qubit 2 vale 1: $|\Psi_a\rangle = -\tfrac{\alpha + \beta}{\sqrt2}|01\rangle + \tfrac{\alpha - \beta}{\sqrt2}|10\rangle$.</li>
+  <li><strong>Algoritmo.</strong> $|\Psi_a\rangle = (I\otimes Z)\,\mathrm{CNOT}_{1,2}\,(H\otimes X)\,|\Psi_0\rangle$.</li>
+  <li><strong>Probabilidad de $|10\rangle$ con el formalismo.</strong> $\hat P_{10} = |10\rangle\langle 10|$, $\;\hat P_{10}|\Psi_a\rangle = \tfrac{\alpha - \beta}{\sqrt2}|10\rangle$ y
+    $$p(10) = \langle\Psi_a|\hat P_{10}|\Psi_a\rangle = \frac{(\alpha - \beta)^*(\alpha - \beta)}{2} = \frac{|\alpha - \beta|^2}{2}$$</li>
+  <li><strong>Estado después de medir.</strong> $|\tilde\Psi\rangle = \dfrac{\hat P_{10}|\Psi_a\rangle}{\sqrt{p(10)}} = \dfrac{\alpha - \beta}{|\alpha - \beta|}\,|10\rangle$, que es $|10\rangle$ a menos de una fase global.</li>
+</ol>
+
+<div class="aviso error">
+  <span class="titulo-aviso">Conjugá el bra</span>
+  <p>Con $\alpha$ y $\beta$ complejos, $\langle\Psi_a|$ lleva $(\alpha - \beta)^*$. Escribir $(\alpha - \beta)^2$ en lugar de $|\alpha - \beta|^2$ es incorrecto. Desarrollado: $|\alpha - \beta|^2 = |\alpha|^2 + |\beta|^2 - 2\,\mathrm{Re}(\alpha^*\beta) = 1 - 2\,\mathrm{Re}(\alpha^*\beta)$.</p>
+</div>
+
+<h2>Medir un qubit y no los dos</h2>
+<p>Si el medidor está en un solo qubit (como en el parcial 2026), el proyector lleva identidad en los demás. Para el qubit 2 y resultado 1:</p>
+<div class="formula">$$\hat P = I\otimes|1\rangle\langle 1|, \qquad p_2(1) = \langle\Psi|\hat P|\Psi\rangle, \qquad |\tilde\Psi\rangle = \frac{\hat P|\Psi\rangle}{\sqrt{p_2(1)}}$$</div>
+<p>Con 3 qubits y medición en el qubit 2: $\hat P = I\otimes|0\rangle\langle 0|\otimes I$. Si hay varios términos compatibles, sobreviven todos y se renormaliza (ver el ejercicio 5 del <a href="#/parciales?ir=p26-ej5">parcial 2026</a>).</p>
+
+<h2>Receta para el parcial</h2>
+<ol class="pasos">
+  <li>Escribí $|\Psi_0\rangle$ como producto tensorial y distribuí.</li>
+  <li>Marcá las columnas y nombrá cada estado intermedio: $\Psi_1, \Psi_2, \dots$</li>
+  <li>Aplicá cada columna término por término. Para compuertas de 1 qubit, usá las identidades ($H|1\rangle = |-\rangle$…); para la CNOT, mirá el control en cada ket.</li>
+  <li>Agrupá términos iguales y simplificá las raíces.</li>
+  <li>Escribí el algoritmo de derecha a izquierda.</li>
+  <li>Para medir: proyector (con $\otimes I$ donde corresponda), probabilidad con el bra <strong>conjugado</strong> y estado normalizado.</li>
+  <li>Verificá que las probabilidades de todos los resultados sumen 1.</li>
+</ol>
+
+<h2>Repetir para estimar</h2>
+<p>En una computadora cuántica real cada ejecución da un solo resultado. Para estimar las probabilidades se repite el circuito muchas veces y se cuenta: $p(k) \approx \tfrac{\#\text{veces que salió } k}{N}$. La guía 6 propone verificar los 13 circuitos en el <a href="https://quantum.cloud.ibm.com/composer" target="_blank" rel="noopener">IBM Quantum Composer</a>; acá podés hacerlo en el <a href="#/laboratorio">laboratorio</a>.</p>
+
+<p>Para practicar sin límite: <a href="#/practica">ejercicios infinitos</a> genera circuitos al azar y corrige tu respuesta.</p>

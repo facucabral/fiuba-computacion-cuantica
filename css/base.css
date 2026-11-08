@@ -1,0 +1,198 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Tokens y base — misma familia visual que facucabral.me
+   Regla del portafolio: el color es información, no decoración.
+   Todo color vive acá como variable; los temas solo reasignan tokens.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --texto-xs: 0.75rem;
+  --texto-sm: 0.875rem;
+  --texto-base: 1rem;
+  --texto-lg: 1.125rem;
+  --texto-xl: 1.25rem;
+  --texto-2xl: 1.5rem;
+  --texto-3xl: 1.875rem;
+  --texto-4xl: 2.25rem;
+  --texto-5xl: 3rem;
+
+  --duracion-rapida: 200ms;
+  --duracion-normal: 300ms;
+  --curva-suave: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --curva-salida: cubic-bezier(0, 0, 0.2, 1);
+
+  --fuente-sans: "Inter", system-ui, sans-serif;
+  --fuente-serif: "Instrument Serif", Georgia, serif;
+  --fuente-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radio-sm: 10px;
+  --radio-md: 14px;
+  --radio-lg: 20px;
+
+  --ancho-lectura: 760px;
+  --ancho-amplio: 1040px;
+  --ancho-lateral: 288px;
+}
+
+/* ── Tema oscuro (por defecto) ── */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #000000;
+  --superficie: #0a0a0a;
+  --superficie-2: #111111;
+  --texto: #ffffff;
+  --texto-2: rgba(255, 255, 255, 0.64);
+  --texto-3: rgba(255, 255, 255, 0.38);
+  --borde: rgba(255, 255, 255, 0.08);
+  --borde-fuerte: rgba(255, 255, 255, 0.16);
+  --vidrio: rgba(255, 255, 255, 0.03);
+  --vidrio-hover: rgba(255, 255, 255, 0.055);
+  --vidrio-borde: rgba(255, 255, 255, 0.1);
+  --vidrio-brillo: rgba(255, 255, 255, 0.1);
+  --sombra: rgba(0, 0, 0, 0.35);
+  --resplandor: rgba(255, 255, 255, 0.08);
+  --ruido-opacidad: 0.035;
+
+  /* Énfasis con significado */
+  --acento: #8ab4ff;            /* conceptos clave, estado cuántico, foco */
+  --acento-suave: rgba(138, 180, 255, 0.1);
+  --acento-borde: rgba(138, 180, 255, 0.32);
+  --exito: #6fda44;             /* correcto, verificado (verde del portafolio) */
+  --exito-suave: rgba(111, 218, 68, 0.1);
+  --alerta: #f5b94a;            /* ojo en el parcial */
+  --alerta-suave: rgba(245, 185, 74, 0.1);
+  --error: #ff6b6b;             /* error típico, respuesta incorrecta */
+  --error-suave: rgba(255, 107, 107, 0.1);
+
+  /* Datos: amplitudes y bases (gráficos, esfera, circuitos) */
+  --dato-0: #8ab4ff;            /* |0⟩, eje Z, Alice */
+  --dato-1: #e7a6ff;            /* |1⟩, Bob */
+  --dato-2: #7ee0c3;            /* |+⟩, eje X */
+  --dato-3: #ffb27a;            /* |−⟩, eje Y, Eve */
+  --compuerta-fondo: #141414;
+  --compuerta-borde: rgba(255, 255, 255, 0.28);
+  --cable: rgba(255, 255, 255, 0.42);
+  /* Colores de unidad: cada bloque de temas tiene su color (como la versión original) */
+  --u-fundamentos: #7cc4ff;
+  --u-matematica: #b59cff;
+  --u-mecanica: #6fe0b0;
+  --u-qubits: #5fd4e8;
+  --u-circuitos: #ffc46b;
+  --u-algoritmos: #ff8fc8;
+  --u-practica: #ffd24d;
+  --u-material: #c9c9c9;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #fafafa;
+  --superficie: #ffffff;
+  --superficie-2: #f2f2f2;
+  --texto: #0a0a0a;
+  --texto-2: rgba(0, 0, 0, 0.6);
+  --texto-3: rgba(0, 0, 0, 0.38);
+  --borde: rgba(0, 0, 0, 0.08);
+  --borde-fuerte: rgba(0, 0, 0, 0.16);
+  --vidrio: rgba(0, 0, 0, 0.025);
+  --vidrio-hover: rgba(0, 0, 0, 0.045);
+  --vidrio-borde: rgba(0, 0, 0, 0.09);
+  --vidrio-brillo: rgba(255, 255, 255, 0.7);
+  --sombra: rgba(0, 0, 0, 0.08);
+  --resplandor: rgba(0, 0, 0, 0.03);
+  --ruido-opacidad: 0.02;
+
+  --acento: #2f63d8;
+  --acento-suave: rgba(47, 99, 216, 0.08);
+  --acento-borde: rgba(47, 99, 216, 0.3);
+  --exito: #2f9e0f;
+  --exito-suave: rgba(47, 158, 15, 0.08);
+  --alerta: #b7770a;
+  --alerta-suave: rgba(183, 119, 10, 0.09);
+  --error: #d43c3c;
+  --error-suave: rgba(212, 60, 60, 0.08);
+
+  --dato-0: #2f63d8;
+  --dato-1: #a43fd0;
+  --dato-2: #11916b;
+  --dato-3: #d0661c;
+  --compuerta-fondo: #ffffff;
+  --compuerta-borde: rgba(0, 0, 0, 0.35);
+  --cable: rgba(0, 0, 0, 0.45);
+  --u-fundamentos: #1f6fc4;
+  --u-matematica: #6b4fd8;
+  --u-mecanica: #138a5c;
+  --u-qubits: #0b8aa3;
+  --u-circuitos: #b06d00;
+  --u-algoritmos: #c2347f;
+  --u-practica: #a77a00;
+  --u-material: #555555;
+}
+
+/* Sin preferencia guardada: respeta el sistema */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #fafafa; --superficie: #ffffff; --superficie-2: #f2f2f2;
+    --texto: #0a0a0a; --texto-2: rgba(0,0,0,0.6); --texto-3: rgba(0,0,0,0.38);
+    --borde: rgba(0,0,0,0.08); --borde-fuerte: rgba(0,0,0,0.16);
+    --vidrio: rgba(0,0,0,0.025); --vidrio-hover: rgba(0,0,0,0.045); --vidrio-borde: rgba(0,0,0,0.09);
+    --vidrio-brillo: rgba(255,255,255,0.7); --sombra: rgba(0,0,0,0.08); --resplandor: rgba(0,0,0,0.03);
+    --ruido-opacidad: 0.02;
+    --acento: #2f63d8; --acento-suave: rgba(47,99,216,0.08); --acento-borde: rgba(47,99,216,0.3);
+    --exito: #2f9e0f; --exito-suave: rgba(47,158,15,0.08);
+    --alerta: #b7770a; --alerta-suave: rgba(183,119,10,0.09);
+    --error: #d43c3c; --error-suave: rgba(212,60,60,0.08);
+    --dato-0: #2f63d8; --dato-1: #a43fd0; --dato-2: #11916b; --dato-3: #d0661c;
+    --compuerta-fondo: #ffffff; --compuerta-borde: rgba(0,0,0,0.35); --cable: rgba(0,0,0,0.45);
+    --u-fundamentos: #1f6fc4; --u-matematica: #6b4fd8; --u-mecanica: #138a5c; --u-qubits: #0b8aa3; --u-circuitos: #b06d00; --u-algoritmos: #c2347f; --u-practica: #a77a00; --u-material: #555555;
+  }
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 84px; }
+
+body {
+  background: var(--bg);
+  color: var(--texto);
+  font-family: var(--fuente-sans);
+  font-size: var(--texto-base);
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out;
+  overflow-x: hidden;
+}
+
+img, svg, canvas { display: block; max-width: 100%; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; }
+a { color: inherit; }
+::selection { background: var(--acento-suave); }
+
+:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; border-radius: 6px; }
+
+.solo-lector {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Grano del portafolio: muy sutil, nunca interfiere con la lectura */
+.ruido {
+  position: fixed; inset: 0; pointer-events: none; z-index: 100;
+  opacity: var(--ruido-opacidad); mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Resplandor ambiental detrás del contenido (como el hero del portafolio) */
+.resplandor-fondo {
+  position: fixed; inset: -20% -10% auto auto; width: 70vw; height: 70vh; pointer-events: none; z-index: 0;
+  background: radial-gradient(closest-side, var(--resplandor), transparent);
+  filter: blur(40px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

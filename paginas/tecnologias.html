@@ -1,0 +1,59 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 1 · Fundamentos</span>
+  <h1>Tecnologías de <em>qubits</em></h1>
+  <p class="bajada">Un qubit es cualquier sistema cuántico de dos niveles que podamos controlar. Hay varias formas de construirlo y ninguna ganó todavía.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Un qubit es cualquier cosa física que tenga dos estados bien definidos y se pueda poner en superposición: un ion en su estado fundamental o excitado, la corriente de un circuito superconductor, la polarización de un fotón. La pelea de la ingeniería es siempre la misma: aislarlo del ruido sin dejar de poder tocarlo.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em></span>
+</div>
+
+<p>La bibliografía de la primera clase recorre las plataformas principales (RMN en Santiago de Compostela, los fotónicos de Xanadu, el enfoque topológico de Preskill). Todas comparten el mismo desafío: <strong>aislar</strong> el qubit del entorno para que no pierda la superposición y, a la vez, poder <strong>controlarlo</strong> y <strong>medirlo</strong> con precisión.</p>
+
+<div class="aviso clave">
+  <span class="titulo-aviso">Vocabulario</span>
+  <p><strong>Decoherencia</strong>: el entorno “mide” el qubit sin que queramos y destruye la superposición. <strong>Tiempo de coherencia</strong>: cuánto dura el estado cuántico útil. <strong>Fidelidad</strong>: qué tan bien sale una compuerta. <strong>NISQ</strong> (<em>Noisy Intermediate-Scale Quantum</em>): la era actual, con decenas a miles de qubits ruidosos y sin corrección de errores completa.</p>
+</div>
+
+<h2>Comparación rápida</h2>
+<p>Elegí un criterio para comparar. Los valores son <strong>cualitativos y orientativos</strong> (1 = débil, 5 = fuerte): resumen el consenso general y cambian rápido con cada avance.</p>
+<div data-widget="tecnologias"></div>
+
+<h2>Las plataformas</h2>
+
+<h3>Superconductores</h3>
+<p>Circuitos eléctricos con <strong>uniones Josephson</strong>, enfriados a unos pocos milikelvin en refrigeradores de dilución. A esa temperatura el circuito no tiene resistencia y se comporta como un átomo artificial con niveles de energía discretos: $|0\rangle$ es el fundamental y $|1\rangle$ el primer excitado. Es la plataforma de IBM y Google.</p>
+<ul>
+  <li><strong>A favor:</strong> compuertas muy rápidas (nanosegundos) y fabricación parecida a la microelectrónica.</li>
+  <li><strong>En contra:</strong> tiempos de coherencia cortos, criogenia masiva y cableado difícil de escalar.</li>
+</ul>
+<div class="aviso intuicion"><span class="titulo-aviso">Dato</span><p>El Premio Nobel de Física 2025 fue para Clarke, Devoret y Martinis por demostrar el efecto túnel cuántico macroscópico en circuitos eléctricos: la base física de estos qubits.</p></div>
+
+<h3>Iones atrapados</h3>
+<p>Átomos con carga suspendidos en vacío con campos electromagnéticos y manipulados con láseres. Los niveles de energía del ion son el qubit.</p>
+<ul>
+  <li><strong>A favor:</strong> qubits idénticos por naturaleza, coherencia larga y compuertas de altísima fidelidad. Cualquier ion de la cadena puede interactuar con cualquier otro.</li>
+  <li><strong>En contra:</strong> compuertas lentas y cadenas largas difíciles de controlar.</li>
+</ul>
+
+<h3>Fotónica</h3>
+<p>El qubit es un fotón: se codifica en su <strong>polarización</strong> ($|H\rangle$, $|V\rangle$), en el camino que toma o en otras propiedades de la luz. Hay enfoques que usan estados de luz “comprimida” (variable continua, como Xanadu) y otros con fotones individuales.</p>
+<ul>
+  <li><strong>A favor:</strong> los fotones casi no interactúan con el entorno, viajan por fibra óptica y gran parte del sistema puede operar a temperatura ambiente (aunque los detectores de fotones individuales más sensibles suelen necesitar frío). Son la opción natural para comunicaciones cuánticas como <a href="#/bb84">BB84</a>.</li>
+  <li><strong>En contra:</strong> justamente porque casi no interactúan, es difícil hacer compuertas entre dos fotones (como la CNOT), y las pérdidas en el camino se acumulan.</li>
+</ul>
+<p>El formalismo con fotones y polarizadores es el del ejercicio 3 del parcial: está en <a href="#/fotones">Fotones y polarizadores</a>.</p>
+
+<h3>Átomos neutros</h3>
+<p>Átomos sin carga atrapados con “pinzas ópticas” (láseres muy enfocados) en grillas de cientos de posiciones. Se entrelazan llevándolos a estados de Rydberg. Escalan bien en cantidad de qubits y es una de las plataformas que más creció en los últimos años.</p>
+
+<h3>Resonancia magnética nuclear (RMN)</h3>
+<p>Usa los <strong>espines nucleares</strong> de moléculas en un líquido, controlados con campos magnéticos y pulsos de radiofrecuencia, a temperatura ambiente. Fue la primera plataforma en ejecutar algoritmos cuánticos pequeños y es excelente para enseñar, pero la señal se debilita al agregar qubits y no escala.</p>
+
+<h3>Topológicos</h3>
+<p>Codifican la información en propiedades globales de ciertas cuasipartículas (anyones de Majorana), de modo que una perturbación local no alcanza para destruirla. Prometen qubits protegidos contra errores “por diseño”, pero su existencia y control siguen en investigación activa.</p>
+
+<h2>El experimento que lo empezó todo</h2>
+<p>Cualquiera de estas plataformas aprovecha lo mismo que mostró el <a href="#/stern-gerlach">experimento de Stern-Gerlach</a> en 1922: hay magnitudes físicas que, al medirlas, solo dan dos resultados posibles. Ese sistema de dos niveles es el qubit.</p>

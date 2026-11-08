@@ -1,0 +1,317 @@
+<header class="encabezado">
+  <span class="antetitulo">Práctica para el parcial</span>
+  <h1>Parciales <em>resueltos</em></h1>
+  <p class="bajada">Tres exámenes reales, uno por pestaña. Cada ejercicio tiene el enunciado completo, qué se pide en criollo y la resolución con el formalismo que exige la cátedra.</p>
+</header>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">Cómo practicar</span>
+  <p>Leé el enunciado, resolvelo en papel (2 horas para el examen entero) y recién después abrí la resolución, que se muestra de a un paso con <strong>Ver siguiente paso</strong>. Si te salió sin mirar, tocá <strong>Marcar como resuelto</strong>: el avance aparece en <a href="#/mi-practica">Tu práctica</a>.</p>
+</div>
+
+<div data-widget="pestanas">
+
+<!-- ═════════════ RECUPERATORIO 2024 ═════════════ -->
+<section data-pestana="Recuperatorio 2024" data-detalle="19/06/2024" id="r24">
+  <figure>
+    <img src="material/parciales/recuperatorio-2024-06-19.webp" alt="Foto del enunciado del primer recuperatorio del 19/06/2024" loading="lazy" width="1200" height="1600" style="max-height:340px;object-fit:cover;object-position:top">
+    <figcaption>Foto del enunciado original · tocala para ampliarla o <a href="#" data-material="p2024">abrila en el visor</a></figcaption>
+  </figure>
+
+  <div class="cabecera-ejercicio" id="r24-ej1" data-ejercicio="r24-ej1"><h3>Ejercicio 1 · Circuito de 2 qubits</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Sea $|\Psi\rangle = \alpha|0\rangle + \beta|1\rangle$ el estado de un qubit, con $\alpha, \beta \in \mathbb{C}$ y $|\alpha|^2 + |\beta|^2 = 1$. Sean $H$, $X$, $Z$ las compuertas Hadamard, NOT cuántica y $Z$. Considerando el siguiente circuito, se llama $|\Psi_a\rangle$ al estado del sistema en el punto (a):</p>
+    <div data-widget="circuito" data-preset="recuperatorio-2024-ej1"></div>
+    <ol type="a">
+      <li>Calcular el estado $|\Psi_a\rangle$ y escribir el algoritmo cuántico que permite obtenerlo.</li>
+      <li>Si a la salida se mide el sistema en la base $B = \{|00\rangle, |01\rangle, |10\rangle, |11\rangle\}$, calcular la probabilidad de que $|\Psi_a\rangle$ se proyecte en $|10\rangle$ (usar el formalismo cuántico).</li>
+      <li>Calcular el estado del sistema inmediatamente después de la medición (usar el formalismo cuántico).</li>
+    </ol>
+  </div>
+  <p class="chico texto-2"><strong>En criollo:</strong> seguí el circuito columna por columna, escribí el producto de matrices de derecha a izquierda y medí con el proyector $|10\rangle\langle 10|$.</p>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <ol class="pasos" data-revelar>
+        <li><strong>Estado inicial.</strong> $|\Psi_0\rangle = (\alpha|0\rangle + \beta|1\rangle)\otimes|0\rangle = \alpha|00\rangle + \beta|10\rangle$.</li>
+        <li><strong>$(H\otimes X)$:</strong> desarmando, $H$ al primero y $X|0\rangle = |1\rangle$ al segundo: $|\Psi_1\rangle = \alpha|+\rangle|1\rangle + \beta|-\rangle|1\rangle = \tfrac{\alpha + \beta}{\sqrt2}|01\rangle + \tfrac{\alpha - \beta}{\sqrt2}|11\rangle$.</li>
+        <li><strong>$\mathrm{CNOT}_{1,2}$:</strong> $|01\rangle$ queda (control 0) y $|11\rangle \to |10\rangle$: $|\Psi_2\rangle = \tfrac{\alpha + \beta}{\sqrt2}|01\rangle + \tfrac{\alpha - \beta}{\sqrt2}|10\rangle$.</li>
+        <li><strong>$(I\otimes Z)$:</strong> $Z|1\rangle = -|1\rangle$ en el segundo qubit: $|\Psi_a\rangle = -\tfrac{\alpha + \beta}{\sqrt2}|01\rangle + \tfrac{\alpha - \beta}{\sqrt2}|10\rangle$. Algoritmo: $|\Psi_a\rangle = (I\otimes Z)\,\mathrm{CNOT}_{1,2}\,(H\otimes X)\,|\Psi_0\rangle$.</li>
+        <li><strong>(b)</strong> $\hat P_{10} = |10\rangle\langle 10|$, $\;\hat P_{10}|\Psi_a\rangle = \tfrac{\alpha - \beta}{\sqrt2}|10\rangle$ (el $|01\rangle$ se anula porque $\langle 10|01\rangle = 0$), y con el bra conjugado: $p(10) = \langle\Psi_a|\hat P_{10}|\Psi_a\rangle = \tfrac{(\alpha - \beta)^*(\alpha - \beta)}{2} = \tfrac{|\alpha - \beta|^2}{2}$.</li>
+        <li><strong>(c)</strong> $|\tilde\Psi\rangle = \dfrac{\hat P_{10}|\Psi_a\rangle}{\sqrt{p(10)}} = \dfrac{\alpha-\beta}{|\alpha-\beta|}|10\rangle \equiv |10\rangle$.</li>
+      </ol>
+      <div data-widget="laboratorio" data-preset="recuperatorio-2024-ej1" data-modo="guiado"></div>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="r24-ej2" data-ejercicio="r24-ej2"><h3>Ejercicio 2 · Bell $|\beta_{00}\rangle$, Alice obtiene $+$</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Considere el estado entrelazado $|\beta_{00}\rangle = \tfrac{1}{\sqrt2}(|00\rangle + |11\rangle)$. El 1.er qubit del par está en poder de Alice y el 2.º en poder de Bob (separados espacialmente). Alice y Bob miden en sus qubits respecto de la base $B_x = \left\{|+\rangle_x = \tfrac{|0\rangle + |1\rangle}{\sqrt2};\ |-\rangle_x = \tfrac{|0\rangle - |1\rangle}{\sqrt2}\right\}$. Alice mide y obtiene “$+$”. Posteriormente Bob mide su qubit.</p>
+    <ol type="a">
+      <li>Calcular el estado $|\tilde\Psi\rangle$ del sistema inmediatamente después de la medición de Alice (usando el formalismo cuántico).</li>
+      <li>Calcular qué resultado obtendrá Bob y con qué probabilidad $p_B$, si mide después de Alice.</li>
+      <li>¿Qué resultados podría haber obtenido Bob, y con qué probabilidades, si en lugar de medir en $B_x$ hubiera medido en la base computacional $B = \{|0\rangle, |1\rangle\}$?</li>
+    </ol>
+  </div>
+  <p class="chico texto-2"><strong>En criollo:</strong> reescribí el par en la base $|\pm\rangle$, quedate con la parte donde Alice tiene $+$ y fijate qué le queda a Bob.</p>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <ol class="pasos" data-revelar>
+        <li><strong>Cambio de base.</strong> $|\beta_{00}\rangle = \tfrac{1}{\sqrt2}(|{++}\rangle + |{--}\rangle)$ (los términos cruzados se cancelan).</li>
+        <li><strong>(a)</strong> $\hat P_+ = |+\rangle\langle+|\otimes I$, $\;\hat P_+|\beta_{00}\rangle = \tfrac{1}{\sqrt2}|{++}\rangle$, $\;p_A(+) = \tfrac12$, $\;|\tilde\Psi\rangle = \dfrac{\tfrac{1}{\sqrt2}|{++}\rangle}{\sqrt{1/2}} = |{++}\rangle$.</li>
+        <li><strong>(b)</strong> Con $\hat P^{B}_+ = I\otimes|+\rangle\langle +|$: Bob obtiene $+$ con $p_B = \langle{++}|\hat P^{B}_+|{++}\rangle = 1$.</li>
+        <li><strong>(c)</strong> Estado completo en $B_z$: $|{++}\rangle = \tfrac12(|00\rangle + |01\rangle + |10\rangle + |11\rangle)$. Con $I\otimes|0\rangle\langle 0|$: $p_B(0) = \tfrac14 + \tfrac14 = \tfrac12$; igual $p_B(1) = \tfrac12$.</li>
+      </ol>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="r24-ej3" data-ejercicio="r24-ej3"><h3>Ejercicio 3 · Fotón y polarizador $|A\rangle$</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Sea un fotón cuyo estado de polarización es $|\Psi\rangle = \tfrac{1}{\sqrt5}|H\rangle + \tfrac{2}{\sqrt5}|V\rangle$. Si el fotón atraviesa un polarizador $P$ que polariza en el estado $|A\rangle$, ¿cuál es la probabilidad de que lo atraviese?</p>
+  </div>
+  <p class="chico texto-2"><strong>En criollo:</strong> $|A\rangle$ es el $|-\rangle$ de los fotones. Calculá $|\langle A|\Psi\rangle|^2$.</p>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <ol class="pasos" data-revelar>
+        <li>$|A\rangle = \tfrac{1}{\sqrt2}(|H\rangle - |V\rangle)$, $\;\hat P_A = |A\rangle\langle A|$.</li>
+        <li>$\langle A|\Psi\rangle = \tfrac{1}{\sqrt2}\left(\tfrac{1}{\sqrt5}\langle H|H\rangle - \tfrac{2}{\sqrt5}\langle V|V\rangle\right) = \tfrac{1 - 2}{\sqrt{10}} = -\tfrac{1}{\sqrt{10}}$ (los cruzados $\langle H|V\rangle$ dan 0).</li>
+        <li>$p(A) = \left\|\hat P_A|\Psi\rangle\right\|^2 = \left|-\tfrac{1}{\sqrt{10}}\right|^2 = \tfrac{1}{10} = 10\,\%$. Desarrollo completo con el proyector en <a href="#/fotones">Fotones</a>.</li>
+      </ol>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="r24-ej4" data-ejercicio="r24-ej4"><h3>Ejercicio 4 · Teórico: Deutsch</h3></div>
+  <div class="enunciado-ejercicio"><p>¿Cuál es el objetivo del algoritmo de Deutsch? Hacer una descripción en pocas palabras del mismo.</p></div>
+  <details class="desplegable">
+    <summary>Respuesta modelo</summary>
+    <div class="contenido-desplegable">
+      <p>Dada una función booleana $f:\{0,1\}\to\{0,1\}$ desconocida (oráculo $U_f|x,y\rangle = |x, y\oplus f(x)\rangle$), determina si es <strong>constante</strong> o <strong>balanceada</strong> evaluándola <strong>una sola vez</strong> (clásicamente hacen falta dos). Prepara $|0\rangle|1\rangle$, aplica $H\otimes H$, el oráculo (que por retroceso de fase deja $(-1)^{f(x)}$ en cada término) y $H$ en el primer qubit; al medirlo sale 0 si es constante y 1 si es balanceada, con certeza. Detalle en <a href="#/deutsch">Deutsch</a>.</p>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="r24-ej5" data-ejercicio="r24-ej5"><h3>Ejercicio 5 · Del algoritmo al circuito</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Para el algoritmo cuántico que se indica a continuación se pide:</p>
+    <div class="formula">$$\begin{aligned} &\text{Entrada: } |10\rangle \\ &\xrightarrow{\mathrm{CNOT}_{1,2}} |11\rangle \\ &\xrightarrow{H\otimes X} \tfrac{1}{\sqrt2}(|0\rangle - |1\rangle)\otimes|0\rangle = \tfrac{1}{\sqrt2}(|00\rangle - |10\rangle) \\ &\xrightarrow{\mathrm{SWAP}} \tfrac{1}{\sqrt2}(|00\rangle - |01\rangle) \\ &\xrightarrow{Y\otimes X} \tfrac{1}{\sqrt2}(i|11\rangle - i|10\rangle) = \tfrac{i}{\sqrt2}(|11\rangle - |10\rangle) \end{aligned}$$</div>
+    <ol type="a">
+      <li>Graficar el circuito cuántico que lo representa.</li>
+      <li>Si a la salida se mide en la base $B = \{|00\rangle, |01\rangle, |10\rangle, |11\rangle\}$, calcular la probabilidad (aplicando el formalismo cuántico) de que el estado se proyecte en $|11\rangle$.</li>
+    </ol>
+  </div>
+  <p class="chico texto-2"><strong>En criollo:</strong> cada flecha es una columna del circuito; después leé el coeficiente de $|11\rangle$ con el proyector.</p>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <p><strong>(a)</strong> Una columna por flecha, en orden:</p>
+      <div data-widget="laboratorio" data-preset="recuperatorio-ej5" data-modo="guiado"></div>
+      <p><strong>(b)</strong> $\hat P_{11} = |11\rangle\langle 11|$, $\;\langle 11|\Psi\rangle = \tfrac{i}{\sqrt2}$, $\;p(11) = \left(\tfrac{i}{\sqrt2}\right)^*\tfrac{i}{\sqrt2} = \tfrac{(-i)(i)}{2} = \tfrac12$.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═════════════ PARCIAL 2026 ═════════════ -->
+<section data-pestana="Parcial 2026" data-detalle="11/06/2026" id="p26">
+  <figure>
+    <img src="material/parciales/parcial-2026-06-11.webp" alt="Foto del enunciado del parcial del 11/06/2026" loading="lazy" width="1191" height="1456" style="max-height:340px;object-fit:cover;object-position:top">
+    <figcaption>Foto del enunciado original · tocala para ampliarla o <a href="#" data-material="p2026">abrila en el visor</a></figcaption>
+  </figure>
+
+  <div class="cabecera-ejercicio" id="p26-ej1" data-ejercicio="p26-ej1"><h3>Ejercicio 1 · Circuito con SWAP</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Para el circuito de la figura 1 se pide (el qubit 1 entra en $|\Psi\rangle = \tfrac{1}{\sqrt5}|0\rangle - \tfrac{2}{\sqrt5}|1\rangle$ y el qubit 2 en $|1\rangle$; se mide el segundo qubit):</p>
+    <div data-widget="circuito" data-preset="parcial-2026-ej1"></div>
+    <ol type="a">
+      <li>Calcular el estado $|\Psi_a\rangle$ y escribir el algoritmo cuántico que permite obtenerlo.</li>
+      <li>Si en el segundo qubit se realiza una medición respecto de la base $B = \{|0\rangle; |1\rangle\}$, calcular (aplicando el formalismo cuántico) la probabilidad de obtener “1”.</li>
+      <li>Calcular el estado del sistema inmediatamente después de realizar la medición.</li>
+    </ol>
+  </div>
+  <p class="chico texto-2"><strong>En criollo:</strong> igual que siempre, pero al final hay una SWAP y se mide <em>solo</em> el qubit 2: el proyector es $I\otimes|1\rangle\langle 1|$.</p>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <ol class="pasos" data-revelar>
+        <li><strong>Normalización.</strong> $\tfrac15 + \tfrac45 = 1$ ✓. $\;|\Psi_0\rangle = \tfrac{1}{\sqrt5}|01\rangle - \tfrac{2}{\sqrt5}|11\rangle$.</li>
+        <li><strong>$(H\otimes X)$:</strong> $|\Psi_1\rangle = \left(\tfrac{1}{\sqrt5}|+\rangle - \tfrac{2}{\sqrt5}|-\rangle\right)|0\rangle = \tfrac{1}{\sqrt{10}}\left[(1 - 2)|0\rangle + (1 + 2)|1\rangle\right]|0\rangle = -\tfrac{1}{\sqrt{10}}|00\rangle + \tfrac{3}{\sqrt{10}}|10\rangle$.</li>
+        <li><strong>$\mathrm{CNOT}_{1,2}$:</strong> $|10\rangle \to |11\rangle$: $|\Psi_2\rangle = -\tfrac{1}{\sqrt{10}}|00\rangle + \tfrac{3}{\sqrt{10}}|11\rangle$.</li>
+        <li><strong>SWAP:</strong> intercambia los dígitos; $|00\rangle$ y $|11\rangle$ quedan iguales. $|\Psi_a\rangle = -\tfrac{1}{\sqrt{10}}|00\rangle + \tfrac{3}{\sqrt{10}}|11\rangle$. Algoritmo: $|\Psi_a\rangle = \mathrm{SWAP}\,\mathrm{CNOT}_{1,2}\,(H\otimes X)\,|\Psi_0\rangle$.</li>
+        <li><strong>(b)</strong> $\hat P_1 = I\otimes|1\rangle\langle 1|$: $\hat P_1|\Psi_a\rangle = \tfrac{3}{\sqrt{10}}|11\rangle$ y $p_2(1) = \left(-\tfrac{1}{\sqrt{10}}\langle 00| + \tfrac{3}{\sqrt{10}}\langle 11|\right)\tfrac{3}{\sqrt{10}}|11\rangle = \tfrac{9}{10}$.</li>
+        <li><strong>(c)</strong> $|\tilde\Psi\rangle = \dfrac{\tfrac{3}{\sqrt{10}}|11\rangle}{\sqrt{9/10}} = |11\rangle$.</li>
+      </ol>
+      <div data-widget="laboratorio" data-preset="parcial-2026-ej1" data-modo="guiado"></div>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="p26-ej2" data-ejercicio="p26-ej2"><h3>Ejercicio 2 · Bell $|\beta_{11}\rangle$, Alice obtiene $+$</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Considere el estado entrelazado $|\beta_{11}\rangle = \tfrac{1}{\sqrt2}(|01\rangle - |10\rangle)$. El 1.er qubit está en poder de Alice y el 2.º en poder de Bob (separados espacialmente). Ambos miden respecto de la base $B_x = \{|+\rangle_x; |-\rangle_x\}$. Alice mide y obtiene “$+$”; posteriormente Bob mide su qubit.</p>
+    <ol type="a">
+      <li>Calcular el estado $|\tilde\Psi\rangle$ inmediatamente después de la medición de Alice (usando el formalismo cuántico).</li>
+      <li>Calcular qué resultado obtendrá Bob y con qué probabilidad $p_B$, si mide después de Alice.</li>
+      <li>¿Qué resultados podría haber obtenido Bob y con qué probabilidades si hubiera medido en la base computacional $B = \{|0\rangle; |1\rangle\}$?</li>
+    </ol>
+  </div>
+  <p class="chico texto-2"><strong>En criollo:</strong> el mismo ejercicio de siempre con otro estado de Bell. Este (el “singlete”) es anticorrelacionado: si Alice saca $+$, Bob saca $-$.</p>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <ol class="pasos" data-revelar>
+        <li><strong>Cambio de base.</strong> $|01\rangle - |10\rangle = -|{+-}\rangle + |{-+}\rangle$, entonces $|\beta_{11}\rangle = \tfrac{1}{\sqrt2}(|{-+}\rangle - |{+-}\rangle)$.</li>
+        <li><strong>(a)</strong> $\hat P_+ = |+\rangle\langle+|\otimes I$: $\hat P_+|\beta_{11}\rangle = -\tfrac{1}{\sqrt2}|{+-}\rangle$, $\;p_A(+) = \tfrac12$, $\;|\tilde\Psi\rangle = -|{+-}\rangle \equiv |{+-}\rangle$.</li>
+        <li><strong>(b)</strong> Bob en $B_x$ obtiene $-$ con probabilidad $p_B = 1$.</li>
+        <li><strong>(c)</strong> En $B_z$, el estado completo: $|{+-}\rangle = \tfrac12(|00\rangle - |01\rangle + |10\rangle - |11\rangle)$. Con $I\otimes|0\rangle\langle 0|$ e $I\otimes|1\rangle\langle 1|$: $p_B(0) = p_B(1) = \tfrac12$.</li>
+      </ol>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="p26-ej3" data-ejercicio="p26-ej3"><h3>Ejercicio 3 · Fotón y polarizador $|A\rangle$</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Sea un fotón cuyo estado de polarización es $|\Psi\rangle = \tfrac{1}{\sqrt5}|H\rangle + \tfrac{2}{\sqrt5}|V\rangle$. Si el fotón atraviesa un polarizador $P$ que polariza en el estado $|A\rangle$, ¿cuál es la probabilidad de que lo atraviese?</p>
+  </div>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <p>Es el mismo enunciado que el recuperatorio 2024: $\langle A|\Psi\rangle = \tfrac{1}{\sqrt2}\cdot\tfrac{1 - 2}{\sqrt5} = -\tfrac{1}{\sqrt{10}}$, así que $p(A) = \tfrac{1}{10}$. Con el proyector: $\hat P_A|\Psi\rangle = -\tfrac{1}{\sqrt{10}}|A\rangle$ y $\|\hat P_A|\Psi\rangle\|^2 = \tfrac{1}{10}$.</p>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="p26-ej4" data-ejercicio="p26-ej4"><h3>Ejercicio 4 · Teórico: teleportación</h3></div>
+  <div class="enunciado-ejercicio"><p>¿Cuál es el objetivo del protocolo de teleportación cuántica? Hacer una descripción en pocas palabras del mismo.</p></div>
+  <details class="desplegable">
+    <summary>Respuesta modelo</summary>
+    <div class="contenido-desplegable">
+      <p>Transferir el estado desconocido de un qubit $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$ de Alice a Bob usando <strong>un par de Bell</strong> compartido y <strong>dos bits clásicos</strong>. Alice aplica una CNOT entre su qubit y su mitad del par, una $H$ a su qubit y mide los dos; envía los 2 bits por un canal clásico y Bob aplica $I$, $X$, $Z$ o $ZX$ según los bits y obtiene $|\psi\rangle$. El original se destruye (no se viola la no-clonación) y no hay comunicación más rápida que la luz. Detalle en <a href="#/teleportacion">Teleportación</a>.</p>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="p26-ej5" data-ejercicio="p26-ej5"><h3>Ejercicio 5 · Circuito de 3 qubits</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Considere el circuito de la figura 2. El estado del sistema antes de medir es $|\Psi_b\rangle$ y se mide el 2.º qubit:</p>
+    <div data-widget="circuito" data-preset="parcial-2026-ej5"></div>
+    <ol type="a">
+      <li>Calcular el estado $|\Psi_b\rangle$ y escribir el correspondiente algoritmo cuántico para obtenerlo.</li>
+      <li>Calcular la probabilidad $p_2(0)$ de obtener “0” al realizar la medición y el estado inmediatamente después de medir.</li>
+      <li>Si el estado inmediatamente después de la medición se llama $|\tilde\Psi\rangle$, ¿qué estado se obtendría al aplicar la compuerta $X\otimes Y\otimes Z$ a $|\tilde\Psi\rangle$?</li>
+    </ol>
+  </div>
+  <p class="chico texto-2"><strong>En criollo:</strong> lo mismo con tres qubits (8 casilleros). En la medición sobreviven todos los términos con el qubit del medio en 0.</p>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <ol class="pasos" data-revelar>
+        <li>$|\Psi_0\rangle = |101\rangle$. $(H\otimes I\otimes I)$: $|\Psi_1\rangle = |-\rangle|01\rangle = \tfrac{1}{\sqrt2}(|001\rangle - |101\rangle)$.</li>
+        <li>$\mathrm{CNOT}_{1,2}$: $|101\rangle \to |111\rangle$. $\;|\Psi_2\rangle = \tfrac{1}{\sqrt2}(|001\rangle - |111\rangle)$.</li>
+        <li>$(I\otimes H\otimes I)$: $|\Psi_3\rangle = \tfrac12\left(|001\rangle + |011\rangle - |101\rangle + |111\rangle\right)$.</li>
+        <li>$\mathrm{CNOT}_{2,3}$: $|011\rangle \to |010\rangle$, $|111\rangle \to |110\rangle$. $\;|\Psi_b\rangle = \tfrac12\left(|001\rangle + |010\rangle - |101\rangle + |110\rangle\right)$. Algoritmo: $|\Psi_b\rangle = \mathrm{CNOT}_{2,3}(I\otimes H\otimes I)\,\mathrm{CNOT}_{1,2}(H\otimes I\otimes I)|101\rangle$.</li>
+        <li><strong>(b)</strong> $\hat P_0 = I\otimes|0\rangle\langle 0|\otimes I$: $\hat P_0|\Psi_b\rangle = \tfrac12(|001\rangle - |101\rangle)$, $p_2(0) = \tfrac14 + \tfrac14 = \tfrac12$ y $|\tilde\Psi\rangle = \tfrac{1}{\sqrt2}(|001\rangle - |101\rangle) = |-\rangle|0\rangle|1\rangle$.</li>
+        <li><strong>(c)</strong> Desarmando cada ket: $|001\rangle \to X|0\rangle\,Y|0\rangle\,Z|1\rangle = |1\rangle(i|1\rangle)(-|1\rangle) = -i|111\rangle$ y $|101\rangle \to |0\rangle(i|1\rangle)(-|1\rangle) = -i|011\rangle$. Resultado: $\tfrac{1}{\sqrt2}(-i|111\rangle + i|011\rangle) = \tfrac{i}{\sqrt2}(|011\rangle - |111\rangle)$.</li>
+      </ol>
+      <div data-widget="laboratorio" data-preset="parcial-2026-ej5" data-modo="guiado"></div>
+    </div>
+  </details>
+</section>
+
+<!-- ═════════════ RECUPERATORIO 2026 ═════════════ -->
+<section data-pestana="Recuperatorio 2026" data-detalle="24/06/2026" id="r26">
+  <div class="aviso">
+    <p class="chico texto-2" style="margin:0">Enunciado transcripto completo (la foto original tiene datos personales y no se publica).</p>
+  </div>
+
+  <div class="cabecera-ejercicio" id="r26-ej1" data-ejercicio="r26-ej1"><h3>Ejercicio 1 · Circuito de 2 qubits</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Sea $|\Psi\rangle = \alpha|0\rangle + \beta|1\rangle$ el estado de un qubit, con $\alpha, \beta \in \mathbb{C}$ y $|\alpha|^2 + |\beta|^2 = 1$. Sean $H$, $X$, $Z$ las compuertas Hadamard, NOT cuántica y $Z$. Considerando el siguiente circuito, se llama $|\Psi_a\rangle$ al estado del sistema en el punto (a):</p>
+    <div data-widget="circuito" data-preset="recuperatorio-2024-ej1"></div>
+    <ol type="a">
+      <li>Calcular el estado $|\Psi_a\rangle$ y escribir el algoritmo cuántico que permite obtenerlo.</li>
+      <li>Si a la salida se mide en la base $B = \{|00\rangle; |01\rangle; |10\rangle; |11\rangle\}$, calcular la probabilidad de que $|\Psi_a\rangle$ se proyecte en $|01\rangle$ (usar el formalismo cuántico).</li>
+      <li>Calcular el estado del sistema inmediatamente después de la medición (usar el formalismo cuántico).</li>
+    </ol>
+  </div>
+  <p class="chico texto-2"><strong>En criollo:</strong> el circuito es idéntico al de 2024; cambia el resultado que se mide ($|01\rangle$). Es el ejercicio donde más se descuenta por no conjugar.</p>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <ol class="pasos" data-revelar>
+        <li><strong>(a)</strong> Igual que en 2024: $|\Psi_a\rangle = -\tfrac{\alpha + \beta}{\sqrt2}|01\rangle + \tfrac{\alpha - \beta}{\sqrt2}|10\rangle$, con algoritmo $(I\otimes Z)\,\mathrm{CNOT}_{1,2}\,(H\otimes X)\,|\Psi_0\rangle$.</li>
+        <li><strong>Proyector.</strong> $\hat P_{01} = |01\rangle\langle 01|$, $\;\hat P_{01}|\Psi_a\rangle = -\tfrac{\alpha + \beta}{\sqrt2}|01\rangle$.</li>
+        <li><strong>Bra conjugado.</strong> $\langle\Psi_a| = -\tfrac{(\alpha + \beta)^*}{\sqrt2}\langle 01| + \tfrac{(\alpha - \beta)^*}{\sqrt2}\langle 10|$.</li>
+        <li><strong>(b)</strong> $p(01) = \langle\Psi_a|\hat P_{01}|\Psi_a\rangle = \tfrac{(\alpha+\beta)^*(\alpha+\beta)}{2} = \tfrac{|\alpha + \beta|^2}{2}$.</li>
+        <li><strong>(c)</strong> $|\tilde\Psi\rangle = \dfrac{-\tfrac{\alpha+\beta}{\sqrt2}|01\rangle}{\tfrac{|\alpha+\beta|}{\sqrt2}} = -\dfrac{\alpha + \beta}{|\alpha + \beta|}|01\rangle \equiv |01\rangle$.</li>
+      </ol>
+      <div class="aviso error"><span class="titulo-aviso">Error que la cátedra descuenta</span><p>No conjugar el bra: con $\alpha, \beta$ complejos, $\left(\tfrac{\alpha+\beta}{\sqrt2}\right)^2 \ne \tfrac{|\alpha+\beta|^2}{2}$.</p></div>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="r26-ej2" data-ejercicio="r26-ej2"><h3>Ejercicio 2 · Bell $|\beta_{10}\rangle$, Alice obtiene $-$</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Considere el estado entrelazado $|\beta_{10}\rangle = \tfrac{1}{\sqrt2}(|00\rangle - |11\rangle)$. El 1.er qubit está en poder de Alice y el 2.º en poder de Bob (separados espacialmente). Ambos miden respecto de la base $B_x = \{|+\rangle_x; |-\rangle_x\}$. Alice mide y obtiene “$-$”; posteriormente Bob mide su qubit.</p>
+    <ol type="a">
+      <li>Calcular el estado $|\tilde\Psi\rangle$ inmediatamente después de la medición de Alice (usando el formalismo cuántico).</li>
+      <li>Calcular qué resultado obtendrá Bob y con qué probabilidad $p_B$, si mide después de Alice.</li>
+      <li>¿Qué resultados podría haber obtenido Bob y con qué probabilidades si hubiera medido en la base computacional $B = \{|0\rangle; |1\rangle\}$?</li>
+    </ol>
+  </div>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <ol class="pasos" data-revelar>
+        <li><strong>Cambio de base.</strong> $|00\rangle - |11\rangle = |{+-}\rangle + |{-+}\rangle$, así que $|\beta_{10}\rangle = \tfrac{1}{\sqrt2}(|{+-}\rangle + |{-+}\rangle)$.</li>
+        <li><strong>(a)</strong> $\hat P_- = |-\rangle\langle -|\otimes I$: $\hat P_-|\beta_{10}\rangle = \tfrac{1}{\sqrt2}|{-+}\rangle$, $\;p_A(-) = \tfrac12$ (¡no 1!), $\;|\tilde\Psi\rangle = |{-+}\rangle$.</li>
+        <li><strong>(b)</strong> Bob en $B_x$ obtiene $+$ con probabilidad 1.</li>
+        <li><strong>(c)</strong> El estado completo en $B_z$: $|{-+}\rangle = \tfrac12(|00\rangle + |01\rangle - |10\rangle - |11\rangle)$. Con $I\otimes|0\rangle\langle 0|$: $\tfrac12(|00\rangle - |10\rangle)$, $p_B(0) = \tfrac12$; igual $p_B(1) = \tfrac12$.</li>
+      </ol>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="r26-ej3" data-ejercicio="r26-ej3"><h3>Ejercicio 3 · Fotón y polarizador $|D\rangle$</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Sea un fotón cuyo estado de polarización es $|\Psi\rangle = \tfrac{1}{\sqrt5}|H\rangle + \tfrac{2}{\sqrt5}|V\rangle$. Si el fotón atraviesa un polarizador $P$ que polariza en el estado $|D\rangle$, ¿cuál es la probabilidad de que lo atraviese?</p>
+  </div>
+  <p class="chico texto-2"><strong>En criollo:</strong> el mismo fotón de los otros parciales, pero ahora el filtro es diagonal ($|D\rangle$ = el $|+\rangle$ de los fotones).</p>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <ol class="pasos" data-revelar>
+        <li>$|D\rangle = \tfrac{1}{\sqrt2}(|H\rangle + |V\rangle)$, $\;\hat P_D = |D\rangle\langle D|$.</li>
+        <li>$\langle D|\Psi\rangle = \tfrac{1}{\sqrt2}\left(\tfrac{1}{\sqrt5} + \tfrac{2}{\sqrt5}\right) = \tfrac{3}{\sqrt{10}}$, así que $\hat P_D|\Psi\rangle = \tfrac{3}{\sqrt{10}}|D\rangle$.</li>
+        <li>$p(D) = \left|\tfrac{3}{\sqrt{10}}\right|^2 = \tfrac{9}{10} = 90\,\%$.</li>
+      </ol>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="r26-ej4" data-ejercicio="r26-ej4"><h3>Ejercicio 4 · Teórico: codificación superdensa</h3></div>
+  <div class="enunciado-ejercicio"><p>¿Cuál es el objetivo del protocolo de codificación superdensa? Hacer una descripción del mismo y graficar el circuito.</p></div>
+  <details class="desplegable">
+    <summary>Respuesta modelo</summary>
+    <div class="contenido-desplegable">
+      <p>Transmitir <strong>dos bits clásicos enviando un solo qubit</strong>, usando un par $|\beta_{00}\rangle$ compartido previamente (Alice tiene el qubit 1 y Bob el 2). Según los bits $b_1b_2$, Alice aplica a su qubit $I$ (00), $X$ (01), $Z$ (10) o $ZX$ (11); cada opción lleva el par a un estado de Bell distinto (ortogonales, distinguibles). Alice envía su qubit; Bob aplica $\mathrm{CNOT}_{1,2}$ y $H\otimes I$ y al medir obtiene $b_1b_2$ con certeza. El circuito, paso a paso, está en <a href="#/superdensa">Codificación superdensa</a>.</p>
+    </div>
+  </details>
+
+  <div class="cabecera-ejercicio" id="r26-ej5" data-ejercicio="r26-ej5"><h3>Ejercicio 5 · Algoritmo escrito y entrelazamiento</h3></div>
+  <div class="enunciado-ejercicio">
+    <p>Para el algoritmo cuántico que se indica a continuación se pide:</p>
+    <div class="formula">$$\begin{aligned} &\text{Entrada: } |10\rangle \\ &\xrightarrow{\mathrm{CNOT}_{1,2}} |11\rangle \\ &\xrightarrow{H\otimes X} \tfrac{1}{\sqrt2}(|0\rangle - |1\rangle)\otimes|0\rangle = \tfrac{1}{\sqrt2}(|00\rangle - |10\rangle) \\ &\xrightarrow{\mathrm{SWAP}} \tfrac{1}{\sqrt2}(|00\rangle - |01\rangle) \\ &\xrightarrow{Y\otimes X} \tfrac{1}{\sqrt2}(i|11\rangle - i|10\rangle) = \tfrac{i}{\sqrt2}(|11\rangle - |10\rangle) \end{aligned}$$</div>
+    <ol type="a">
+      <li>Graficar el circuito cuántico que lo representa.</li>
+      <li>Si a la salida se mide en la base $B = \{|00\rangle; |01\rangle; |10\rangle; |11\rangle\}$, calcular la probabilidad (aplicando el formalismo cuántico) de que el estado se proyecte en $|10\rangle$.</li>
+      <li>Indicar si el estado cuántico antes de realizar la medición es o no entrelazado.</li>
+    </ol>
+  </div>
+  <p class="chico texto-2"><strong>En criollo:</strong> el algoritmo de 2024, con otra proyección y una pregunta de entrelazamiento (trampa: tiene dos términos pero no está entrelazado).</p>
+  <details class="desplegable">
+    <summary>Resolución</summary>
+    <div class="contenido-desplegable">
+      <ol class="pasos" data-revelar>
+        <li><strong>(a)</strong> El mismo circuito del recuperatorio 2024 (ver esa pestaña): $\mathrm{CNOT}_{1,2}$, luego $H\otimes X$, SWAP y $Y\otimes X$.</li>
+        <li><strong>(b)</strong> $|\Psi\rangle = \tfrac{i}{\sqrt2}|11\rangle - \tfrac{i}{\sqrt2}|10\rangle$. $\;\langle 10|\Psi\rangle = -\tfrac{i}{\sqrt2}$, $\;p(10) = \left(-\tfrac{i}{\sqrt2}\right)^*\left(-\tfrac{i}{\sqrt2}\right) = \tfrac{i}{\sqrt2}\cdot\left(-\tfrac{i}{\sqrt2}\right) = \tfrac12$.</li>
+        <li><strong>(c)</strong> <strong>No está entrelazado</strong>: $c_{00}c_{11} - c_{01}c_{10} = 0$, y se factoriza: $\tfrac{i}{\sqrt2}(|11\rangle - |10\rangle) = i\,|1\rangle\otimes\tfrac{1}{\sqrt2}(|1\rangle - |0\rangle) = -i\,|1\rangle\otimes|-\rangle$.</li>
+      </ol>
+      <div class="aviso error"><span class="titulo-aviso">Error que la cátedra descuenta</span><p>Responder “está entrelazado” porque tiene dos términos. Hay que intentar factorizar (o usar el test $c_{00}c_{11} - c_{01}c_{10}$) antes de concluir.</p></div>
+    </div>
+  </details>
+</section>
+
+</div>

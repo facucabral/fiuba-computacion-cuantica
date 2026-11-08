@@ -1,0 +1,82 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 4 · Qubits · Slides 6 y 7</span>
+  <h1>La esfera de <em>Bloch</em></h1>
+  <p class="bajada">Cada estado de un qubit es un punto en la superficie de una esfera. Las compuertas son rotaciones y medir es proyectar sobre un eje.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Todos los estados posibles de un qubit son una flechita que apunta a algún punto de una esfera. <strong>Norte</strong> = $|0\rangle$, <strong>sur</strong> = $|1\rangle$, <strong>ecuador</strong> = mitad y mitad. Una compuerta gira la flechita y un algoritmo es el camino que dibuja la punta. Medir es preguntar “¿qué tan cerca del norte estás?”: por eso las flechas de una misma latitud dan las mismas probabilidades.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “El qubit en profundidad: la esfera de Bloch”</span>
+</div>
+
+<h2>De cuatro números a dos ángulos</h2>
+<p>$\alpha$ y $\beta$ son dos complejos: cuatro números reales. La normalización quita uno y la fase global (que no se puede observar) quita otro. Quedan dos, que se eligen como ángulos:</p>
+<div class="formula destacada">$$|\psi\rangle = \cos\frac{\theta}{2}\,|0\rangle + e^{i\varphi}\sin\frac{\theta}{2}\,|1\rangle, \qquad 0 \le \theta \le \pi,\quad 0 \le \varphi < 2\pi$$</div>
+<ul>
+  <li>$\theta$ (latitud) decide las probabilidades: $p(0) = \cos^2\tfrac{\theta}{2}$, $p(1) = \sin^2\tfrac{\theta}{2}$.</li>
+  <li>$\varphi$ (longitud) es la <strong>fase relativa</strong>: no cambia $p(0)$ ni $p(1)$, pero sí el resultado de medir en otra base.</li>
+</ul>
+
+<div data-widget="esferaBloch"></div>
+
+<h2>El mapa</h2>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Lugar</th><th>Estado</th><th>$\theta$, $\varphi$</th></tr></thead>
+  <tbody>
+    <tr><td>Polo norte</td><td>$|0\rangle$</td><td>$0$, cualquiera</td></tr>
+    <tr><td>Polo sur</td><td>$|1\rangle$</td><td>$\pi$, cualquiera</td></tr>
+    <tr><td>Ecuador, eje $+x$</td><td>$|+\rangle$</td><td>$\pi/2$, $0$</td></tr>
+    <tr><td>Ecuador, eje $-x$</td><td>$|-\rangle$</td><td>$\pi/2$, $\pi$</td></tr>
+    <tr><td>Ecuador, eje $+y$</td><td>$|{+i}\rangle$</td><td>$\pi/2$, $\pi/2$</td></tr>
+    <tr><td>Ecuador, eje $-y$</td><td>$|{-i}\rangle$</td><td>$\pi/2$, $3\pi/2$</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="aviso clave">
+  <span class="titulo-aviso">Ortogonal = opuesto</span>
+  <p>En el espacio de Hilbert, $|0\rangle$ y $|1\rangle$ forman un ángulo recto ($\langle 0|1\rangle = 0$), pero en la esfera están en polos opuestos, a $180^\circ$. Por eso aparece $\theta/2$ en la fórmula: el ángulo en la esfera es el doble del ángulo entre los vectores.</p>
+</div>
+
+<details class="desplegable">
+  <summary>¿Por qué $\theta/2$? Comprobalo con el ecuador</summary>
+  <div class="contenido-desplegable">
+    <p>Un estado del ecuador está a $90^\circ$ del polo norte y debe dar 50 % de probabilidad de 0. Con $\cos\theta$ daría $\cos 90^\circ = 0$. Con la mitad del ángulo: $\cos 45^\circ = \tfrac{1}{\sqrt2}$, y al cuadrado da justo $\tfrac12$.</p>
+  </div>
+</details>
+
+<details class="desplegable">
+  <summary>¿Por qué el polo sur es $|1\rangle$ y no $-|0\rangle$?</summary>
+  <div class="contenido-desplegable">
+    <p>Porque $-|0\rangle = e^{i\pi}|0\rangle$ difiere de $|0\rangle$ solo en una fase global: es <strong>el mismo estado físico</strong>, el mismo punto (el polo norte). Los puntos opuestos de la esfera corresponden a estados ortogonales.</p>
+  </div>
+</details>
+
+<h2>Compuertas como rotaciones</h2>
+<p>Toda compuerta de 1 qubit es una rotación de la esfera. Probalas con los botones de arriba y mirá la estela que deja la flechita:</p>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Compuerta</th><th>Rotación</th><th>Efecto notable</th></tr></thead>
+  <tbody>
+    <tr><td>$X$</td><td>$180^\circ$ en $x$</td><td>$|0\rangle \leftrightarrow |1\rangle$</td></tr>
+    <tr><td>$Y$</td><td>$180^\circ$ en $y$</td><td>$|0\rangle \to i|1\rangle$</td></tr>
+    <tr><td>$Z$</td><td>$180^\circ$ en $z$</td><td>$|+\rangle \leftrightarrow |-\rangle$; los polos quedan quietos</td></tr>
+    <tr><td>$H$</td><td>$180^\circ$ en el eje $(x+z)/\sqrt2$</td><td>$|0\rangle \leftrightarrow |+\rangle$, $|1\rangle \leftrightarrow |-\rangle$</td></tr>
+    <tr><td>$S$</td><td>$90^\circ$ en $z$</td><td>$|+\rangle \to |{+i}\rangle$</td></tr>
+    <tr><td>$T$</td><td>$45^\circ$ en $z$</td><td>suma $\pi/4$ a la fase</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Medir es proyectar sobre un eje</h2>
+<p>Medir en la base computacional es mirar la <strong>altura</strong> de la flechita sobre el eje $z$: si $z = \cos\theta$, entonces $p(0) = \tfrac{1 + z}{2}$ y $p(1) = \tfrac{1 - z}{2}$. Todos los estados de un mismo paralelo (mismo $\theta$) dan las mismas probabilidades en $B_z$. Para medir en $B_x$ se mira la componente en $x$: $p(+) = \tfrac{1 + x}{2}$.</p>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">Para el parcial</span>
+  <p>En los ejercicios de la cátedra los estados se escriben como combinaciones de kets ($\alpha|0\rangle + \beta|1\rangle$), no con ángulos. La esfera sirve para <em>razonar</em> rápido: por ejemplo, para ver que $H$ lleva $|1\rangle$ a $|-\rangle$ o que $Z$ no cambia las probabilidades en $B_z$.</p>
+</div>
+
+<h2>Y si hay más de un qubit</h2>
+<p>La esfera describe <strong>un</strong> qubit. Si un qubit está entrelazado con otro, ya no tiene un estado propio: su vector de Bloch se achica hacia el centro (estado mixto). Lo vas a ver en <a href="#/entrelazamiento">entrelazamiento</a> y en <a href="#/densidad">matriz densidad</a>.</p>

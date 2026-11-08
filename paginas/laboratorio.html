@@ -1,0 +1,28 @@
+<header class="encabezado">
+  <span class="antetitulo">Herramienta</span>
+  <h1>Laboratorio de <em>circuitos</em></h1>
+  <p class="bajada">Armá un circuito de hasta 3 qubits y recorrelo columna por columna. Muestra el estado en notación de Dirac, como lo escribirías en el parcial, y la medición con proyectores.</p>
+</header>
+
+<div data-widget="laboratorio" data-preset="bell"></div>
+
+<h2>Cómo se usa</h2>
+<ol class="pasos">
+  <li><strong>Elegí una herramienta</strong> de la paleta (H, X, CNOT…) y tocá una celda del circuito. Para la CNOT tocá primero el control y después el objetivo, en la misma columna.</li>
+  <li><strong>Cambiá el estado inicial</strong> de cada qubit con los selectores ($|0\rangle$, $|1\rangle$, $|+\rangle$, $|-\rangle$).</li>
+  <li><strong>Recorré los pasos</strong> con los botones o tocando una compuerta: la columna resaltada es la que se acaba de aplicar.</li>
+  <li><strong>Medí</strong> todo el sistema o un solo qubit: aparecen el proyector $\hat P$, la probabilidad y el estado después de medir, ya normalizado.</li>
+</ol>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">Para verificar, no para reemplazar</span>
+  <p>Resolvé el ejercicio a mano y usá el laboratorio para revisar el resultado. En el parcial cuenta el desarrollo: estados intermedios con nombre ($\Psi_0, \Psi_1, \dots$), el algoritmo escrito y el proyector.</p>
+</div>
+
+<h2>Circuitos para cargar</h2>
+<p>En el menú “Cargar un circuito…” están los circuitos de los parciales y de las guías. Algunos para probar:</p>
+<ul>
+  <li><strong>Parcial 11/06/2026, ejercicio 1</strong>: incluye una SWAP. Medí solo q2 y compará con la <a href="#/parciales?ir=p26-ej1">resolución</a>.</li>
+  <li><strong>SWAP = 3 CNOT</strong> (guía 5, ejercicio 7): las tres CNOT alternadas intercambian los qubits.</li>
+  <li><strong>Estado GHZ</strong>: el entrelazamiento con 3 qubits. Medí un qubit y mirá cómo quedan los otros dos.</li>
+</ul>

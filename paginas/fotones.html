@@ -1,0 +1,72 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 4 · Qubits · Slides 7</span>
+  <h1>Fotones y <em>polarizadores</em></h1>
+  <p class="bajada">El mismo formalismo que con spines, cambiando imanes por filtros de luz. Es el ejercicio 3 de los parciales.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Un polarizador le hace una pregunta al fotón: “¿pasás o no?”. La probabilidad de que pase es la sombra del fotón sobre el eje del filtro, al cuadrado. Y si pasa, sale alineado con el filtro: se olvidó de cómo venía. Todo lo que sabés de qubits sirve tal cual: solo cambian los nombres.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em></span>
+</div>
+
+<div class="aviso clave">
+  <span class="titulo-aviso">Ayudamemoria: es solo cambiar de letra</span>
+  <p>$H \leftrightarrow 0$, &nbsp; $V \leftrightarrow 1$, &nbsp; $D \leftrightarrow +$, &nbsp; $A \leftrightarrow -$. Un ejercicio de fotones es un ejercicio de qubits con otras letras: $|D\rangle = \tfrac{1}{\sqrt2}(|H\rangle + |V\rangle)$ es exactamente $|+\rangle = \tfrac{1}{\sqrt2}(|0\rangle + |1\rangle)$.</p>
+</div>
+
+<h2>La polarización como qubit</h2>
+<p>La luz es una onda electromagnética y la <strong>polarización</strong> es la dirección en la que oscila su campo eléctrico. Para un fotón individual, esa dirección es un qubit:</p>
+<div class="grilla dos">
+  <div class="tarjeta">
+    <h3>Base $B_z$ (rectilínea)</h3>
+    <p>$|H\rangle$ horizontal $\equiv |0\rangle$<br>$|V\rangle$ vertical $\equiv |1\rangle$</p>
+  </div>
+  <div class="tarjeta">
+    <h3>Base $B_x$ (diagonal)</h3>
+    <p>$|D\rangle = \tfrac{1}{\sqrt2}(|H\rangle + |V\rangle) \equiv |+\rangle$ (a $45^\circ$)<br>$|A\rangle = \tfrac{1}{\sqrt2}(|H\rangle - |V\rangle) \equiv |-\rangle$ (a $135^\circ$, antidiagonal)</p>
+  </div>
+</div>
+
+<h2>El polarizador mide</h2>
+<p>Un polarizador orientado según $|P\rangle$ deja pasar al fotón o lo absorbe. Es una medición con dos resultados, y la probabilidad de que pase es la regla de Born:</p>
+<div class="formula destacada">$$p(\text{pasa}) = |\langle P|\Psi\rangle|^2 = \langle\Psi|\hat P|\Psi\rangle, \qquad \hat P = |P\rangle\langle P|$$</div>
+<p>Si pasa, sale polarizado según el filtro: el estado colapsó a $|P\rangle$. Con estados reales, si el fotón está a un ángulo $\theta$ del filtro, $p = \cos^2\theta$: es la <strong>ley de Malus</strong> de la óptica, ahora fotón por fotón.</p>
+
+<div data-widget="polarizadores"></div>
+
+<div class="aviso intuicion">
+  <span class="titulo-aviso">Ángulo físico y ángulo en la esfera</span>
+  <p>Una polarización a un ángulo físico $\theta$ es $\cos\theta|H\rangle + \sin\theta|V\rangle$. En la esfera de Bloch ese estado está al doble del ángulo: $H$ y $V$ forman $90^\circ$ en el laboratorio pero son polos opuestos en la esfera. Por eso $|D\rangle$ ($45^\circ$ físicos) queda en el ecuador.</p>
+</div>
+
+<h2>Los tres experimentos clásicos</h2>
+<ol class="pasos">
+  <li><strong>Dos filtros iguales ($V$ y $V$):</strong> pasa todo lo que pasó el primero. $|\langle V|V\rangle|^2 = 1$.</li>
+  <li><strong>Filtros cruzados ($V$ y $H$):</strong> no pasa nada. $|\langle H|V\rangle|^2 = 0$.</li>
+  <li><strong>Un diagonal en el medio ($V$, $D$, $H$):</strong> ¡vuelve a pasar luz! Del total que pasó el primer filtro, el $D$ deja pasar la mitad y la deja en $|D\rangle$; el $H$ deja pasar la mitad de eso: $\tfrac12\cdot\tfrac12 = 25\%$. Agregar un filtro <em>aumenta</em> la luz que llega: el filtro del medio borró la información de que el fotón era vertical.</li>
+</ol>
+<p>Armalo arriba con el preset “V · D · H”.</p>
+
+<h2>El ejercicio del parcial</h2>
+<p><strong>Enunciado (recuperatorio 2024 y parcial 2026):</strong> un fotón en $|\Psi\rangle = \tfrac{1}{\sqrt5}|H\rangle + \tfrac{2}{\sqrt5}|V\rangle$ atraviesa un polarizador en $|A\rangle$. ¿Cuál es la probabilidad de que pase?</p>
+
+<h3>Método 1: formalismo con proyector</h3>
+<ol class="pasos" data-revelar>
+  <li><strong>Escribí el filtro en la base $H/V$:</strong> $|A\rangle = \tfrac{1}{\sqrt2}(|H\rangle - |V\rangle)$.</li>
+  <li><strong>Armá el proyector:</strong> $\hat P_A = |A\rangle\langle A| = \tfrac12\left(|H\rangle\langle H| - |H\rangle\langle V| - |V\rangle\langle H| + |V\rangle\langle V|\right)$.</li>
+  <li><strong>Aplicalo al estado</strong> usando $\langle H|H\rangle = \langle V|V\rangle = 1$ y $\langle H|V\rangle = 0$:
+    $$\hat P_A|\Psi\rangle = \tfrac12\left(\tfrac{1}{\sqrt5} - \tfrac{2}{\sqrt5}\right)|H\rangle + \tfrac12\left(-\tfrac{1}{\sqrt5} + \tfrac{2}{\sqrt5}\right)|V\rangle = -\tfrac{1}{2\sqrt5}\left(|H\rangle - |V\rangle\right) = -\tfrac{1}{\sqrt{10}}|A\rangle$$</li>
+  <li><strong>Probabilidad:</strong> $p(A) = \left\|\hat P_A|\Psi\rangle\right\|^2 = \left|-\tfrac{1}{\sqrt{10}}\right|^2 = \tfrac{1}{10} = 10\%$.</li>
+  <li><strong>Estado al salir:</strong> $\dfrac{\hat P_A|\Psi\rangle}{\sqrt{1/10}} = -|A\rangle$, que es $|A\rangle$ salvo una fase global.</li>
+</ol>
+
+<h3>Método 2: cambio de base (para verificar)</h3>
+<p>Con $|H\rangle = \tfrac{|D\rangle + |A\rangle}{\sqrt2}$ y $|V\rangle = \tfrac{|D\rangle - |A\rangle}{\sqrt2}$:</p>
+<div class="formula">$$|\Psi\rangle = \frac{1 + 2}{\sqrt{10}}|D\rangle + \frac{1 - 2}{\sqrt{10}}|A\rangle = \frac{3}{\sqrt{10}}|D\rangle - \frac{1}{\sqrt{10}}|A\rangle$$</div>
+<p>Se lee directo: $p(A) = \tfrac{1}{10}$ y, de paso, $p(D) = \tfrac{9}{10}$, que es la respuesta del <strong>recuperatorio 2026</strong>, donde el polarizador estaba en $|D\rangle$.</p>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">Para no perder puntos</span>
+  <p>Si el enunciado no pide el formalismo, el cambio de base alcanza; si lo pide, escribí el proyector. En los dos casos, definí primero qué es $|A\rangle$ (o $|D\rangle$) en la base $H/V$. No hacen falta ángulos: todo se resuelve con kets.</p>
+</div>

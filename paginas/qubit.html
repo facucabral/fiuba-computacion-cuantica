@@ -1,0 +1,89 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 4 · Qubits · Slides 6</span>
+  <h1>El <em>qubit</em> y la medición</h1>
+  <p class="bajada">La unidad de información cuántica: un vector unitario en $\mathbb{C}^2$. Puede estar en superposición, pero al medirlo da siempre 0 o 1.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Un bit es un gato vivo <em>o</em> muerto. Un qubit es el gato de Schrödinger: tiene un “peso” $\alpha$ de estar vivo y un peso $\beta$ de estar muerto, conviviendo en un solo objeto. Cuando abrís la caja (medís) el gato está vivo o muerto, y ya no sabés cuánto valían $\alpha$ y $\beta$. Para averiguarlo hay que preparar el mismo estado, medir, y repetir muchas veces.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Computación cuántica desde cero”</span>
+</div>
+
+<h2>Bit contra qubit</h2>
+<div class="grilla dos">
+  <div class="tarjeta">
+    <h3>Bit clásico</h3>
+    <ul>
+      <li>Vale 0 <strong>o</strong> 1, siempre definido.</li>
+      <li>Se puede leer sin alterarlo y copiar sin límite.</li>
+      <li>Físicamente: un transistor apagado o encendido.</li>
+    </ul>
+  </div>
+  <div class="tarjeta">
+    <h3>Qubit</h3>
+    <ul>
+      <li>Estado $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$, con $\alpha, \beta \in \mathbb{C}$.</li>
+      <li>Medirlo lo altera; no se puede copiar (<a href="#/no-clonacion">no-clonación</a>).</li>
+      <li>Físicamente: spin, polarización de un fotón, niveles de un átomo o de un circuito.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="formula destacada">$$|\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \qquad |\alpha|^2 + |\beta|^2 = 1$$</div>
+<p>$\alpha$ y $\beta$ son <strong>amplitudes de probabilidad</strong>, no probabilidades. Pueden ser negativas o complejas. Las probabilidades son sus módulos al cuadrado.</p>
+
+<div class="aviso intuicion">
+  <span class="titulo-aviso">La moneda que gira</span>
+  <p>Una moneda sobre la mesa es cara <em>o</em> cruz, aunque la tapes con la mano: el valor ya está definido. Una moneda girando no es ni cara ni cruz hasta que la frenás. El qubit en superposición se parece más a la segunda. La analogía falla en un punto importante: la moneda no tiene <strong>fase</strong> y el qubit sí, y eso permite la interferencia.</p>
+</div>
+
+<h2>¿Qué vectores son un qubit?</h2>
+<p>Solo los normalizados (es el primer ejercicio de la guía 4). Probá con estos: ¿cuáles representan un qubit?</p>
+<details class="desplegable">
+  <summary>a) $\tfrac{1}{\sqrt2}(|0\rangle + |1\rangle)$ · b) $\tfrac12|0\rangle + \tfrac{\sqrt3}{2}|1\rangle$ · c) $\tfrac12|0\rangle + \tfrac23|1\rangle$ · d) $\tfrac{1}{2}|0\rangle + \tfrac{i}{2}|1\rangle$ · e) $\tfrac12|0\rangle + \tfrac{\sqrt3\,i}{2}|1\rangle$</summary>
+  <div class="contenido-desplegable">
+    <ul>
+      <li>a) $\tfrac12 + \tfrac12 = 1$ → <strong>sí</strong>.</li>
+      <li>b) $\tfrac14 + \tfrac34 = 1$ → <strong>sí</strong>.</li>
+      <li>c) $\tfrac14 + \tfrac49 = \tfrac{25}{36} \ne 1$ → <strong>no</strong> (habría que normalizarlo).</li>
+      <li>d) $\tfrac14 + \tfrac14 = \tfrac12$ → <strong>no</strong>.</li>
+      <li>e) $\tfrac14 + \left|\tfrac{\sqrt3 i}{2}\right|^2 = \tfrac14 + \tfrac34 = 1$ → <strong>sí</strong>.</li>
+    </ul>
+  </div>
+</details>
+
+<h2>La medición</h2>
+<p>Medir en la base computacional da 0 con probabilidad $|\alpha|^2$ y 1 con probabilidad $|\beta|^2$. Después, el qubit queda en el estado que salió:</p>
+<div class="formula">$$\alpha|0\rangle + \beta|1\rangle \;\xrightarrow{\text{medir}}\; \begin{cases} |0\rangle & \text{con probabilidad } |\alpha|^2 \\ |1\rangle & \text{con probabilidad } |\beta|^2 \end{cases}$$</div>
+<p>Una sola medición da un solo bit. Para “ver” las probabilidades hay que preparar el mismo estado muchas veces y contar. Elegí el estado con el deslizador y tirá:</p>
+
+<div data-widget="moneda"></div>
+
+<h3>Medir en otra base</h3>
+<p>Nada obliga a medir en $\{|0\rangle, |1\rangle\}$. Para medir en $B_x = \{|+\rangle, |-\rangle\}$ (guía 4, ejercicio 3) se reescribe el estado en esa base:</p>
+<div class="formula">$$|\psi\rangle = \frac{\alpha+\beta}{\sqrt2}|+\rangle + \frac{\alpha-\beta}{\sqrt2}|-\rangle \quad\Rightarrow\quad p(+) = \frac{|\alpha+\beta|^2}{2},\quad p(-) = \frac{|\alpha-\beta|^2}{2}$$</div>
+<p>Y el estado posterior es $|+\rangle$ o $|-\rangle$ según lo que salga.</p>
+
+<h2>Ejemplos para tener a mano</h2>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Estado</th><th>$\alpha$</th><th>$\beta$</th><th>$p(0)$</th><th>$p(1)$</th></tr></thead>
+  <tbody>
+    <tr><td>$|0\rangle$</td><td>1</td><td>0</td><td>100 %</td><td>0 %</td></tr>
+    <tr><td>$|+\rangle$</td><td>$\tfrac{1}{\sqrt2}$</td><td>$\tfrac{1}{\sqrt2}$</td><td>50 %</td><td>50 %</td></tr>
+    <tr><td>$|-\rangle$</td><td>$\tfrac{1}{\sqrt2}$</td><td>$-\tfrac{1}{\sqrt2}$</td><td>50 %</td><td>50 %</td></tr>
+    <tr><td>$|{+i}\rangle$</td><td>$\tfrac{1}{\sqrt2}$</td><td>$\tfrac{i}{\sqrt2}$</td><td>50 %</td><td>50 %</td></tr>
+    <tr><td>$\tfrac12|0\rangle + \tfrac{\sqrt3}{2}|1\rangle$</td><td>$\tfrac12$</td><td>$\tfrac{\sqrt3}{2}$</td><td>25 %</td><td>75 %</td></tr>
+    <tr><td>Con complejos</td><td>$\tfrac35$</td><td>$\tfrac{4i}{5}$</td><td>36 %</td><td>64 %</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">Error típico</span>
+  <p>Confundir amplitud con probabilidad: con $\beta = -\tfrac{1}{\sqrt2}$ la probabilidad es $\tfrac12$, no $-\tfrac{1}{\sqrt2}$ ni $-\tfrac12$. Y siempre verificá que las probabilidades sumen 1.</p>
+</div>
+
+<h2>Más de dos dimensiones: el estado más general</h2>
+<p>Con la fase global descartada, un qubit queda determinado por dos números reales. Eso permite dibujar todos los estados posibles en una esfera: la <a href="#/bloch">esfera de Bloch</a>.</p>

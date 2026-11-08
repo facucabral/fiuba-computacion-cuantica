@@ -1,0 +1,87 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 4 · Qubits · Slides 7 · Guía 4</span>
+  <h1>Sistemas de <em>qubits</em></h1>
+  <p class="bajada">Para describir varios qubits juntos se usa el producto tensorial. Con $n$ qubits el vector de estado tiene $2^n$ componentes.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Juntar qubits <strong>multiplica</strong> en lugar de sumar: 1 qubit tiene 2 casilleros, 2 qubits tienen 4 ($|00\rangle, |01\rangle, |10\rangle, |11\rangle$), 3 qubits tienen 8. El producto tensorial es “cada uno con cada uno”, como armar todas las combinaciones posibles entre dos menús. Por eso con $n$ qubits hay $2^n$ números en juego.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Entrelazamiento cuántico”</span>
+</div>
+
+<div data-widget="secuencia" data-titulo="Producto tensorial: cada uno con cada uno">
+  <div class="paso-visual" data-titulo="Dos qubits por separado">
+    <div class="qubits-separados">
+      <div class="caja-qubit"><small>qubit 1</small>$\htmlClass{q-cambio}{\alpha}|0\rangle + \beta|1\rangle$</div>
+      <span class="operador-tensorial">⊗</span>
+      <div class="caja-qubit"><small>qubit 2</small>$\gamma|0\rangle + \delta|1\rangle$</div>
+    </div>
+    <p class="explicacion-paso">Cada qubit tiene sus dos coeficientes. Queremos un solo vector que describa a los dos.</p>
+  </div>
+  <div class="paso-visual" data-titulo="El primer término del qubit 1 con todo el qubit 2">
+    <div class="formula">$$\htmlClass{q-cambio}{\alpha}|0\rangle\otimes(\gamma|0\rangle + \delta|1\rangle) = \alpha\gamma|00\rangle + \alpha\delta|01\rangle$$</div>
+    <p class="explicacion-paso">Distributiva: $\alpha|0\rangle$ multiplica a cada término del segundo qubit. Los kets se pegan: $|0\rangle\otimes|1\rangle = |01\rangle$.</p>
+  </div>
+  <div class="paso-visual" data-titulo="El segundo término con todo el qubit 2">
+    <div class="formula">$$\htmlClass{q-cambio}{\beta}|1\rangle\otimes(\gamma|0\rangle + \delta|1\rangle) = \beta\gamma|10\rangle + \beta\delta|11\rangle$$</div>
+    <p class="explicacion-paso">Lo mismo con $\beta|1\rangle$. El primer dígito de cada ket siempre es el del qubit 1.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Juntar: 2 × 2 = 4 términos">
+    <div class="formula">$$|\psi\rangle = \alpha\gamma|00\rangle + \alpha\delta|01\rangle + \beta\gamma|10\rangle + \beta\delta|11\rangle = \begin{pmatrix}\alpha\gamma\\ \alpha\delta\\ \beta\gamma\\ \beta\delta\end{pmatrix}$$</div>
+    <p class="explicacion-paso">Cuatro amplitudes, en orden binario 00, 01, 10, 11. Si existe esta factorización, el estado es <strong>separable</strong>; si no existe, está <strong>entrelazado</strong>.</p>
+  </div>
+</div>
+
+<h2>El producto tensorial</h2>
+<p>Las compuertas de dos qubits, como la CNOT, actúan sobre <strong>un</strong> vector que describe a ambos. Ese vector se arma con el producto tensorial $\otimes$: cada componente del primero multiplica al segundo vector entero.</p>
+<div class="formula destacada">$$\begin{pmatrix}\alpha_1\\\beta_1\end{pmatrix}\otimes\begin{pmatrix}\alpha_2\\\beta_2\end{pmatrix} = \begin{pmatrix}\alpha_1\alpha_2\\\alpha_1\beta_2\\\beta_1\alpha_2\\\beta_1\beta_2\end{pmatrix} = \alpha_1\alpha_2|00\rangle + \alpha_1\beta_2|01\rangle + \beta_1\alpha_2|10\rangle + \beta_1\beta_2|11\rangle$$</div>
+<p>Se abrevia $|a\rangle\otimes|b\rangle = |a\rangle|b\rangle = |ab\rangle$. En $|q_1q_2\rangle$, <strong>el primer dígito es el qubit 1</strong>, la línea de arriba del circuito.</p>
+
+<div data-widget="tensorial"></div>
+
+<h2>La base de 2 y 3 qubits</h2>
+<div class="formula">$$|00\rangle = \begin{pmatrix}1\\0\\0\\0\end{pmatrix},\quad |01\rangle = \begin{pmatrix}0\\1\\0\\0\end{pmatrix},\quad |10\rangle = \begin{pmatrix}0\\0\\1\\0\end{pmatrix},\quad |11\rangle = \begin{pmatrix}0\\0\\0\\1\end{pmatrix}$$</div>
+<p>Con 3 qubits: $|000\rangle, |001\rangle, \dots, |111\rangle$, ocho vectores. El índice de cada uno es el número binario de la etiqueta: $|101\rangle$ es el sexto (índice 5).</p>
+
+<h2>Propiedades que se usan en las cuentas</h2>
+<ul>
+  <li><strong>Distributiva:</strong> $(a|0\rangle + b|1\rangle)\otimes|0\rangle = a|00\rangle + b|10\rangle$.</li>
+  <li><strong>Escalares afuera:</strong> $(a|\psi\rangle)\otimes|\varphi\rangle = a\,(|\psi\rangle\otimes|\varphi\rangle)$.</li>
+  <li><strong>Producto interno por partes:</strong> $\langle ab|cd\rangle = \langle a|c\rangle\langle b|d\rangle$. Por ejemplo, $\langle 01|01\rangle = 1$ y $\langle 01|11\rangle = \langle0|1\rangle\langle1|1\rangle = 0$.</li>
+  <li><strong>Operadores por partes:</strong> $(A\otimes B)(|a\rangle\otimes|b\rangle) = A|a\rangle\otimes B|b\rangle$. Así se aplica, por ejemplo, $H\otimes X$.</li>
+</ul>
+
+<div class="aviso clave">
+  <span class="titulo-aviso">Compuerta sobre un solo qubit</span>
+  <p>Si una compuerta actúa solo sobre el qubit 1, en el sistema completo es $U\otimes I$; si actúa sobre el 2, $I\otimes U$. Eso se escribe en el “algoritmo”: $(H\otimes I)$, $(I\otimes Z)$…</p>
+</div>
+
+<h2>Medir un solo qubit</h2>
+<p>Es lo que piden los ejercicios 1, 2 y 5. El proyector sobre el qubit medido se combina con la identidad en los demás. Para medir el <strong>qubit 1</strong> y obtener 0:</p>
+<div class="formula destacada">$$\hat P^{(1)}_0 = |0\rangle\langle 0|\otimes I, \qquad p_1(0) = \langle\Psi|\hat P^{(1)}_0|\Psi\rangle, \qquad |\tilde\Psi\rangle = \frac{\hat P^{(1)}_0|\Psi\rangle}{\sqrt{p_1(0)}}$$</div>
+<p>En la práctica: <strong>te quedás con los términos donde ese qubit vale lo medido</strong>, sumás los módulos al cuadrado de sus coeficientes (esa es la probabilidad) y normalizás lo que quedó.</p>
+
+<h3>Ejemplo resuelto (guía 4, ejercicio 4)</h3>
+<p>$|\Psi\rangle = \tfrac12(|00\rangle - |01\rangle + |10\rangle - |11\rangle)$.</p>
+<ol class="pasos" data-revelar>
+  <li><strong>¿Producto o entrelazado?</strong> Factorizá: $\tfrac12(|0\rangle + |1\rangle)\otimes(|0\rangle - |1\rangle) = |+\rangle\otimes|-\rangle$. Es un estado <strong>producto</strong> (separable).</li>
+  <li><strong>Probabilidades de cada qubit.</strong> Términos con $q_1 = 0$: $|00\rangle$ y $-|01\rangle$, entonces $p_1(0) = \tfrac14 + \tfrac14 = \tfrac12$ y $p_1(1) = \tfrac12$. Igual para $q_2$: $p_2(0) = p_2(1) = \tfrac12$.</li>
+  <li><strong>Si en $q_1$ se mide 0.</strong> $\hat P^{(1)}_0|\Psi\rangle = \tfrac12(|00\rangle - |01\rangle)$; dividiendo por $\sqrt{1/2}$: $|\tilde\Psi\rangle = \tfrac{1}{\sqrt2}(|00\rangle - |01\rangle) = |0\rangle|-\rangle$.</li>
+  <li><strong>¿Afecta a la medición de $q_2$?</strong> No: antes y después $q_2$ está en $|-\rangle$ y da 0 o 1 con 50 %. En un estado producto, medir un qubit no cambia lo que se puede predecir del otro.</li>
+  <li><strong>Probabilidad de $|11\rangle$.</strong> $p(11) = |\langle 11|\Psi\rangle|^2 = \left|-\tfrac12\right|^2 = \tfrac14$, y el estado posterior es $|11\rangle$.</li>
+</ol>
+
+<h2>¿Separable o entrelazado?</h2>
+<p>Un estado de dos qubits es <strong>separable</strong> (producto) si se puede escribir como $|\psi_1\rangle\otimes|\psi_2\rangle$. Si no, está <strong>entrelazado</strong>. Para dos qubits hay un test rápido con los coeficientes de $c_{00}|00\rangle + c_{01}|01\rangle + c_{10}|10\rangle + c_{11}|11\rangle$:</p>
+<div class="formula destacada">$$\text{separable} \iff c_{00}\,c_{11} - c_{01}\,c_{10} = 0$$</div>
+<p>Se deduce de igualar $c_{00} = \alpha_1\alpha_2$, $c_{01} = \alpha_1\beta_2$, $c_{10} = \beta_1\alpha_2$, $c_{11} = \beta_1\beta_2$: si existe la factorización, el “determinante” se anula.</p>
+<div class="grilla dos">
+  <div class="tarjeta"><h3>Separable</h3><p>$\tfrac{1}{\sqrt2}(|00\rangle + |01\rangle)$: $c_{00}c_{11} - c_{01}c_{10} = 0 - 0 = 0$. Es $|0\rangle|+\rangle$.</p></div>
+  <div class="tarjeta"><h3>Entrelazado</h3><p>$\tfrac{1}{\sqrt2}(|00\rangle + |11\rangle)$: $\tfrac12 - 0 = \tfrac12 \ne 0$. Es el par de Bell $|\beta_{00}\rangle$.</p></div>
+</div>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">Recuperatorio 2026, ej. 5c</span>
+  <p>Pidieron decir si $\tfrac{i}{\sqrt2}(|11\rangle - |10\rangle)$ está entrelazado. <strong>No</strong>: $c_{00}c_{11} - c_{01}c_{10} = 0\cdot\tfrac{i}{\sqrt2} - 0\cdot\left(-\tfrac{i}{\sqrt2}\right) = 0$. Factorizado: $i\,|1\rangle\otimes\tfrac{1}{\sqrt2}(|1\rangle - |0\rangle) = -i\,|1\rangle|-\rangle$. Dos términos no significan entrelazamiento.</p>
+</div>

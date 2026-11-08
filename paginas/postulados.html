@@ -1,0 +1,95 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 3 · Mecánica cuántica · Slides 4 · Guía 3</span>
+  <h1>Los <em>postulados</em></h1>
+  <p class="bajada">Las reglas del juego. La cátedra los enuncia en seis pasos: qué es un estado, qué se mide, qué puede salir, con qué probabilidad, cómo queda el sistema y cómo evoluciona.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Son las reglas del juego, y muchas veces las usamos sin darnos cuenta: <strong>dónde vive</strong> el estado (1), <strong>qué</strong> se puede medir (2) y <strong>qué puede salir</strong> (3), <strong>con qué probabilidad</strong> (4), <strong>qué le pasa al estado</strong> cuando lo medís: no se acomoda suavemente, hace “pap” y salta al resultado (5), y <strong>cómo se mueve</strong> mientras nadie mira: girando sin estirarse (6). El valor medio es como la edad promedio de una clase: cada edad posible por su frecuencia.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Postulados de la computación cuántica”</span>
+</div>
+
+<div class="aviso intuicion">
+  <span class="titulo-aviso">Sobre la numeración</span>
+  <p>Hay libros y videos (como <em>El Qubit de Newton</em>) que agrupan los postulados en cuatro o cinco. Acá seguimos la numeración de las slides de la cátedra, que es la que vas a ver en clase y en el campus.</p>
+</div>
+
+<h2 id="p1">Postulado 1 · El estado</h2>
+<p>Todo sistema cuántico aislado tiene asociado un espacio de Hilbert $\mathcal{E}$. Su estado en un instante queda <strong>completamente descripto</strong> por un ket normalizado:</p>
+<div class="formula">$$|\psi(t)\rangle \in \mathcal{E}, \qquad \langle\psi(t)|\psi(t)\rangle = 1$$</div>
+<p>Como $\mathcal{E}$ es un espacio vectorial, vale el <strong>principio de superposición</strong>: si el sistema puede estar en $|\varphi_1\rangle$ o en $|\varphi_2\rangle$, también puede estar en $\lambda_1|\varphi_1\rangle + \lambda_2|\varphi_2\rangle$ (normalizado). Para un qubit: $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$ con $|\alpha|^2 + |\beta|^2 = 1$.</p>
+
+<h2 id="p2">Postulado 2 · Las magnitudes físicas</h2>
+<p>Cada magnitud física medible $A$ se describe con un operador <strong>hermítico</strong> $\hat A$, llamado <em>observable</em>, cuyos autovectores forman una base del espacio.</p>
+<p>En computación cuántica, cuando “medimos si el qubit está en 0 o en 1” estamos midiendo el observable $\hat\sigma_z = Z$, aunque no lo digamos.</p>
+
+<h2 id="p3">Postulado 3 · Los resultados posibles</h2>
+<p>Los <strong>únicos</strong> resultados posibles al medir $A$ son los <strong>autovalores</strong> de $\hat A$. Como $\hat A$ es hermítico, siempre son números reales.</p>
+<p>Así se explica el experimento de <a href="#/stern-gerlach">Stern-Gerlach</a>: $\hat S_z$ tiene solo dos autovalores, $\pm\hbar/2$, y por eso aparecen solo dos manchas.</p>
+
+<h2 id="p4">Postulado 4 · Descomposición espectral (regla de Born)</h2>
+<p>Si el sistema está en $|\psi\rangle$ y se mide $A$, la probabilidad de obtener el autovalor $a_n$ (no degenerado, autovector $|u_n\rangle$) es:</p>
+<div class="formula destacada">$$p(a_n) = |\langle u_n|\psi\rangle|^2 = \langle\psi|\hat P_n|\psi\rangle, \qquad \hat P_n = |u_n\rangle\langle u_n|$$</div>
+<p>Si $a_n$ está repetido $g_n$ veces (degenerado), se suman las contribuciones de su subespacio: $\hat P_n = \sum_{i=1}^{g_n}|u_n^i\rangle\langle u_n^i|$ y $p(a_n) = \sum_i |\langle u_n^i|\psi\rangle|^2 = \langle\psi|\hat P_n|\psi\rangle$.</p>
+
+<div data-widget="moneda" data-modo="born"></div>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">El “formalismo cuántico”</span>
+  <p>Cuando el enunciado dice <em>usar el formalismo cuántico</em>, no alcanza con elevar al cuadrado el coeficiente. Hay que escribir el proyector, aplicarlo y calcular $p = \langle\psi|\hat P|\psi\rangle$ (o la norma al cuadrado de $\hat P|\psi\rangle$), <strong>conjugando</strong> al armar el bra.</p>
+</div>
+
+<h3>Valor medio</h3>
+<p>Repetir la medición muchas veces da en promedio:</p>
+<div class="formula">$$\langle \hat A\rangle = \langle\psi|\hat A|\psi\rangle = \sum_n a_n\,p(a_n)$$</div>
+
+<h2 id="p5">Postulado 5 · Colapso (reducción del ket)</h2>
+<p>Si al medir se obtuvo $a_n$, el estado <strong>inmediatamente después</strong> es la proyección normalizada:</p>
+<div class="formula destacada">$$|\psi\rangle \;\xrightarrow{\text{se obtuvo } a_n}\; |\tilde\psi\rangle = \frac{\hat P_n|\psi\rangle}{\sqrt{\langle\psi|\hat P_n|\psi\rangle}}$$</div>
+<p>En el caso no degenerado esto es simplemente $|u_n\rangle$ (a menos de una fase global). Volver a medir lo mismo enseguida da el mismo resultado con probabilidad 1.</p>
+<div class="aviso intuicion">
+  <span class="titulo-aviso">Intuición</span>
+  <p>El vector no viaja suavemente hacia el resultado: salta de golpe y se renormaliza. La medición es el único paso <strong>irreversible</strong> de todo el formalismo; las compuertas son unitarias y siempre se pueden deshacer.</p>
+</div>
+
+<div data-widget="secuencia" data-titulo="Medir con el formalismo, paso a paso">
+  <div class="paso-visual" data-titulo="El estado y lo que se mide">
+    <div class="formula">$$|\psi\rangle = \tfrac35|0\rangle + \tfrac{4i}{5}|1\rangle, \qquad \text{¿probabilidad de obtener } 1\text{?}$$</div>
+    <p class="explicacion-paso">Antes de nada: ¿suma 1? $\tfrac{9}{25} + \tfrac{16}{25} = 1$. Sí, está normalizado.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Escribir el proyector">
+    <div class="formula">$$\hat P_1 = |1\rangle\langle 1|$$</div>
+    <p class="explicacion-paso">El proyector sobre el resultado que nos piden. Es una “máquina” que se queda solo con la parte $|1\rangle$ del estado.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Aplicarlo: se anulan los ortogonales">
+    <div class="formula">$$\hat P_1|\psi\rangle = \tfrac35|1\rangle\htmlClass{q-cambio}{\langle 1|0\rangle} + \tfrac{4i}{5}|1\rangle\htmlClass{q-cambio}{\langle 1|1\rangle} = \tfrac35|1\rangle\cdot 0 + \tfrac{4i}{5}|1\rangle\cdot 1 = \tfrac{4i}{5}|1\rangle$$</div>
+    <p class="explicacion-paso">El bra $\langle 1|$ choca con cada ket: con $|0\rangle$ da 0 (desaparece), con $|1\rangle$ da 1 (sobrevive).</p>
+  </div>
+  <div class="paso-visual" data-titulo="Probabilidad (conjugando)">
+    <div class="formula">$$p(1) = \langle\psi|\hat P_1|\psi\rangle = \htmlClass{q-cambio}{\left(-\tfrac{4i}{5}\right)}\tfrac{4i}{5} = \tfrac{16}{25}$$</div>
+    <p class="explicacion-paso">El bra lleva el conjugado: $\tfrac{4i}{5} \to -\tfrac{4i}{5}$. Así $(-i)(i) = 1$ y la probabilidad sale positiva.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Estado después de medir">
+    <div class="formula">$$|\tilde\psi\rangle = \frac{\hat P_1|\psi\rangle}{\sqrt{p(1)}} = \frac{\tfrac{4i}{5}|1\rangle}{\tfrac45} = i|1\rangle \equiv |1\rangle$$</div>
+    <p class="explicacion-paso">Se divide por la raíz de la probabilidad para que vuelva a tener norma 1. El $i$ que queda es una fase global: es el mismo estado que $|1\rangle$.</p>
+  </div>
+</div>
+
+<h2 id="p6">Postulado 6 · Evolución</h2>
+<p>La evolución de un sistema cuántico <strong>cerrado</strong> es una transformación unitaria:</p>
+<div class="formula">$$|\psi(t_2)\rangle = \hat U(t_1, t_2)\,|\psi(t_1)\rangle, \qquad \hat U^\dagger\hat U = I$$</div>
+<p>Las compuertas cuánticas son exactamente eso: operadores unitarios que actúan entre la preparación y la medición. Por ejemplo la Hadamard, $H|0\rangle = \tfrac{1}{\sqrt2}(|0\rangle + |1\rangle)$.</p>
+
+<h2>Sistemas compuestos</h2>
+<p>Para describir varios sistemas juntos (por ejemplo dos qubits), el espacio total es el <strong>producto tensorial</strong> de los espacios: $\mathcal{E} = \mathcal{E}_1 \otimes \mathcal{E}_2$. De ahí sale el entrelazamiento: hay estados del espacio total que no son producto de estados individuales. Ver <a href="#/sistemas">sistemas de qubits</a>.</p>
+
+<h2>Ejemplo completo: la autoevaluación 2</h2>
+<p>Observable con matriz $\mathrm{diag}(a, a, b)$ en la BON $\{|\varphi_1\rangle, |\varphi_2\rangle, |\varphi_3\rangle\}$ y estado $|\psi\rangle = \tfrac{i}{3}|\varphi_1\rangle + \tfrac{2}{3}|\varphi_2\rangle + \tfrac{2e^{i\pi}}{3}|\varphi_3\rangle$.</p>
+<ol class="pasos" data-revelar>
+  <li><strong>Proyectores.</strong> $a$ es autovalor doble (autovectores $|\varphi_1\rangle$, $|\varphi_2\rangle$) y $b$ es simple: $\hat P_a = |\varphi_1\rangle\langle\varphi_1| + |\varphi_2\rangle\langle\varphi_2|$, $\;\hat P_b = |\varphi_3\rangle\langle\varphi_3|$.</li>
+  <li><strong>Bra conjugado.</strong> $\langle\psi| = -\tfrac{i}{3}\langle\varphi_1| + \tfrac23\langle\varphi_2| + \tfrac{2e^{-i\pi}}{3}\langle\varphi_3|$. Notá el $-i$ y el $e^{-i\pi}$.</li>
+  <li><strong>Valor medio.</strong> $\langle\hat A\rangle = \langle\psi|\hat A|\psi\rangle = a\left(\tfrac19 + \tfrac49\right) + b\,\tfrac49 = \tfrac{5a}{9} + \tfrac{4b}{9}$.</li>
+  <li><strong>Probabilidad de $a$.</strong> $\hat P_a|\psi\rangle = \tfrac{i}{3}|\varphi_1\rangle + \tfrac23|\varphi_2\rangle$, entonces $p(a) = \langle\psi|\hat P_a|\psi\rangle = \tfrac19 + \tfrac49 = \tfrac59$.</li>
+  <li><strong>Estado después de obtener $a$.</strong> $|\tilde\psi\rangle = \dfrac{\tfrac{i}{3}|\varphi_1\rangle + \tfrac23|\varphi_2\rangle}{\sqrt{5/9}} = \tfrac{1}{\sqrt5}\left(i|\varphi_1\rangle + 2|\varphi_2\rangle\right)$.</li>
+</ol>

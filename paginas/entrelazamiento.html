@@ -1,0 +1,109 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 4 · Qubits · Slides 7 · Guía 4</span>
+  <h1>Entrelazamiento y estados de <em>Bell</em></h1>
+  <p class="bajada">Dos qubits entrelazados no tienen estado propio cada uno: solo existe el estado del par. Es el ejercicio 2 de todos los parciales.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p><strong>Separable</strong>: podés decir qué parte de cada número vino del qubit 1 y qué parte del qubit 2. <strong>Entrelazado</strong>: los dos son un único objeto y esa separación es imposible. Si mandás un qubit de un par de Bell a la otra punta del universo y medís el tuyo, el otro queda definido al instante. Pero quien lo tiene ve 0 o 1 al 50 % hasta que le avisás por teléfono: no se puede mandar información más rápido que la luz. Einstein, intentando atacar la cuántica, descubrió una de sus propiedades más importantes.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “Entrelazamiento cuántico: EPR, qubits y puertas”</span>
+</div>
+
+<h2>Los cuatro estados de Bell</h2>
+<p>Son los estados de dos qubits con máximo entrelazamiento. Forman una base ortonormal de $\mathbb{C}^4$ (la base de Bell). La cátedra los nombra $|\beta_{xy}\rangle$:</p>
+<div class="grilla dos">
+  <div class="formula">$$|\beta_{00}\rangle = \frac{|00\rangle + |11\rangle}{\sqrt2} \;(=|\Phi^+\rangle)$$</div>
+  <div class="formula">$$|\beta_{01}\rangle = \frac{|01\rangle + |10\rangle}{\sqrt2} \;(=|\Psi^+\rangle)$$</div>
+  <div class="formula">$$|\beta_{10}\rangle = \frac{|00\rangle - |11\rangle}{\sqrt2} \;(=|\Phi^-\rangle)$$</div>
+  <div class="formula">$$|\beta_{11}\rangle = \frac{|01\rangle - |10\rangle}{\sqrt2} \;(=|\Psi^-\rangle)$$</div>
+</div>
+<div class="aviso intuicion">
+  <span class="titulo-aviso">Regla para memorizarlos</span>
+  <p>En $|\beta_{xy}\rangle = \tfrac{1}{\sqrt2}\left(|0\,y\rangle + (-1)^x|1\,\bar y\rangle\right)$: $y$ dice si los qubits son <strong>iguales</strong> ($y=0$: 00 y 11) o <strong>distintos</strong> ($y=1$: 01 y 10), y $x$ dice el <strong>signo</strong> del medio. Se generan con $H$ en el qubit 1 y una CNOT, partiendo de $|xy\rangle$.</p>
+</div>
+
+<h2>Correlaciones: jugá de Alice y Bob</h2>
+<p>Alice tiene el qubit 1 y Bob el 2, separados por la distancia que quieras. Cada uno elige en qué base mide. Repetí el experimento y mirá la tabla de resultados conjuntos:</p>
+<div data-widget="aliceBob"></div>
+<ul>
+  <li>Si los dos miden en la <strong>misma base</strong>, los resultados están perfectamente correlacionados (o anticorrelacionados, según el estado).</li>
+  <li>Lo que ve Bob <strong>solo</strong>, sin saber qué obtuvo Alice, es siempre 50/50. Por eso el entrelazamiento <strong>no permite mandar información más rápido que la luz</strong>: para notar la correlación Bob necesita que Alice le cuente su resultado por un canal clásico.</li>
+</ul>
+
+<h2>La paradoja EPR</h2>
+<p>En 1935, Einstein, Podolsky y Rosen argumentaron que la mecánica cuántica era incompleta: si medir el qubit de Alice define al instante el de Bob, o hay una “acción fantasmal a distancia” o los resultados ya estaban escritos de antemano (variables ocultas). Los experimentos de violación de las desigualdades de Bell (Nobel 2022: Aspect, Clauser y Zeilinger) descartaron las variables ocultas locales. El entrelazamiento es real, y no viola la relatividad porque no transmite información por sí solo.</p>
+
+<h2>El método del parcial: cambio de base</h2>
+<p>El enunciado típico: “Alice y Bob miden en la base $B_x = \{|+\rangle, |-\rangle\}$. Alice obtiene $+$”. Conviene <strong>reescribir el estado completo en la base de medición</strong> antes de proyectar.</p>
+
+<div data-widget="secuencia" data-titulo="Ejercicio 2 de punta a punta (con |β₀₀⟩)">
+  <div class="paso-visual" data-titulo="El estado y el pedido">
+    <div class="formula">$$|\beta_{00}\rangle = \tfrac{1}{\sqrt2}\left(|00\rangle + |11\rangle\right), \qquad \text{Alice mide en } B_x \text{ y obtiene } +$$</div>
+    <p class="explicacion-paso">El estado está escrito en $\{|0\rangle, |1\rangle\}$ pero la medición es en $\{|+\rangle, |-\rangle\}$. Hay que traducir.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Reemplazar cada 0 y cada 1">
+    <div class="formula">$$|0\rangle = \tfrac{|+\rangle + |-\rangle}{\sqrt2}, \quad |1\rangle = \tfrac{|+\rangle - |-\rangle}{\sqrt2} \;\Rightarrow\; |00\rangle = \tfrac12\left(|{++}\rangle + |{+-}\rangle + |{-+}\rangle + |{--}\rangle\right)$$</div>
+    <p class="explicacion-paso">Cada qubit por separado y después producto tensorial. Con $|11\rangle$ igual, pero los términos cruzados llevan signo $-$.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Sumar: los cruzados se cancelan">
+    <div class="formula">$$|\beta_{00}\rangle = \tfrac{1}{2\sqrt2}\Big(2|{++}\rangle + \htmlClass{q-cambio}{0\,|{+-}\rangle + 0\,|{-+}\rangle} + 2|{--}\rangle\Big) = \tfrac{1}{\sqrt2}\left(|{++}\rangle + |{--}\rangle\right)$$</div>
+    <p class="explicacion-paso">Mismo estado, ahora escrito en la base en la que se mide.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Proyector de Alice (identidad en Bob)">
+    <div class="formula">$$\hat P_+ = |+\rangle\langle +|\otimes I \;\Rightarrow\; \hat P_+|\beta_{00}\rangle = \tfrac{1}{\sqrt2}|{++}\rangle + \htmlClass{q-tachado}{\tfrac{1}{\sqrt2}|{--}\rangle}$$</div>
+    <p class="explicacion-paso">$\langle +|-\rangle = 0$: el término donde Alice tiene $-$ desaparece.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Probabilidad y colapso">
+    <div class="formula">$$p_A(+) = \left|\tfrac{1}{\sqrt2}\right|^2 = \tfrac12, \qquad |\tilde\Psi\rangle = \frac{\tfrac{1}{\sqrt2}|{++}\rangle}{\sqrt{1/2}} = |{++}\rangle$$</div>
+    <p class="explicacion-paso">Alice tenía 50 % de chances. Después, el par quedó en $|{++}\rangle$: Bob tiene $|+\rangle$ sin haber hecho nada.</p>
+  </div>
+  <div class="paso-visual" data-titulo="Lo que mide Bob">
+    <div class="formula">$$\text{En } B_x:\ p_B(+) = 1 \qquad\qquad \text{En } B_z:\ |{++}\rangle = \tfrac12\left(|00\rangle + |01\rangle + |10\rangle + |11\rangle\right) \Rightarrow p_B(0) = p_B(1) = \tfrac12$$</div>
+    <p class="explicacion-paso">Para la base computacional se vuelve a escribir el <strong>estado completo</strong> en $B_z$ y se proyecta con $I\otimes|0\rangle\langle 0|$.</p>
+  </div>
+</div>
+
+<h3>Paso 1: los cuatro Bell en la base $B_x$</h3>
+<p>Reemplazando $|0\rangle = \tfrac{|+\rangle + |-\rangle}{\sqrt2}$ y $|1\rangle = \tfrac{|+\rangle - |-\rangle}{\sqrt2}$ y distribuyendo:</p>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Estado</th><th>En la base $B_x$</th><th>Si Alice obtiene $+$, Bob queda en</th></tr></thead>
+  <tbody>
+    <tr><td>$|\beta_{00}\rangle$</td><td>$\tfrac{1}{\sqrt2}(|{++}\rangle + |{--}\rangle)$</td><td>$|+\rangle$</td></tr>
+    <tr><td>$|\beta_{01}\rangle$</td><td>$\tfrac{1}{\sqrt2}(|{++}\rangle - |{--}\rangle)$</td><td>$|+\rangle$</td></tr>
+    <tr><td>$|\beta_{10}\rangle$</td><td>$\tfrac{1}{\sqrt2}(|{+-}\rangle + |{-+}\rangle)$</td><td>$|-\rangle$</td></tr>
+    <tr><td>$|\beta_{11}\rangle$</td><td>$\tfrac{1}{\sqrt2}(|{-+}\rangle - |{+-}\rangle)$</td><td>$|-\rangle$</td></tr>
+  </tbody>
+</table>
+</div>
+
+<details class="desplegable">
+  <summary>Ver la cuenta completa para $|\beta_{00}\rangle$</summary>
+  <div class="contenido-desplegable">
+    <div class="formula">$$|00\rangle = \tfrac12(|{++}\rangle + |{+-}\rangle + |{-+}\rangle + |{--}\rangle), \qquad |11\rangle = \tfrac12(|{++}\rangle - |{+-}\rangle - |{-+}\rangle + |{--}\rangle)$$</div>
+    <div class="formula">$$|\beta_{00}\rangle = \frac{1}{\sqrt2}\cdot\frac12\left(2|{++}\rangle + 2|{--}\rangle\right) = \frac{|{++}\rangle + |{--}\rangle}{\sqrt2}$$</div>
+    <p>Los términos cruzados se cancelan. Para los otros tres estados la cuenta es igual cambiando signos.</p>
+  </div>
+</details>
+
+<h3>Paso 2: proyectar con el formalismo</h3>
+<p>Para $|\beta_{00}\rangle$ y resultado $+$ de Alice:</p>
+<div class="formula">$$\hat P_+ = |+\rangle\langle +|\otimes I, \qquad \hat P_+|\beta_{00}\rangle = \tfrac{1}{\sqrt2}|{++}\rangle, \qquad p_A(+) = \left\|\hat P_+|\beta_{00}\rangle\right\|^2 = \tfrac12$$</div>
+<div class="formula destacada">$$|\tilde\Psi\rangle = \frac{\hat P_+|\beta_{00}\rangle}{\sqrt{p_A(+)}} = |{++}\rangle$$</div>
+
+<h3>Paso 3: lo que obtiene Bob</h3>
+<ul>
+  <li><strong>En $B_x$:</strong> el sistema está en $|{++}\rangle$, así que Bob obtiene $+$ con probabilidad $p_B = |\langle +|+\rangle|^2 = 1$.</li>
+  <li><strong>En $B_z$:</strong> volvé a escribir el estado <em>completo</em> en la base computacional: $|{++}\rangle = \tfrac12(|00\rangle + |01\rangle + |10\rangle + |11\rangle)$. Con el proyector $I\otimes|0\rangle\langle0|$ queda $p_B(0) = \tfrac12$ y $p_B(1) = \tfrac12$.</li>
+</ul>
+
+<div class="aviso error">
+  <span class="titulo-aviso">Errores que la cátedra descuenta</span>
+  <p>Decir que la probabilidad de que Alice obtenga $+$ es 1 (es $\tfrac12$); no usar el formalismo; y para la parte (c), volver a la base $B_z$ <strong>solo el qubit de Bob</strong> en vez del estado completo. El proyector siempre actúa sobre el sistema entero ($I\otimes|v\rangle\langle v|$).</p>
+</div>
+
+<p>Los tres parciales que conocemos usan $|\beta_{00}\rangle$, $|\beta_{11}\rangle$ y $|\beta_{10}\rangle$ con este mismo esquema. Están resueltos en <a href="#/parciales">parciales</a>.</p>
+
+<h2>Operaciones locales y no locales</h2>
+<p>Una compuerta que se escribe como $U_1\otimes U_2$ (cada qubit por su lado) <strong>no puede crear</strong> entrelazamiento. Para entrelazar hace falta una compuerta que actúe sobre los dos a la vez, como la CNOT. El conjunto {compuertas de 1 qubit, CNOT} es <strong>universal</strong>: alcanza para aproximar cualquier operación.</p>

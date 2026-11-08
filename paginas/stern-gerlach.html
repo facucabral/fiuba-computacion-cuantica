@@ -1,0 +1,47 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 3 · Mecánica cuántica · Slides 5</span>
+  <h1>Experimento de <em>Stern-Gerlach</em></h1>
+  <p class="bajada">1922: un haz de átomos de plata atraviesa un imán y, en lugar de una mancha continua, aparecen dos puntos. El spin está cuantizado.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>Imaginá tirar miles de imancitos orientados al azar contra una pared, pasando cerca de un imán grande. Esperarías una mancha continua. Con átomos de plata aparecen <strong>solo dos puntos</strong>: el spin solo puede contestar “arriba” o “abajo”. Esa respuesta de dos opciones es un qubit natural.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em></span>
+</div>
+
+<h2>El montaje</h2>
+<p>Un horno a unos 1000 °C evapora plata. Unas rendijas forman un haz fino que pasa por un imán con campo magnético <strong>inhomogéneo</strong> (más intenso de un lado que del otro, en la dirección $z$). Cada átomo de plata tiene un electrón desapareado en su última capa, que se comporta como un pequeño imán: su momento magnético se debe al <strong>spin</strong> $\vec S$, un momento angular intrínseco.</p>
+<p>En un campo inhomogéneo, un imancito recibe una fuerza proporcional a la proyección de su momento sobre $z$. Midiendo cuánto se desvía cada átomo se mide $S_z$.</p>
+
+<div class="grilla dos">
+  <div class="tarjeta">
+    <h3>Lo que se esperaba</h3>
+    <p>Los átomos salen del horno con orientaciones al azar. Clásicamente, $S_z$ podría tomar cualquier valor entre un máximo y un mínimo: en la pantalla debería verse <strong>una mancha continua</strong>.</p>
+  </div>
+  <div class="tarjeta">
+    <h3>Lo que se vio</h3>
+    <p>El haz se partió en <strong>dos manchas iguales</strong>, $N_1$ y $N_2$, sin nada en el medio. Solo hay dos valores posibles: $S_z = +\tfrac{\hbar}{2}$ (“up”) y $S_z = -\tfrac{\hbar}{2}$ (“down”).</p>
+  </div>
+</div>
+
+<h2>Simulá el experimento</h2>
+<p>Encadená aparatos orientados en $z$ o en $x$ y bloqueá una de las salidas. Las partículas se mueven por el aparato y el contador muestra cuántas llegan a cada detector.</p>
+<div data-widget="sternGerlach"></div>
+
+<h2>Las tres lecciones</h2>
+<ol class="pasos">
+  <li><strong>Cuantización.</strong> Un aparato $z$ siempre da uno de dos resultados. Es un sistema de dos niveles: un <strong>qubit</strong>, con $|{\uparrow_z}\rangle \equiv |0\rangle$ y $|{\downarrow_z}\rangle \equiv |1\rangle$.</li>
+  <li><strong>Repetibilidad.</strong> Si te quedás con los “up” de un aparato $z$ y los pasás por otro aparato $z$, salen 100 % “up”. Después de medir, el estado colapsó (postulado 5).</li>
+  <li><strong>Las mediciones en otra base borran la información anterior.</strong> Si entre dos aparatos $z$ ponés uno en $x$, los “up” vuelven a dividirse 50/50. Medir $S_x$ dejó el estado en $|{\pm_x}\rangle$, que es una superposición de $|0\rangle$ y $|1\rangle$.</li>
+</ol>
+
+<div class="formula destacada">$$|{\uparrow_x}\rangle = |+\rangle = \frac{|0\rangle + |1\rangle}{\sqrt2} \quad\Rightarrow\quad p(\uparrow_z) = \left|\langle 0|+\rangle\right|^2 = \frac12$$</div>
+
+<div class="aviso intuicion">
+  <span class="titulo-aviso">Intuición</span>
+  <p>Los aparatos $z$ y $x$ son preguntas incompatibles: los observables $\hat S_z$ y $\hat S_x$ no conmutan. Saber la respuesta exacta a una implica no saber nada de la otra. Con fotones pasa lo mismo cambiando imanes por <a href="#/fotones">polarizadores</a>.</p>
+</div>
+
+<h2>Por qué importa para la computación</h2>
+<p>Stern-Gerlach muestra empíricamente que hay sistemas físicos con exactamente dos resultados de medición. Cualquier sistema de dos niveles (spin de un electrón, polarización de un fotón, dos niveles de energía de un circuito superconductor) sirve para construir un qubit. El formalismo es siempre el mismo.</p>

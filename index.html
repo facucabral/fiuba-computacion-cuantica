@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Computación Cuántica · Apuntes FIUBA</title>
+  <meta name="description" content="Apuntes interactivos de Computación Cuántica (FIUBA, TB032): teoría, esfera de Bloch, simulador de circuitos, parciales resueltos, autoevaluaciones, quiz y el material de la cátedra.">
+  <meta name="theme-color" content="#000000">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <!-- Solo se cargan recursos propios, las librerías fijadas de cdnjs, las fuentes y la analítica. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com data:; img-src 'self' data: blob: https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://cdnjs.cloudflare.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; worker-src 'self' blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta property="og:title" content="Computación Cuántica · Apuntes FIUBA">
+  <meta property="og:description" content="Teoría, simuladores, parciales resueltos y material de la materia, en una sola página.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23000'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='white' stroke-width='3'/%3E%3Cellipse cx='32' cy='32' rx='17' ry='6' fill='none' stroke='white' stroke-opacity='.45' stroke-width='2'/%3E%3Cline x1='32' y1='32' x2='42' y2='19' stroke='white' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+
+  <script src="js/temaInicial.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/estructura.css">
+  <link rel="stylesheet" href="css/componentes.css">
+  <link rel="stylesheet" href="css/widgets.css">
+  <link rel="stylesheet" href="css/color.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <div class="ruido" aria-hidden="true"></div>
+  <div class="resplandor-fondo" aria-hidden="true"></div>
+  <a class="solo-lector" href="#contenido">Saltar al contenido</a>
+
+  <div class="aplicacion">
+    <header class="barra-superior">
+      <button class="boton-icono solo-movil" id="abrirMenu" aria-label="Abrir índice" aria-controls="lateral" aria-expanded="false" data-icono="menu"></button>
+      <a class="logo-kb" href="https://facucabral.me" aria-label="facucabral.me">KB</a>
+      <nav class="migas" aria-label="Ubicación">
+        <a class="opcional" href="../">fiuba</a>
+        <span class="separador opcional">/</span>
+        <a href="#/inicio">cuántica</a>
+        <span class="separador">/</span>
+        <span class="actual" id="migaActual">Inicio</span>
+      </nav>
+      <div class="acciones">
+        <button class="boton-icono" id="abrirBusqueda" aria-label="Buscar tema (Ctrl+K)" data-icono="buscar"></button>
+        <button class="boton-icono" id="cambiarTema" aria-label="Cambiar tema claro/oscuro" data-icono="tema"></button>
+      </div>
+    </header>
+
+    <div class="cuerpo">
+      <aside class="lateral" id="lateral" aria-label="Índice de la materia">
+        <button class="buscar-atajo" id="buscarLateral"><span data-icono="buscar"></span> Buscar tema <kbd>Ctrl K</kbd></button>
+        <div class="progreso-general" id="progresoGeneral"></div>
+        <nav id="navegacion"></nav>
+        <div class="pie-lateral">
+          Apuntes de la cursada 1C 2026 de <strong>TB032 · Computación Cuántica</strong> (FIUBA).<br>
+          Hechos por <a href="https://facucabral.me" target="_blank" rel="noopener">Facundo Cabral</a> ·
+          <a href="https://github.com/facucabral/fiuba-computacion-cuantica" target="_blank" rel="noopener">código y material</a>
+        </div>
+      </aside>
+
+      <main class="contenido" id="contenido" tabindex="-1">
+        <div class="estado-carga"><span class="punto"></span></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="velo" id="velo"></div>
+
+  <div class="paleta" id="paleta" role="dialog" aria-modal="true" aria-label="Buscar tema">
+    <div class="paleta-caja">
+      <input type="search" id="paletaEntrada" placeholder="Buscar: Bloch, CNOT, Born, BB84, parcial…" autocomplete="off" aria-label="Buscar">
+      <div class="paleta-resultados" id="paletaResultados" role="listbox"></div>
+    </div>
+  </div>
+
+  <div class="visor" id="visor" role="dialog" aria-modal="true" aria-labelledby="visorTitulo">
+    <div class="visor-barra">
+      <button class="boton-icono" id="visorCerrar" aria-label="Cerrar visor" data-icono="cerrar"></button>
+      <span class="titulo" id="visorTitulo"></span>
+      <span class="paginas" id="visorPaginas"></span>
+      <button class="boton-icono ocultar-movil" id="visorAlejar" aria-label="Alejar" data-icono="menos"></button>
+      <button class="boton-icono ocultar-movil" id="visorAcercar" aria-label="Acercar" data-icono="mas"></button>
+      <a class="boton-icono" id="visorPestana" target="_blank" rel="noopener" aria-label="Abrir en otra pestaña" data-icono="externo"></a>
+      <a class="boton-icono" id="visorDescargar" download aria-label="Descargar" data-icono="descargar"></a>
+    </div>
+    <div class="visor-lienzo" id="visorLienzo"></div>
+  </div>
+
+  <noscript><p style="padding:24px">Esta guía necesita JavaScript para los gráficos interactivos. El material está en el <a href="https://github.com/facucabral/fiuba-computacion-cuantica">repositorio</a>.</p></noscript>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 6 · Tema extra</span>
+  <h1>Matriz <em>densidad</em></h1>
+  <p class="bajada">Para cuando además de la incertidumbre cuántica hay ignorancia clásica: no sabemos en qué estado se preparó el qubit.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p><strong>Puro</strong>: sabés exactamente hacia dónde apunta la flechita. <strong>Mixto</strong>: alguien sacó una flechita al azar de una bolsa y no te dijo cuál; esa ignorancia clásica achica la flecha hacia el centro de la esfera. En el centro no sabés nada: 50/50 en cualquier base.</p>
+  <span class="fuente">Intuición inspirada en <em>El Qubit de Newton</em> · “La matriz densidad explicada”</span>
+</div>
+
+<div class="aviso intuicion">
+  <span class="titulo-aviso">Tema complementario</span>
+  <p>No apareció en los parciales que conocemos. Sirve para entender qué le pasa a un qubit entrelazado cuando se lo mira solo, y está en los videos de <em>El Qubit de Newton</em> que acompañan la materia.</p>
+</div>
+
+<h2>Dos tipos de probabilidad</h2>
+<div class="grilla dos">
+  <div class="tarjeta"><h3>Cuántica</h3><p>El qubit está en $|+\rangle$. Al medir en $B_z$ da 50/50, pero <strong>el estado está perfectamente definido</strong>: medido en $B_x$ da $+$ siempre.</p></div>
+  <div class="tarjeta"><h3>Clásica</h3><p>Alguien tiró una moneda y preparó $|0\rangle$ o $|1\rangle$. En $B_z$ también da 50/50, pero ahora en $B_x$ <strong>también</strong> da 50/50. Es otra situación.</p></div>
+</div>
+<p>Un ket no puede describir la segunda situación. Hace falta un objeto que mezcle estados con probabilidades clásicas $p_i$:</p>
+<div class="formula destacada">$$\hat\rho = \sum_i p_i\,|\psi_i\rangle\langle\psi_i|, \qquad p_i \ge 0,\quad \sum_i p_i = 1$$</div>
+
+<h2>Puros y mixtos</h2>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th></th><th>Estado puro</th><th>Estado mixto</th></tr></thead>
+  <tbody>
+    <tr><td>Forma</td><td>$\rho = |\psi\rangle\langle\psi|$</td><td>$\rho = \sum_i p_i|\psi_i\rangle\langle\psi_i|$</td></tr>
+    <tr><td>Pureza $\mathrm{Tr}(\rho^2)$</td><td>$= 1$</td><td>$< 1$ (mínimo $\tfrac12$ para un qubit)</td></tr>
+    <tr><td>En la esfera de Bloch</td><td>en la superficie</td><td>adentro (la “bola” de Bloch)</td></tr>
+    <tr><td>Ejemplo</td><td>$|+\rangle\langle+| = \tfrac12\begin{pmatrix}1&1\\1&1\end{pmatrix}$</td><td>$\tfrac12|0\rangle\langle0| + \tfrac12|1\rangle\langle1| = \tfrac12 I$</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Los elementos de la diagonal son las probabilidades en la base computacional; los de fuera de la diagonal (<strong>coherencias</strong>) guardan la información de fase. La decoherencia los va borrando.</p>
+
+<div data-widget="densidad"></div>
+
+<h2>Propiedades y fórmulas</h2>
+<ul>
+  <li>$\rho^\dagger = \rho$ (hermítica), autovalores $\ge 0$, $\mathrm{Tr}\,\rho = 1$.</li>
+  <li><strong>Regla de Born:</strong> $p(a_n) = \mathrm{Tr}(\hat P_n\rho)$.</li>
+  <li><strong>Valor medio:</strong> $\langle \hat A\rangle = \mathrm{Tr}(\rho\hat A)$.</li>
+  <li><strong>Evolución:</strong> $\rho \to U\rho U^\dagger$.</li>
+  <li><strong>Vector de Bloch:</strong> $\rho = \tfrac12(I + r_x X + r_y Y + r_z Z)$, con $|\vec r| \le 1$ e igualdad solo si es puro.</li>
+</ul>
+
+<h2>El qubit de un par de Bell, mirado solo</h2>
+<p>Si Alice y Bob comparten $|\beta_{00}\rangle$ y Bob ignora todo lo que hace Alice, su qubit se describe con la <strong>traza parcial</strong> sobre el qubit de Alice:</p>
+<div class="formula">$$\rho_B = \mathrm{Tr}_A\left(|\beta_{00}\rangle\langle\beta_{00}|\right) = \tfrac12|0\rangle\langle 0| + \tfrac12|1\rangle\langle 1| = \tfrac12 I$$</div>
+<p>Es el estado <strong>máximamente mixto</strong>, el centro de la bola. Por eso el qubit de Bob da 50/50 en cualquier base: toda la información está en las correlaciones con Alice, no en su qubit. En el <a href="#/laboratorio">laboratorio</a> esto aparece como “estado entrelazado”.</p>

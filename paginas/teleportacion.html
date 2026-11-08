@@ -1,0 +1,60 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 6 · Protocolos</span>
+  <h1>Teleportación <em>cuántica</em></h1>
+  <p class="bajada">Alice le transfiere a Bob un qubit desconocido usando un par entrelazado y dos bits clásicos. No viaja materia y no es instantánea.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>No viaja el qubit: viajan las instrucciones para reconstruirlo. Es como mandar un LEGO armado a otra ciudad: en vez de mandar las piezas, los dos ya tienen un kit compartido (el par de Bell) y vos mandás por WhatsApp dos datos (los 2 bits) que dicen qué ajuste final hacer. Tu modelo se desarma en el proceso, así que nunca hay dos copias.</p>
+</div>
+
+<h2>Objetivo</h2>
+<p>Alice tiene un qubit en un estado $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$ que <strong>no conoce</strong> (y no puede medir sin destruirlo). Quiere que Bob termine con ese mismo estado. Cuentan con:</p>
+<ul>
+  <li>Un par de Bell $|\beta_{00}\rangle$ compartido: un qubit lo tiene Alice y el otro Bob.</li>
+  <li>Un canal <strong>clásico</strong> (teléfono, internet) para mandar 2 bits.</li>
+</ul>
+
+<h2>El protocolo, interactivo</h2>
+<p>Elegí el estado a teleportar en la esfera, avanzá paso a paso y fijate que la esfera de Bob termina igual a la de Alice, cualquiera sea el resultado de la medición.</p>
+<div data-widget="teleportacion"></div>
+
+<h2>Paso a paso</h2>
+<ol class="pasos" data-revelar>
+  <li><strong>Estado inicial</strong> (qubits 1 y 2 de Alice, 3 de Bob):
+    $$|\Psi_0\rangle = |\psi\rangle\otimes|\beta_{00}\rangle = \tfrac{1}{\sqrt2}\left[\alpha|0\rangle(|00\rangle + |11\rangle) + \beta|1\rangle(|00\rangle + |11\rangle)\right]$$</li>
+  <li><strong>Alice aplica $\mathrm{CNOT}_{1,2}$:</strong>
+    $$|\Psi_1\rangle = \tfrac{1}{\sqrt2}\left[\alpha|0\rangle(|00\rangle + |11\rangle) + \beta|1\rangle(|10\rangle + |01\rangle)\right]$$</li>
+  <li><strong>Alice aplica $H$ al qubit 1</strong> y se reagrupan los términos según lo que tiene Alice:
+    $$|\Psi_2\rangle = \tfrac12\Big[|00\rangle(\alpha|0\rangle + \beta|1\rangle) + |01\rangle(\alpha|1\rangle + \beta|0\rangle) + |10\rangle(\alpha|0\rangle - \beta|1\rangle) + |11\rangle(\alpha|1\rangle - \beta|0\rangle)\Big]$$</li>
+  <li><strong>Alice mide sus dos qubits.</strong> Obtiene $m_1m_2 \in \{00, 01, 10, 11\}$, cada uno con probabilidad $\tfrac14$ (independiente de $\alpha$ y $\beta$: Alice no aprende nada del estado). El qubit de Bob colapsa al paréntesis correspondiente.</li>
+  <li><strong>Alice le manda a Bob los 2 bits por el canal clásico.</strong></li>
+  <li><strong>Bob corrige:</strong> aplica $X$ si $m_2 = 1$ y después $Z$ si $m_1 = 1$, es decir, $Z^{m_1}X^{m_2}$. Termina con $\alpha|0\rangle + \beta|1\rangle$.</li>
+</ol>
+
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Alice mide</th><th>Bob tiene</th><th>Bob aplica</th></tr></thead>
+  <tbody>
+    <tr><td>00</td><td>$\alpha|0\rangle + \beta|1\rangle$</td><td>nada ($I$)</td></tr>
+    <tr><td>01</td><td>$\alpha|1\rangle + \beta|0\rangle$</td><td>$X$</td></tr>
+    <tr><td>10</td><td>$\alpha|0\rangle - \beta|1\rangle$</td><td>$Z$</td></tr>
+    <tr><td>11</td><td>$\alpha|1\rangle - \beta|0\rangle$</td><td>primero $X$, después $Z$ ($ZX$)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="aviso parcial">
+  <span class="titulo-aviso">Por qué no viola nada</span>
+  <p><strong>No es más rápida que la luz:</strong> sin los 2 bits, el qubit de Bob es completamente aleatorio y no le sirve. <strong>No clona:</strong> al medir, el estado original de Alice se destruye; nunca existen dos copias. <strong>No transporta materia:</strong> se transfiere el estado, no la partícula.</p>
+</div>
+
+<h2>Respuesta para el ejercicio 4 (parcial 2026)</h2>
+<p>El parcial del 11/06/2026 preguntó: <em>“¿Cuál es el objetivo del protocolo de teleportación cuántica? Hacer una descripción en pocas palabras”</em>.</p>
+<div class="tarjeta">
+  <p>El objetivo es <strong>transferir el estado cuántico desconocido de un qubit</strong> $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$ de Alice a Bob, que están separados, usando como recursos <strong>un par entrelazado</strong> compartido ($|\beta_{00}\rangle$) y <strong>dos bits clásicos</strong>. Alice aplica una CNOT entre su qubit y su mitad del par, una Hadamard a su qubit y mide ambos; envía los dos bits por un canal clásico y Bob, según su valor, aplica $I$, $X$, $Z$ o $ZX$ a su qubit, que queda en $|\psi\rangle$. El estado original se destruye al medir (no se viola la no-clonación) y la información no viaja más rápido que la luz, porque Bob necesita los bits clásicos.</p>
+</div>
+
+<h2>Circuito</h2>
+<p>El circuito completo está dibujado en el interactivo de arriba. En palabras: el par de Bell se prepara con $H$ en el qubit 2 y $\mathrm{CNOT}_{2,3}$; Alice aplica $\mathrm{CNOT}_{1,2}$ y $H$ al qubit 1 y mide los qubits 1 y 2; los resultados viajan como bits clásicos (líneas dobles) y controlan las compuertas $X^{m_2}$ y $Z^{m_1}$ sobre el qubit 3.</p>

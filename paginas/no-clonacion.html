@@ -1,0 +1,49 @@
+<header class="encabezado">
+  <span class="antetitulo">Unidad 6 · Algoritmos</span>
+  <h1>Teorema de <em>no-clonación</em></h1>
+  <p class="bajada">No existe una operación cuántica que copie un estado desconocido. Es una consecuencia directa de la linealidad, y la razón por la que BB84 es seguro.</p>
+</header>
+
+<div class="aviso tierra">
+  <span class="titulo-aviso">Bajada a tierra</span>
+  <p>No existe el Ctrl+C cuántico. Para copiar algo tendrías que saber qué es, y para saber qué es un qubit tenés que medirlo, que es justamente lo que lo destruye. Esa “desventaja” es la que hace segura la criptografía cuántica.</p>
+</div>
+
+<h2>Enunciado</h2>
+<div class="aviso clave">
+  <span class="titulo-aviso">Teorema (Wootters, Zurek y Dieks, 1982)</span>
+  <p>No existe un operador unitario $U$ tal que $U\left(|\psi\rangle\otimes|0\rangle\right) = |\psi\rangle\otimes|\psi\rangle$ para <strong>todo</strong> estado $|\psi\rangle$.</p>
+</div>
+
+<h2>La demostración en tres líneas</h2>
+<p>Supongamos que existe esa $U$ y probémosla con los dos estados de la base:</p>
+<ol class="pasos">
+  <li>$U|0\rangle|0\rangle = |0\rangle|0\rangle$ y $U|1\rangle|0\rangle = |1\rangle|1\rangle$. (La CNOT hace justamente esto.)</li>
+  <li>Por linealidad, para $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$:
+    $$U|\psi\rangle|0\rangle = \alpha|00\rangle + \beta|11\rangle$$</li>
+  <li>Pero una copia verdadera sería
+    $$|\psi\rangle|\psi\rangle = \alpha^2|00\rangle + \alpha\beta|01\rangle + \alpha\beta|10\rangle + \beta^2|11\rangle$$
+    Las dos expresiones solo coinciden si $\alpha\beta = 0$, es decir, si el estado ya era $|0\rangle$ o $|1\rangle$. Contradicción.</li>
+</ol>
+
+<details class="desplegable">
+  <summary>Otra demostración, con productos internos</summary>
+  <div class="contenido-desplegable">
+    <p>Si $U$ clona $|\psi\rangle$ y $|\varphi\rangle$, como $U$ conserva productos internos:</p>
+    <div class="formula">$$\langle\varphi|\psi\rangle = \left(\langle\varphi|\langle 0|\right)U^\dagger U\left(|\psi\rangle|0\rangle\right) = \left(\langle\varphi|\langle\varphi|\right)\left(|\psi\rangle|\psi\rangle\right) = \langle\varphi|\psi\rangle^2$$</div>
+    <p>Un número igual a su cuadrado es 0 o 1: los estados tienen que ser ortogonales o iguales. No se pueden clonar dos estados que no sean ortogonales.</p>
+  </div>
+</details>
+
+<div class="aviso intuicion">
+  <span class="titulo-aviso">Y entonces, ¿la CNOT no copia?</span>
+  <p>La CNOT copia <strong>valores de la base</strong> ($|0\rangle \to |00\rangle$, $|1\rangle \to |11\rangle$), igual que un bit clásico. Con una superposición no produce dos copias: produce un estado <strong>entrelazado</strong> $\alpha|00\rangle + \beta|11\rangle$. Así se crean los pares de Bell.</p>
+</div>
+
+<h2>Consecuencias</h2>
+<ul>
+  <li><strong>Criptografía:</strong> un espía no puede copiar un fotón para medirlo con calma y dejar pasar el original intacto. Al medirlo, lo perturba y se lo detecta (<a href="#/bb84">BB84</a>).</li>
+  <li><strong>Corrección de errores:</strong> la redundancia clásica (“guardar tres copias y votar”) no se puede usar tal cual. Los códigos cuánticos reparten la información en estados entrelazados de varios qubits.</li>
+  <li><strong>Teleportación:</strong> para que el estado aparezca en Bob, tiene que destruirse en Alice. Nunca existen dos copias (<a href="#/teleportacion">teleportación</a>).</li>
+  <li><strong>No hay comunicación más rápida que la luz:</strong> si se pudiera clonar, Bob podría hacer muchas copias de su mitad de un par de Bell y averiguar qué base usó Alice.</li>
+</ul>

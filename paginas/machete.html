@@ -1,0 +1,149 @@
+<header class="encabezado">
+  <span class="antetitulo">Práctica para el parcial</span>
+  <h1>Machete del <em>parcial</em></h1>
+  <p class="bajada">Todo lo que hay que tener a mano, en el orden en que se usa al resolver. Bajalo en PDF para tenerlo sin conexión en el celular o la compu.</p>
+  <div class="fila-botones solo-pantalla">
+    <a class="boton primario" href="material/machete.pdf" download="machete-computacion-cuantica.pdf">Descargar PDF</a>
+    <a class="boton" href="#" data-material="machete">Ver el PDF</a>
+    <button class="boton" type="button" data-imprimir>Imprimir esta página</button>
+  </div>
+</header>
+
+<div class="leyenda-dirac">
+  <span><strong>Ket</strong> $|\psi\rangle$</span>
+  <span><strong>Bra</strong> $\langle\psi|$</span>
+  <span><strong>Braket (número)</strong> $\langle\varphi|\psi\rangle$</span>
+  <span><strong>Proyector</strong> $|v\rangle\langle v|$</span>
+</div>
+
+<h2>1 · Antes de tocar nada</h2>
+<div class="grilla">
+  <div class="tarjeta">
+    <h3>¿Suma 1?</h3>
+    <p>Verificá la normalización del estado que te dan: $|\alpha|^2 + |\beta|^2 = 1$. Si no da, hay un error de lectura o hay que normalizar.</p>
+    <p class="chico texto-2">Ej.: $\tfrac{1}{\sqrt5}, \tfrac{2}{\sqrt5} \Rightarrow \tfrac15 + \tfrac45 = 1$ ✓</p>
+  </div>
+  <div class="tarjeta">
+    <h3>¿Quién es quién?</h3>
+    <p>En $|q_1q_2q_3\rangle$ el <strong>primer dígito es el qubit de arriba</strong>. En la CNOT, el punto ● es el control y el ⊕ el objetivo.</p>
+  </div>
+  <div class="tarjeta">
+    <h3>Nombrá todo</h3>
+    <p>$\Psi_0, \Psi_1, \Psi_2, \dots$ después de cada columna. Así no te perdés y el corrector sigue el razonamiento.</p>
+  </div>
+</div>
+
+<h2>2 · Ayudamemorias</h2>
+<div class="grilla">
+  <div class="tarjeta">
+    <h3>Fotones = cambiar de letra</h3>
+    <p>$H \to 0$ &nbsp; $V \to 1$ &nbsp; $D \to +$ &nbsp; $A \to -$</p>
+    <p class="chico texto-2">$|D\rangle = \tfrac{|H\rangle + |V\rangle}{\sqrt2}$ es el $|+\rangle$; $|A\rangle = \tfrac{|H\rangle - |V\rangle}{\sqrt2}$ es el $|-\rangle$.</p>
+  </div>
+  <div class="tarjeta">
+    <h3>Ida y vuelta de bases</h3>
+    <p>$|\pm\rangle = \tfrac{|0\rangle \pm |1\rangle}{\sqrt2}$</p>
+    <p>$|0\rangle = \tfrac{|+\rangle + |-\rangle}{\sqrt2}$, &nbsp; $|1\rangle = \tfrac{|+\rangle - |-\rangle}{\sqrt2}$</p>
+    <p class="chico texto-2">Misma forma en las dos direcciones: “suma” y “resta”.</p>
+  </div>
+  <div class="tarjeta">
+    <h3>Hadamard</h3>
+    <p>$H|0\rangle = |+\rangle$, $H|1\rangle = |-\rangle$</p>
+    <p>$H|+\rangle = |0\rangle$, $H|-\rangle = |1\rangle$</p>
+    <p class="chico texto-2">Hace y deshace: $H^2 = I$.</p>
+  </div>
+  <div class="tarjeta">
+    <h3>Pauli en una línea</h3>
+    <p>$X$: intercambia $0 \leftrightarrow 1$. &nbsp; $Z$: le cambia el signo al $1$. &nbsp; $Y$: intercambia y agrega $i$: $Y|0\rangle = i|1\rangle$, $Y|1\rangle = -i|0\rangle$.</p>
+  </div>
+  <div class="tarjeta">
+    <h3>Estados de Bell</h3>
+    <p>$|\beta_{xy}\rangle = \tfrac{1}{\sqrt2}\left(|0\,y\rangle + (-1)^x|1\,\bar y\rangle\right)$</p>
+    <p class="chico texto-2">$y$: ¿iguales (00, 11) o distintos (01, 10)? &nbsp; $x$: ¿signo $+$ o $-$?</p>
+  </div>
+  <div class="tarjeta">
+    <h3>Números que aparecen siempre</h3>
+    <p>$\left(\tfrac{1}{\sqrt2}\right)^2 = \tfrac12$, &nbsp; $\tfrac{1}{\sqrt2}\cdot\tfrac{1}{\sqrt2} = \tfrac12$, &nbsp; $|i|^2 = 1$, &nbsp; $(-i)(i) = 1$, &nbsp; $e^{i\pi} = -1$.</p>
+  </div>
+</div>
+
+<h2>3 · Receta: aplicar compuertas</h2>
+<p><strong>Desarmar, aplicar, rearmar.</strong> Separá cada ket en sus qubits, aplicá a cada qubit su compuerta y volvé a unir con el producto tensorial. Por linealidad, se hace término por término.</p>
+<div class="formula destacada">$$(Y\otimes Z)|01\rangle = \underbrace{Y|0\rangle}_{\text{qubit 1}}\otimes\underbrace{Z|1\rangle}_{\text{qubit 2}} = (i|1\rangle)\otimes(-|1\rangle) = -i|11\rangle$$</div>
+<ul>
+  <li>Sin compuerta en un qubit → $I$ (queda igual).</li>
+  <li>CNOT: mirá el control <strong>en cada término</strong>; si vale 1, invertí el objetivo. Los coeficientes no cambian.</li>
+  <li>SWAP: intercambiá los dígitos de cada ket. Toffoli: invierte el objetivo solo si los dos controles valen 1.</li>
+  <li>Al final, <strong>agrupá</strong> los coeficientes que acompañan al mismo ket y volvé a verificar que sume 1.</li>
+  <li>Algoritmo: se escribe de derecha a izquierda, $|\Psi_a\rangle = U_3U_2U_1|\Psi_0\rangle$.</li>
+</ul>
+
+<h2>4 · Receta: medir con el formalismo</h2>
+<ol class="pasos">
+  <li><strong>Proyector</strong> del resultado pedido: $\hat P = |v\rangle\langle v|$. Si se mide un solo qubit, identidad en el resto: $I\otimes|1\rangle\langle 1|$.</li>
+  <li><strong>Aplicarlo</strong>: el bra choca con cada ket del estado. <strong>Iguales dan 1, distintos dan 0</strong>: solo sobreviven los términos que coinciden con lo medido.</li>
+  <li><strong>Probabilidad</strong>: $p = \langle\psi|\hat P|\psi\rangle$, con el bra <strong>conjugado</strong>. En la práctica, la suma de $|c|^2$ de los términos que sobrevivieron.</li>
+  <li><strong>Estado posterior</strong>: lo que sobrevivió dividido por $\sqrt p$. Una fase delante ($-1$, $i$) no cambia el estado.</li>
+</ol>
+<div class="formula">$$\hat P_{10}\left(a|01\rangle + b|10\rangle\right) = a\,|10\rangle\underbrace{\langle 10|01\rangle}_{0} + b\,|10\rangle\underbrace{\langle 10|10\rangle}_{1} = b\,|10\rangle \;\Rightarrow\; p(10) = b^*b = |b|^2$$</div>
+
+<h2>5 · Medir en otra base</h2>
+<p>Primero reescribí <strong>todo el estado</strong> en la base de la medición (ayudamemoria de la sección 2), después proyectá. Para volver a $B_z$, reescribí otra vez el estado completo, no solo un qubit.</p>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Bell</th><th>En $B_z$</th><th>En $B_x$</th></tr></thead>
+  <tbody>
+    <tr><td>$|\beta_{00}\rangle$</td><td>$\tfrac{1}{\sqrt2}(|00\rangle + |11\rangle)$</td><td>$\tfrac{1}{\sqrt2}(|{++}\rangle + |{--}\rangle)$</td></tr>
+    <tr><td>$|\beta_{01}\rangle$</td><td>$\tfrac{1}{\sqrt2}(|01\rangle + |10\rangle)$</td><td>$\tfrac{1}{\sqrt2}(|{++}\rangle - |{--}\rangle)$</td></tr>
+    <tr><td>$|\beta_{10}\rangle$</td><td>$\tfrac{1}{\sqrt2}(|00\rangle - |11\rangle)$</td><td>$\tfrac{1}{\sqrt2}(|{+-}\rangle + |{-+}\rangle)$</td></tr>
+    <tr><td>$|\beta_{11}\rangle$</td><td>$\tfrac{1}{\sqrt2}(|01\rangle - |10\rangle)$</td><td>$\tfrac{1}{\sqrt2}(|{-+}\rangle - |{+-}\rangle)$</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="chico texto-2">Ej. 2 de todos los parciales: Alice obtiene un resultado con probabilidad $\tfrac12$; después Bob, en la misma base, obtiene su resultado con probabilidad 1; en $B_z$, 50/50.</p>
+
+<h2>6 · Compuertas</h2>
+<div class="tabla-envoltura">
+<table>
+  <thead><tr><th>Compuerta</th><th>Matriz</th><th>$|0\rangle\to$</th><th>$|1\rangle\to$</th></tr></thead>
+  <tbody>
+    <tr><td>$X$</td><td>$\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$</td><td>$|1\rangle$</td><td>$|0\rangle$</td></tr>
+    <tr><td>$Y$</td><td>$\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)$</td><td>$i|1\rangle$</td><td>$-i|0\rangle$</td></tr>
+    <tr><td>$Z$</td><td>$\left(\begin{smallmatrix}1&0\\0&-1\end{smallmatrix}\right)$</td><td>$|0\rangle$</td><td>$-|1\rangle$</td></tr>
+    <tr><td>$H$</td><td>$\tfrac{1}{\sqrt2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$</td><td>$|+\rangle$</td><td>$|-\rangle$</td></tr>
+    <tr><td>$S$</td><td>$\left(\begin{smallmatrix}1&0\\0&i\end{smallmatrix}\right)$</td><td>$|0\rangle$</td><td>$i|1\rangle$</td></tr>
+    <tr><td>$T$</td><td>$\left(\begin{smallmatrix}1&0\\0&e^{i\pi/4}\end{smallmatrix}\right)$</td><td>$|0\rangle$</td><td>$e^{i\pi/4}|1\rangle$</td></tr>
+    <tr><td>$R(\delta)$</td><td>$\left(\begin{smallmatrix}1&0\\0&e^{i\delta}\end{smallmatrix}\right)$</td><td>$|0\rangle$</td><td>$e^{i\delta}|1\rangle$</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="chico texto-2">$\mathrm{CNOT}_{c,t}|x,y\rangle = |x, y\oplus x\rangle$ &nbsp;·&nbsp; $\mathrm{SWAP}|xy\rangle = |yx\rangle$ &nbsp;·&nbsp; Toffoli $|x,y,z\rangle = |x, y, z\oplus xy\rangle$.</p>
+
+<h2>7 · ¿Entrelazado?</h2>
+<p>Para 2 qubits con coeficientes $c_{00}, c_{01}, c_{10}, c_{11}$:</p>
+<div class="formula destacada">$$\text{separable} \iff c_{00}\,c_{11} - c_{01}\,c_{10} = 0$$</div>
+<p>Dos términos no alcanzan para decir “entrelazado”: $\tfrac{i}{\sqrt2}(|11\rangle - |10\rangle) = -i|1\rangle|-\rangle$ es separable.</p>
+
+<h2>8 · Teóricos en una línea</h2>
+<div class="tabla-envoltura">
+<table>
+  <tbody>
+    <tr><td><strong>Deutsch</strong></td><td>¿$f$ constante o balanceada? Una consulta (clásico: dos). $|01\rangle \to H\otimes H \to U_f \to H\otimes I \to$ medir q1: 0 constante, 1 balanceada.</td></tr>
+    <tr><td><strong>Teleportación</strong></td><td>Enviar 1 qubit con 1 par de Bell + 2 bits clásicos. Alice: CNOT, $H$, mide. Bob: $Z^{m_1}X^{m_2}$.</td></tr>
+    <tr><td><strong>Superdensa</strong></td><td>Enviar 2 bits con 1 qubit + 1 par de Bell. Alice: $I, X, Z, ZX$. Bob: CNOT, $H$, mide.</td></tr>
+    <tr><td><strong>BB84</strong></td><td>Clave con fotones en dos bases al azar; un espía introduce ~25 % de error.</td></tr>
+    <tr><td><strong>No-clonación</strong></td><td>No existe $U$ que copie un estado arbitrario (contradice la linealidad).</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="errores">9 · Errores que la cátedra descuenta</h2>
+<div class="grilla">
+  <div class="tarjeta"><h3>No conjugar el bra</h3><p>Con $i$, $\alpha$, $\beta$ complejos, el bra lleva conjugados. Si no, salen mal la probabilidad y el estado posterior.</p></div>
+  <div class="tarjeta"><h3>No usar el formalismo</h3><p>Si lo piden: proyector, aplicarlo, $\langle\psi|\hat P|\psi\rangle$ y normalizar.</p></div>
+  <div class="tarjeta"><h3>Probabilidad de Alice = 1</h3><p>Es $\tfrac12$. Lo que vale 1 es la de Bob <em>después</em>, en la misma base.</p></div>
+  <div class="tarjeta"><h3>Cambiar de base un solo qubit</h3><p>Siempre el estado completo, y proyector con $\otimes I$.</p></div>
+  <div class="tarjeta"><h3>“Tiene dos términos, está entrelazado”</h3><p>Probá factorizar o usá $c_{00}c_{11} - c_{01}c_{10}$.</p></div>
+  <div class="tarjeta"><h3>Dejar el teórico en blanco</h3><p>Llevá preparadas Deutsch, teleportación y superdensa, con circuito.</p></div>
+</div>
+<p class="chico texto-2">Y además: no escribir en rojo (es el color del corrector) y verificar que las probabilidades de todos los resultados sumen 1.</p>
